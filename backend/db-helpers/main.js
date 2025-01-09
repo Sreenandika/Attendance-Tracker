@@ -15,7 +15,8 @@ function connectToDB() {
          if (err) {
              console.error('Error executing query', err);
          } else {
-             console.log('Query executed successfully', res.rows);
+            console.log('Query executed successfully', res.rows);
+            return res.rows;
          }
      }
      );
@@ -29,6 +30,7 @@ function connectToDB() {
             console.error('Error executing query', err);
         } else {
             console.log('Query executed successfully', res.rows);
+            return res.rows;
         }
     }
     );

@@ -12,8 +12,8 @@ app.get('/', (req, res) => {
 }
 );
 app.get('/api', (req, res) => {
-    db.connectToDB();
-    res.json({ message: 'Hello from the server!' });
+    const lmao = db.connectToDB();
+    res.json({ lmao });
 });
 
 app.listen(port, () => {
