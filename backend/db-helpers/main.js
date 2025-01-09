@@ -1,5 +1,5 @@
 const db = require('./const.js');
-const {Client} = require('pg');
+const { Client } = require('pg');
 const client = new Client({
     user: db.user,
     host: db.host,
@@ -9,33 +9,16 @@ const client = new Client({
 });
 
 function connectToDB() {
-    if(client._connected) {
-        console.log('Already connected to the database');
-     client.query('SELECT NOW()', (err, res) => {
-         if (err) {
-             console.error('Error executing query', err);
-         } else {
-            console.log('Query executed successfully', res.rows);
-            return res.rows;
-         }
-     }
-     );
-    return;
-    }
     client.connect()
         .then(() => console.log('Connected to the database'))
         .catch(e => console.error('Error connecting to the database', e));
-    client.query('SELECT NOW()', (err, res) => {
-        if (err) {
-            console.error('Error executing query', err);
-        } else {
-            console.log('Query executed successfully', res.rows);
-            return res.rows;
-        }
-    }
-    );
 };
 
+function getAdminUsers(){
+    const query = `SELECT username,password FROM user_accounts WHERE role = 'admin'`;
+    return client.query(query);
+}
 module.exports = {
-    connectToDB
+    connectToDB,
+    getAdminUsers
 }

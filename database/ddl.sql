@@ -48,5 +48,13 @@ CREATE TABLE attendance (
     assignment_id INT NOT NULL REFERENCES teacher_assignments(assignment_id),
     student_id INT NOT NULL REFERENCES students(student_id),
     attendance_date DATE NOT NULL,
-    present BOOLEAN NOT NULL
+    present BOOLEAN NOT NULL,
+    department_id INT NOT NULL REFERENCES departments(department_id)
+);
+
+CREATE TABLE user_accounts (
+    user_id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(128) NOT NULL,
+    user_role VARCHAR(20) NOT NULL CHECK (user_role IN ('teacher', 'admin', 'student'))
 );

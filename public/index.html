@@ -6,19 +6,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous">
-    </script>
+        </script>
     <title>Attendance-Tracker</title>
 </head>
+
 <body>
-    <button id = "lmao">Redirect</button>
+    <form id = "loginForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <label for="userType">Type of User:</label>
+        <select id="userType" name="userType" required>
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+            <option value="admin">Admin</option>
+        </select>
+    </form>
+    <br>
+    <button id="signin">Sign In</button>
+
 </body>
 <script>
-    $('#lmao').click(function(){
-        fetch('/api').then(response => response.json()).then(data => console.log(data));
-    });
-    $(document).ready(function () {
-        console.log('Hello world');
-    });
+$('#signin').click(function () {
+    console.log('Sign in clicked');
+    var username = $('#username').val();
+    var password = $('#password').val();
+    var userType = $('#userType').val();
+    data = {
+        username: username,
+        password: password,
+        userType: userType
+    }
+    function success(data) {
+        console.log(data);
+    }
+    $.ajax({
+    type: "POST",
+    url: "/login",
+    data: data,
+    success: success,
+});
+});
 </script>
-
 </html>
