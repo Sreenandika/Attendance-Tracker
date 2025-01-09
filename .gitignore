@@ -1,2 +1,5 @@
 node_modules
 const.js
+db
+localhost.session.sql
+.vscode/
