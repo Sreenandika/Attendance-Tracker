@@ -10,8 +10,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    db.connectToDB();
     res.sendFile(path.join(__dirname,"../public", 'index.html'));
+    
+    db.connectToDB();
 }
 );
 
@@ -21,18 +22,12 @@ app.get('/students', (req, res) => {
 );
 
 app.post('/login', (req, res) => {
-    console.log(req.body);
     if(req.body.userType === 'admin'){
-        db.getAdminUsers()
-        .then((result) => {
-            console.log(result.rows);
-            res.send(result.rows);
-        })
-        .catch((e) => {
-            console.error('Error getting admin users', e);
-            res.send('Error getting admin users');
-        });
-    }
+        db.getAdminUsers();
+        // const users = db.getAdminUsers();
+        // console.log(users);
+        // db.closeConnection();
+}
 }
 );
 
