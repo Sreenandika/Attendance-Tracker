@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <form id = "loginForm">
+    <form id="loginForm">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required>
         <br>
@@ -30,25 +30,31 @@
 
 </body>
 <script>
-$('#signin').click(function () {
-    console.log('Sign in clicked');
-    var username = $('#username').val();
-    var password = $('#password').val();
-    var userType = $('#userType').val();
-    data = {
-        username: username,
-        password: password,
-        userType: userType
-    }
-    function success(data) {
-        console.log(data);
-    }
-    $.ajax({
-    type: "POST",
-    url: "/login",
-    data: data,
-    success: success,
+    $('#signin').click(function () {
+        console.log('Sign in clicked');
+        var username = $('#username').val();
+        var password = $('#password').val();
+        var userType = $('#userType').val();
+        data = {
+            username: username,
+            password: password,
+            userType: userType
+        }
+        function success(data) {
+           if(data.loginStatus == false){
+            alert("No such user, try again");
+           }
+           else{
+            window.location.pathname = `admin/${data.user_id}`;
+           }
+        }
+        $.ajax({
+            type: "POST",
+            url: "/login",
+            data: data,
+            success: success,
+        });
     });
-});
 </script>
+
 </html>

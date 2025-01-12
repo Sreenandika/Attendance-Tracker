@@ -1,35 +1,13 @@
-const db = require('./const.js');
-const { Client } = require('pg');
-const client = new Client({
-    user: db.user,
-    host: db.host,
-    database: db.database,
-    password: db.password,
-    port: db.port,
-});
 
-function connectToDB() {
-    client.connect()
-        .then(() => console.log('Connected to the database'))
-        .catch(e => console.error('Error connecting to the database', e));
-    console.log(client);
-};
-
-function getAdminUsers(){
-    const query = `SELECT username,password FROM user_accounts WHERE user_role = 'admin';`;
-    client.query(query).then((result) => {
-        const users = result.rows;
-        console.log(users);
-    }
-    )
-    
+function getAdminUsers (client) {
+    const query = `SELECT user_id,username,password FROM user_accounts WHERE user_role = 'admin';`;
+    return client.query(query);
 }
-
-function closeConnection(){
-   client.end();
+function getStudentUsers (client) {
+    const query = `SELECT username,password FROM user_accounts WHERE user_role = 'student';`;
+    return client.query(query);
 }
 module.exports = {
-    connectToDB,
     getAdminUsers,
-    closeConnection
+    getStudentUsers
 }
