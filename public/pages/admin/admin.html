@@ -1,14 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Page</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous">
+        </script>
 </head>
+
 <body>
-    LMAO Admin Page
+    <h2 id="header"></h2>
+    <br>
+    <button id="addClass">Add Class</button>
+    <button id="addTeacher">Add Teacher</button>
+    <button id="addStudent">Add Student</button>
+    <button id="addSubject">Add Subjects</button>
+    <br><br>
+    <button id="logout">Logout</button>
+
 </body>
 <script>
-    
+    $("#header").text(`Welcome Admin ${window.location.pathname.split('/')[2]}`);
+    $("#addClass").click(() => {
+        const currUserId = window.location.pathname.split('/')[2];
+        window.location.pathname = `/admin/${currUserId}/class_manager`;
+    });
+
 </script>
+
 </html>

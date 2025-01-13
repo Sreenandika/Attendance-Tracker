@@ -30,6 +30,23 @@ app.get('/students', (req, res) => {
 );
 
 
+app.get('/admin/:admin_id', (req, res) => {
+    res.sendFile(path.join(__dirname, "../public/pages/admin", 'admin.html'));
+});
+app.get('/admin/:admin_id/student_manager', (req, res) => {
+    res.sendFile(path.join(__dirname, "../public/pages/admin", 'admin.html'));
+});
+app.get('/admin/:admin_id/teacher_manager', (req, res) => {
+    res.sendFile(path.join(__dirname, "../public/pages/admin", 'admin.html'));
+});
+app.get('/admin/:admin_id/class_manager', (req, res) => {
+    res.sendFile(path.join(__dirname, "../public/pages/admin", 'classHandler.html'));
+});
+app.get('/admin/:admin_id/subject_manager', (req, res) => {
+    res.sendFile(path.join(__dirname, "../public/pages/admin", 'admin.html'));
+});
+
+
 app.post('/login', async (req, res) => {
     const client = await pool.connect();
     if(req.body.userType === 'admin'){
@@ -54,30 +71,19 @@ app.post('/login', async (req, res) => {
             res.send('Error getting admin users');
         });
     }
-    if(req.body.userType === 'student'){
-        funcs.getStudentUsers(client)
-        .then((result) => {
-            console.log(result.rows);
-            if(req.body.username === result.rows[0].username && req.body.password === result.rows[0].password){
-                res.send('Login successful');
-            }
-            else{
-                res.send('Login failed');
-            }
-        })
-        .catch((e) => {
-            console.error('Error getting student users', e);
-            res.send('Error getting student users');
-        });
-    }
     client.release();
 });
 
-app.get('/admin/:admin_id', (req, res) => {
-    res.sendFile(path.join(__dirname, "../public/pages/admin", 'admin.html'));
+
+
+app.post('/addClass', async (req, res) => {
+    console.log(req.body);
+    const client = await pool.connect();
+    funcs.addClasses(client,req.body.className,req.body.classId).then((result) => {
+        console.log(result.rows);
+    });
+    client.release();
 });
-
-
 
 
 app.listen(port, () => {

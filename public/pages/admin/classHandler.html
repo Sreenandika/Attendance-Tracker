@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=\, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous">
+        </script>
+    <title>Class Manager</title>
+</head>
+
+<body>
+    <h1>This is the class manager page</h1>
+    <br>
+    <h2>Add class</h2>
+    <form id="addClassForm">
+        <label for="className">Class Name</label>
+        <input type="text" id="className" name="className">
+        <br>
+    </form>
+    <button id="submitClass">Submit</button>
+
+</body>
+<script>
+    let dictionary = new Map();
+    dictionary.set("IT", "1");
+    dictionary.set("CS", "2");
+    dictionary.set("SF", "3");
+    dictionary.set("CE", "4");
+    dictionary.set("ME", "5");
+    dictionary.set("EC", "6");
+    dictionary.set("EEE", "7");
+    function extractAndConvert(className) {
+        const regex = /^S([1-8])(IT|CS|SF|CE|ME|EC|EEE).?$/;
+        const match = className.match(regex);
+        if (match) {
+            const last = className.charAt(className.length - 1);
+            const number = match[1];
+            const department = match[2];
+            const departmentNumber = dictionary.get(department);
+            if (last === 'A') {
+                return number + departmentNumber + '0';
+            }
+            if (last === 'B') {
+                return number + departmentNumber + '1';
+            }
+            return number + departmentNumber + '9';
+        }
+        return null;
+    }
+    $("#submitClass").click(() => {
+        const className = $("#className").val();
+        const classId = extractAndConvert(className);
+        if (!className || classId == null) {
+            alert("Please enter a proper class name");
+            return;
+        }
+        $.ajax({
+            url: "/addClass",
+            method: "POST",
+            data: {
+                classId,
+                className
+            },
+            success: (res) => {
+                console.log(res);
+            },
+            error: (err) => {
+                console.log(err);
+            }
+        });
+
+    });
+</script>
+
+</html>
