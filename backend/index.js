@@ -74,10 +74,16 @@ app.post('/login', async (req, res) => {
     client.release();
 });
 
+app.get('/getClass', async (req, res) => {
+    const client = await pool.connect();
+    funcs.getClass(client) .then((result) => {
+        res.send(result.rows);
+    });
+    client.release();
+});
 
 
 app.post('/addClass', async (req, res) => {
-    console.log(req.body);
     const client = await pool.connect();
     funcs.addClasses(client,req.body.className,req.body.classId).then((result) => {
         console.log(result.rows);
@@ -85,6 +91,14 @@ app.post('/addClass', async (req, res) => {
     client.release();
 });
 
+app.post('/editClass', async (req, res) => {
+    const client = await pool.connect();
+    funcs.editClass(client,req.body.oldClass,req.body.className,req.body.oldClassId,req.body.classId).then((result) => {    
+        console.log(result.rows);
+    }
+);
+    client.release();
+});
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);

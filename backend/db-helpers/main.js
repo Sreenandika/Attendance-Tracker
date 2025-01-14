@@ -9,11 +9,20 @@ function getStudentUsers (client) {
 }
 function addClasses(client,class_name,class_id){
     const query = `INSERT INTO classes(class_id,class_name) VALUES(${class_id},'${class_name}');`;
-    console.log(query);
     return client.query(query);
 
 }
+function editClass(client,class_name,new_class_name,class_id,new_class_id){
+    const query = `UPDATE classes SET class_id = ${new_class_id}, class_name = '${new_class_name}' WHERE class_id = ${class_id} AND class_name = '${class_name}';`;
+    return client.query(query);
+}
+function getClass (client) {
+    const query = `SELECT class_name from classes;`;
+    return client.query(query);
+}
 module.exports = {
+    getClass,
+    editClass,
     getAdminUsers,
     getStudentUsers,
     addClasses

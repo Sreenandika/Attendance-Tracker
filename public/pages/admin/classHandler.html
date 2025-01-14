@@ -20,9 +20,29 @@
         <br>
     </form>
     <button id="submitClass">Submit</button>
+    <h2>Edit Class</h2>
+    <label for="class">Choose a class to edit:</label>
+    <select name="selectClass" id="selectClass">
+    </select>
+    <br>
+    <label for="className">Name of new Class</label>
+    <input type="text" id="editClassName" name="className">
+    <button id="editSubmitClass">Submit</button>
 
 </body>
 <script>
+    $.get("/getClass", function (data, status) {
+        if(data.length == 0){
+            $("#selectClass").append(`<option>No Classes Found</option>`);
+            return;
+        }
+        else{
+            classExist = true;
+            data.forEach(element => {
+            $("#selectClass").append(`<option>${element.class_name}</option>`);
+        });
+        }
+    });
     let dictionary = new Map();
     dictionary.set("IT", "1");
     dictionary.set("CS", "2");
@@ -52,6 +72,7 @@
     $("#submitClass").click(() => {
         const className = $("#className").val();
         const classId = extractAndConvert(className);
+        
         if (!className || classId == null) {
             alert("Please enter a proper class name");
             return;
@@ -72,6 +93,34 @@
         });
 
     });
+    $("#editSubmitClass").click(() => {
+        const className = $("#editClassName").val();
+        const classId = extractAndConvert(className);
+        const oldClass = $("#selectClass").val();
+        const oldClassId = extractAndConvert(oldClass);
+        if (!className || classId == null) {
+            alert("Please enter a proper class name");
+            return;
+        }
+        $.ajax({
+            url: "/editClass",
+            method: "POST",
+            data: {
+                oldClassId,
+                oldClass,
+                classId,
+                className
+            },
+            success: (res) => {
+                console.log(res);
+            },
+            error: (err) => {
+                console.log(err);
+            }
+        });
+
+    });
+
 </script>
 
 </html>
