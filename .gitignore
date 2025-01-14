@@ -3,3 +3,4 @@ const.js
 db
 localhost.session.sql
 .vscode/
+.idea

@@ -1,7 +1,3 @@
-
-
-//code is from GFG, this feature is not implemented in the project
-
 const nodemailer = require('nodemailer');
 let mailTransporter =
     nodemailer.createTransport(
