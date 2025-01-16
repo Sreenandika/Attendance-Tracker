@@ -43,8 +43,8 @@ app.get('/admin/:admin_id/class_manager', (req, res) => {
     res.sendFile(path.join(__dirname, "../public/pages/admin", 'classHandler.html'));
 });
 app.get('/admin/:admin_id/subject_manager', (req, res) => {
-    res.sendFile(path.join(__dirname, "../public/pages/admin", 'admin.html'));
-});
+    res.sendFile(path.join(__dirname, "../public/pages/admin", 'subjectHandler.html'));
+});``
 
 
 app.post('/login', async (req, res) => {
