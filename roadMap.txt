@@ -1,0 +1,10 @@
+Core technologies: 
+    1. git/gihub
+    2. Node js
+    3. jquery
+    4. Google Oauth - Add a table with Email and Name 
+    5. postgrese library 
+    6. SQL
+    7. Javascript
+    8. Rest API 
+    9. The schema
