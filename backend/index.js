@@ -1,13 +1,13 @@
-const funcs = require('./db-helpers/main.js')
-const db = require('./db-helpers/const.js');
 const express = require('express');
+const { Pool } = require('pg');
 const path = require('path');
 const bodyParser = require('body-parser');
 
+const funcs = require('./db-helpers/main.js')
+const db = require('./db-helpers/const.js');
 const app = express();
 const port = 3000;
 
-const { Pool } = require('pg');
 const pool = new Pool({
     user: db.user,
     host: db.host,
