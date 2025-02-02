@@ -23,7 +23,18 @@ function addDepartments(client, department_id, department_name) {
 	return client.query(query);
 }
 function getDepartments(client) {
-	const query = `SELECT department_name from departments;`;
+	const query = `SELECT * from departments;`;
+	return client.query(query);
+}
+function addSubjects(
+	client,
+	department_id,
+	subject_name,
+	subject_id,
+	subject_type
+) {
+	const query = `INSERT INTO subjects (subject_id,subject_name,department_id,subject_type) 
+	VALUES(${subject_id},'${subject_name}',${department_id},'${subject_type}');`;
 	return client.query(query);
 }
 module.exports = {
@@ -34,4 +45,5 @@ module.exports = {
 	addClasses,
 	addDepartments,
 	getDepartments,
+	addSubjects,
 };

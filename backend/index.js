@@ -24,31 +24,34 @@ app.get("/", (req, res) => {
 	res.sendFile(path.join(__dirname, "../public", "index.html"));
 });
 
-app.get("/students", (req, res) => {
-	res.sendFile(
-		path.join(__dirname, "../public/pages/students", "students.html")
-	);
-});
-
 app.get("/admin/:admin_id", (req, res) => {
 	res.sendFile(path.join(__dirname, "../public/pages/admin", "admin.html"));
 });
+
 app.get("/admin/:admin_id/student_manager", (req, res) => {
-	res.sendFile(path.join(__dirname, "../public/pages/admin", "admin.html"));
+	res.sendFile(
+		path.join(__dirname, "../public/pages/admin", "studentHandler.html")
+	);
 });
+
 app.get("/admin/:admin_id/teacher_manager", (req, res) => {
-	res.sendFile(path.join(__dirname, "../public/pages/admin", "admin.html"));
+	res.sendFile(
+		path.join(__dirname, "../public/pages/admin", "teacherHandler.html")
+	);
 });
+
 app.get("/admin/:admin_id/class_manager", (req, res) => {
 	res.sendFile(
 		path.join(__dirname, "../public/pages/admin", "classHandler.html")
 	);
 });
+
 app.get("/admin/:admin_id/subject_manager", (req, res) => {
 	res.sendFile(
 		path.join(__dirname, "../public/pages/admin", "subjectHandler.html")
 	);
 });
+
 app.get("/admin/:admin_id/department_manager", (req, res) => {
 	res.sendFile(
 		path.join(__dirname, "../public/pages/admin", "departmentHandler.html")
@@ -134,6 +137,22 @@ app.get("/getDepartments", async (req, res) => {
 	funcs.getDepartments(client).then((result) => {
 		res.send(result.rows);
 	});
+	client.release();
+});
+app.post("/addSubject", async (req, res) => {
+	console.log(req.body);
+	const client = await pool.connect();
+	funcs
+		.addSubjects(
+			client,
+			req.body.department_id,
+			req.body.subject_name,
+			req.body.subject_id,
+			req.body.subject_type
+		)
+		.then((result) => {
+			res.send("OK");
+		});
 	client.release();
 });
 app.listen(port, () => {

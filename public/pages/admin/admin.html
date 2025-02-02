@@ -1,50 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Admin Page</title>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
+			integrity="sha512-EZLkOqwILORob+p0BXZc+Vm3RgJBOe1Iq/0fiI7r/wJgzOFZMlsqTa29UEl6v6U6gsV4uIpsNZoV32YZqrCRCQ=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		/>
+		<script
+			src="https://code.jquery.com/jquery-3.7.1.js"
+			integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+			crossorigin="anonymous"
+		></script>
+	</head>
+	<style>
+		#adminOptions {
+			display: flex;
+			flex-direction: column;
+			width: 200px;
+		}
+	</style>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Page</title>
-    <script src="https://code.jquery.com/jquery-3.7.1.js"
-        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous">
-        </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
-        integrity="sha512-EZLkOqwILORob+p0BXZc+Vm3RgJBOe1Iq/0fiI7r/wJgzOFZMlsqTa29UEl6v6U6gsV4uIpsNZoV32YZqrCRCQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
-<style>
-    #adminOptions {
-        display: flex;
-        flex-direction: column;
-        width: 200px;
-    }
-</style>
-
-<body>
-    <h3 id="header"></h3>
-    <div id="adminOptions">
-        <button id="classHandler">Class Manager</button>
-        <button id="teacherHandler">Teacher Manager</button>
-        <button id="addStudent">Student Manager</button>
-        <button id="addSubject">Subjects Manager</button>
-        <button id="departmentHandler">Department Manager</button>
-    </div>
-    <button id="logout">Logout</button>
-</body>
-<script>
-    $("#header").text(`Welcome Admin ${window.location.pathname.split('/')[2]}`);
-    $("#classHandler").click(() => {
-        const currUserId = window.location.pathname.split('/')[2];
-        window.location.pathname = `/admin/${currUserId}/class_manager`;
-    });
-    $("#addSubject").click(() => {
-        const currUserId = window.location.pathname.split('/')[2];
-        window.location.pathname = `/admin/${currUserId}/subject_manager`;
-    });
-    $("#departmentHandler").click(() => {
-        const currUserId = window.location.pathname.split('/')[2];
-        window.location.pathname = `/admin/${currUserId}/department_manager`;
-    });
-</script>
-
+	<body>
+		<h3 id="header"></h3>
+		<div id="adminOptions">
+			<button id="classHandler">Class Manager</button>
+			<button id="teacherHandler">Teacher Manager</button>
+			<button id="studentHandler">Student Manager</button>
+			<button id="subjectHandler">Subjects Manager</button>
+			<button id="departmentHandler">Department Manager</button>
+		</div>
+		<button id="logout">Logout</button>
+	</body>
+	<script>
+		$("#header").text(
+			`Welcome Admin ${window.location.pathname.split("/")[2]}`
+		);
+		$("#classHandler").click(() => {
+			const currUserId = window.location.pathname.split("/")[2];
+			window.location.pathname = `/admin/${currUserId}/class_manager`;
+		});
+		$("#subjectHandler").click(() => {
+			const currUserId = window.location.pathname.split("/")[2];
+			window.location.pathname = `/admin/${currUserId}/subject_manager`;
+		});
+		$("#departmentHandler").click(() => {
+			const currUserId = window.location.pathname.split("/")[2];
+			window.location.pathname = `/admin/${currUserId}/department_manager`;
+		});
+		$("#teacherHandler").click(() => {
+			const currUserId = window.location.pathname.split("/")[2];
+			window.location.pathname = `/admin/${currUserId}/teacher_manager`;
+		});
+	</script>
 </html>
