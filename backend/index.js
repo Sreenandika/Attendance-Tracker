@@ -14,6 +14,7 @@ const pool = new Pool({
     database: db.database,
     password: db.password,
     port: db.port,
+    ssl : db.ssl
 });
 
 app.use(bodyParser.urlencoded({ extended: true }));
