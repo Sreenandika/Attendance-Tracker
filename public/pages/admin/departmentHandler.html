@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<script
+			src="https://code.jquery.com/jquery-3.7.1.js"
+			integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+			crossorigin="anonymous"
+		></script>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
+			integrity="sha512-EZLkOqwILORob+p0BXZc+Vm3RgJBOe1Iq/0fiI7
+        r/wJgzOFZMlsqTa29UEl6v6U6gsV4uIpsNZoV32YZqrCRCQ=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		/>
+		<style>
+			#addDepartmentContainer {
+				display: flex;
+				flex-direction: column;
+				width: 200px;
+			}
+
+			#editDepartmentContainer {
+				display: flex;
+				flex-direction: column;
+				width: 200px;
+			}
+		</style>
+		<title>Department Manager</title>
+	</head>
+
+	<body>
+		<h5 style="font-weight: 200">Add department</h5>
+		<div id="addDepartmentContainer">
+			<label for="departmentName">Department Name</label>
+			<input type="text" id="departmentName" />
+			<label for="departmentName">Department Id</label>
+			<input type="text" id="departmentId" />
+			<button id="submitDepartment">Submit</button>
+		</div>
+		<!-- <h3 style="font-weight: 200">Edit Department</h3>
+		<div id="editDepartmentContainer">
+			<label for="department">Choose a department to edit:</label>
+			<select name="selectDepartment" id="selectDepartment"></select>
+			<br />
+			<label for="departmentName">Name of new Department</label>
+			<input type="text" id="editDepartmentName" name="departmentName" />
+			<button id="editSubmitDepartment">Submit</button>
+		</div>
+		<h3 style="font-weight: 200">Current Departments</h3>-->
+		<h5>Current Departments registerd</h5>
+		<ul id="currDepartments"></ul>
+	</body>
+	<script>
+		$.get("/getDepartments", function (data, status) {
+			if (data.length == 0) {
+				$("#currDepartments").append(`<li>No Classes Found</li>`);
+				return;
+			} else {
+				data.forEach((element) => {
+					$("#currDepartments").append(`<li>${element.department_name}</li>`);
+				});
+			}
+		});
+		$("#submitDepartment").click(() => {
+			const departmentName = $("#departmentName").val();
+			const departmentId = $("#departmentId").val();
+			if (!departmentName || departmentId == null) {
+				alert("Please enter a proper department name");
+				return;
+			}
+			$.ajax({
+				url: "/addDepartment",
+				method: "POST",
+				data: {
+					departmentId,
+					departmentName,
+				},
+				success: (data, textStatus, jqXHR) => {},
+				error: (err) => {
+					console.log(err);
+				},
+			});
+		});
+	</script>
+</html>

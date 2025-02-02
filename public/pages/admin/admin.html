@@ -23,22 +23,27 @@
 <body>
     <h3 id="header"></h3>
     <div id="adminOptions">
-        <button id="addClass">Add Class</button>
-        <button id="addTeacher">Add Teacher</button>
-        <button id="addStudent">Add Student</button>
-        <button id="addSubject">Add Subjects</button>
+        <button id="classHandler">Class Manager</button>
+        <button id="teacherHandler">Teacher Manager</button>
+        <button id="addStudent">Student Manager</button>
+        <button id="addSubject">Subjects Manager</button>
+        <button id="departmentHandler">Department Manager</button>
     </div>
     <button id="logout">Logout</button>
 </body>
 <script>
     $("#header").text(`Welcome Admin ${window.location.pathname.split('/')[2]}`);
-    $("#addClass").click(() => {
+    $("#classHandler").click(() => {
         const currUserId = window.location.pathname.split('/')[2];
         window.location.pathname = `/admin/${currUserId}/class_manager`;
     });
     $("#addSubject").click(() => {
         const currUserId = window.location.pathname.split('/')[2];
         window.location.pathname = `/admin/${currUserId}/subject_manager`;
+    });
+    $("#departmentHandler").click(() => {
+        const currUserId = window.location.pathname.split('/')[2];
+        window.location.pathname = `/admin/${currUserId}/department_manager`;
     });
 </script>
 

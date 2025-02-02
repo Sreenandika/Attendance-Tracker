@@ -4,3 +4,5 @@ db
 localhost.session.sql
 .vscode/
 .idea
+attendance.session.sql
+const-local.js
