@@ -45,7 +45,7 @@ app.get('/admin/:admin_id/class_manager', (req, res) => {
 });
 app.get('/admin/:admin_id/subject_manager', (req, res) => {
     res.sendFile(path.join(__dirname, "../public/pages/admin", 'subjectHandler.html'));
-});``
+});
 
 
 app.post('/login', async (req, res) => {
@@ -100,6 +100,11 @@ app.post('/editClass', async (req, res) => {
 );
     client.release();
 });
+
+app.get('/pictures/login', (req, res) => {
+res.sendFile(path.join(__dirname, "../public/pages/pictures", 'person.png'));
+});
+
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
