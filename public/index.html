@@ -1,91 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script
+			src="https://code.jquery.com/jquery-3.7.1.js"
+			integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+			crossorigin="anonymous"
+		></script>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
+			integrity="sha512-EZLkOqwILORob+p0BXZc+Vm3RgJBOe1Iq/0fiI7r/
+            wJgzOFZMlsqTa29UEl6v6U6gsV4uIpsNZoV32YZqrCRCQ=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		/>
+		<link
+			href="https://fonts.googleapis.com/icon?family=Material+Icons"
+			rel="stylesheet"
+		/>
+		<title>Attendance-Tracker</title>
+		<style>
+			#loginForm {
+				display: flex;
+				flex-direction: column;
+				width: 200px;
+			}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.7.1.js"
-        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous">
-        </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
-        integrity="sha512-EZLkOqwILORob+p0BXZc+Vm3RgJBOe1Iq/0fiI7r/wJgzOFZMlsqTa29UEl6v6U6gsV4uIpsNZoV32YZqrCRCQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <title>Attendance-Tracker</title>
-    <style>
-        #loginForm {
-            display: flex;
-            flex-direction: column;
-            width: 200px;
+			#login-container {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				height: 100vh;
+			}
 
-        }
+			#userType {
+				margin-bottom: 10px;
+			}
 
-        #login-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            
-        }
+			#signin {
+				background-color: #0099ff;
+			}
+		</style>
+	</head>
 
-        #userType {
-            margin-bottom: 10px;
-        }
-
-        #signin {
-            background-color: #0099ff;
-        }
-    </style>
-</head>
-
-<body>
-    <div id="login-container">
-        <form id="loginForm">
-            <span class="material-icons" style="font-size: 130px; padding-left: 20%;">person</span>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-            <br>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <br>
-            <label for="userType">Type of User:</label>
-            <select id="userType" name="userType" required>
-                <option value="student">Student</option>
-                <option value="teacher">Teacher</option>
-                <option value="admin">Admin</option>
-            </select>
-
-        </form>
-        <button id="signin">Sign In</button>
-    </div>
-
-</body>
-<script>
-    $('#signin').click(function () {
-        var username = $('#username').val();
-        var password = $('#password').val();
-        var userType = $('#userType').val();
-        data = {
-            username: username,
-            password: password,
-            userType: userType
-        }
-        function success(data) {
-            if (data.loginStatus == false) {
-                alert("No such user, try again");
-            }
-            else {
-                window.location.pathname = `admin/${data.user_id}`;
-            }
-        }
-        $.ajax({
-            type: "POST",
-            url: "/login",
-            data: data,
-            success: success,
-        });
-    });
-</script>
-
+	<body>
+		<div id="login-container">
+			<form id="loginForm">
+				<span class="material-icons" style="font-size: 130px; padding-left: 20%"
+					>person</span
+				>
+				<label for="username">Username:</label>
+				<input type="text" id="username" name="username" required />
+				<br />
+				<label for="password">Password:</label>
+				<input type="password" id="password" name="password" required />
+				<br />
+				<label for="userType">Type of User:</label>
+				<select id="userType" name="userType" required>
+					<option value="student">Student</option>
+					<option value="teacher">Teacher</option>
+					<option value="admin">Admin</option>
+				</select>
+			</form>
+			<button id="signin">Sign In</button>
+		</div>
+	</body>
+	<script>
+		$("#signin").click(function () {
+			var username = $("#username").val();
+			var password = $("#password").val();
+			var userType = $("#userType").val();
+			data = {
+				username: username,
+				password: password,
+				userType: userType,
+			};
+			function success(data) {
+				if (data.loginStatus == false) {
+					alert("No such user, try again");
+				} else {
+					window.location.pathname = `admin/${data.user_id}`;
+				}
+			}
+			$.ajax({
+				type: "POST",
+				url: "/login",
+				data: data,
+				success: success,
+			});
+		});
+	</script>
 </html>

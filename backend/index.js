@@ -103,7 +103,6 @@ app.post("/addClass", async (req, res) => {
 		});
 	client.release();
 });
-
 app.post("/editClass", async (req, res) => {
 	const client = await pool.connect();
 	funcs
