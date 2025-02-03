@@ -38,7 +38,7 @@
 	<script>
 		$.get("/getDepartments", function (data, status) {
 			if (data.length == 0) {
-				$("#selectDepartment").append(`<option>No Classes Found</option>`);
+				$("#selectDepartment").append(`<option>No Departments Found</option>`);
 				return;
 			} else {
 				data.forEach((element) => {
@@ -73,7 +73,7 @@
 					department_id,
 				},
 				success: (data, textStatus, jqXHR) => {
-					console.log("SSD");
+					console.log("Sucess");
 				},
 				error: (err) => {
 					console.log(err.HEADERS_RECEIVED);

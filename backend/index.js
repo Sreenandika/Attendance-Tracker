@@ -155,6 +155,28 @@ app.post("/addSubject", async (req, res) => {
 		});
 	client.release();
 });
+app.post("/addTeacher", async (req, res) => {
+	console.log(req.body);
+	const client = await pool.connect();
+	funcs
+		.addTeachers(
+			client,
+			req.body.department_id,
+			req.body.teacher_name,
+			req.body.teacher_id
+		)
+		.then((result) => {
+			res.send("OK");
+		});
+	client.release();
+});
+app.get("/getTeachers", async (req, res) => {
+	const client = await pool.connect();
+	funcs.getTeachers(client).then((result) => {
+		res.send(result.rows);
+	});
+	client.release();
+});
 app.listen(port, () => {
 	console.log(`Server is running on http://localhost:${port}`);
 });

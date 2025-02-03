@@ -15,7 +15,7 @@ function editClass(client, class_name, new_class_name, class_id, new_class_id) {
 	return client.query(query);
 }
 function getClass(client) {
-	const query = `SELECT class_name from classes;`;
+	const query = `SELECT * from classes;`;
 	return client.query(query);
 }
 function addDepartments(client, department_id, department_name) {
@@ -37,6 +37,15 @@ function addSubjects(
 	VALUES(${subject_id},'${subject_name}',${department_id},'${subject_type}');`;
 	return client.query(query);
 }
+function addTeachers(client, department_id, teacher_name, teacher_id) {
+	const query = `INSERT INTO teachers (teacher_id,teacher_name,department_id) 
+	VALUES(${teacher_id},'${teacher_name}','${department_id}');`;
+	return client.query(query);
+}
+function getTeachers(client){
+	const query = `SELECT * FROM teachers`;
+	return client.query(query);
+}
 module.exports = {
 	getClass,
 	editClass,
@@ -46,4 +55,6 @@ module.exports = {
 	addDepartments,
 	getDepartments,
 	addSubjects,
+	addTeachers,
+	getTeachers,
 };
