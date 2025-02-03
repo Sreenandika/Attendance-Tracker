@@ -4,7 +4,8 @@ const path = require("path");
 const bodyParser = require("body-parser");
 
 const funcs = require("./db-helpers/main.js");
-const db = require("./db-helpers/const-local.js");
+const db = require("./db-helpers/const.js");
+const adminPaths = require("./htmlHandlers/admin.js")
 const app = express();
 const port = 3000;
 
@@ -19,43 +20,10 @@ const pool = new Pool({
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use('',adminPaths);
 
 app.get("/", (req, res) => {
 	res.sendFile(path.join(__dirname, "../public", "index.html"));
-});
-
-app.get("/admin/:admin_id", (req, res) => {
-	res.sendFile(path.join(__dirname, "../public/pages/admin", "admin.html"));
-});
-
-app.get("/admin/:admin_id/student_manager", (req, res) => {
-	res.sendFile(
-		path.join(__dirname, "../public/pages/admin", "studentHandler.html")
-	);
-});
-
-app.get("/admin/:admin_id/teacher_manager", (req, res) => {
-	res.sendFile(
-		path.join(__dirname, "../public/pages/admin", "teacherHandler.html")
-	);
-});
-
-app.get("/admin/:admin_id/class_manager", (req, res) => {
-	res.sendFile(
-		path.join(__dirname, "../public/pages/admin", "classHandler.html")
-	);
-});
-
-app.get("/admin/:admin_id/subject_manager", (req, res) => {
-	res.sendFile(
-		path.join(__dirname, "../public/pages/admin", "subjectHandler.html")
-	);
-});
-
-app.get("/admin/:admin_id/department_manager", (req, res) => {
-	res.sendFile(
-		path.join(__dirname, "../public/pages/admin", "departmentHandler.html")
-	);
 });
 
 app.post("/login", async (req, res) => {
@@ -193,6 +161,43 @@ app.post("/addAssignment", async (req, res) => {
 			req.body.class_id,
 			req.body.teacher_id,
 			req.body.subject_id
+		)
+		.then((result) => {
+			res.send("OK");
+		});
+	client.release();
+});
+app.post("/addStudent", async (req, res) => {
+	console.log(req.body);
+	const client = await pool.connect();
+	funcs
+		.addStudents(
+			client,
+			req.body.department_id,
+			req.body.student_name,
+			req.body.student_id
+		)
+		.then((result) => {
+			res.send("OK");
+		});
+	client.release();
+});
+app.get("/getStudents", async (req, res) => {
+	const client = await pool.connect();
+	funcs.getStudents(client).then((result) => {
+		console.log(result.rows);
+		res.send(result.rows);
+	});
+	client.release();
+});
+app.post("/addEnrollment", async (req, res) => {
+	console.log(req.body);
+	const client = await pool.connect();
+	funcs
+		.addEnrollment(
+			client,
+			req.body.class_id,
+			req.body.student_id
 		)
 		.then((result) => {
 			res.send("OK");

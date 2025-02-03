@@ -55,6 +55,20 @@ function addAssignment(client, class_id, teacher_id, subject_id) {
 	VALUES(${teacher_id},'${class_id}','${subject_id}');`;
 	return client.query(query);
 }
+function addStudents(client, department_id, student_name, student_id) {
+	const query = `INSERT INTO students (student_id,student_name,department_id) 
+	VALUES(${student_id},'${student_name}','${department_id}');`;
+	return client.query(query);
+}
+function getStudents(client) {
+	const query = `SELECT * FROM students`;
+	return client.query(query);
+}
+function addEnrollment(client, class_id, student_id) {
+	const query = `INSERT INTO student_enrollments (student_id,class_id) 
+	VALUES(${student_id},${class_id});`;
+	return client.query(query);
+}
 module.exports = {
 	getClass,
 	editClass,
@@ -68,4 +82,7 @@ module.exports = {
 	getTeachers,
 	getSubjects,
 	addAssignment,
+	addStudents,
+	getStudents,
+	addEnrollment
 };
