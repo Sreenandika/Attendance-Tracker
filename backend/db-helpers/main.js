@@ -37,13 +37,22 @@ function addSubjects(
 	VALUES(${subject_id},'${subject_name}',${department_id},'${subject_type}');`;
 	return client.query(query);
 }
+function getSubjects(client) {
+	const query = `SELECT * FROM subjects`;
+	return client.query(query);
+}
 function addTeachers(client, department_id, teacher_name, teacher_id) {
 	const query = `INSERT INTO teachers (teacher_id,teacher_name,department_id) 
 	VALUES(${teacher_id},'${teacher_name}','${department_id}');`;
 	return client.query(query);
 }
-function getTeachers(client){
+function getTeachers(client) {
 	const query = `SELECT * FROM teachers`;
+	return client.query(query);
+}
+function addAssignment(client, class_id, teacher_id, subject_id) {
+	const query = `INSERT INTO teacher_assignments (teacher_id,class_id,subject_id) 
+	VALUES(${teacher_id},'${class_id}','${subject_id}');`;
 	return client.query(query);
 }
 module.exports = {
@@ -57,4 +66,6 @@ module.exports = {
 	addSubjects,
 	addTeachers,
 	getTeachers,
+	getSubjects,
+	addAssignment,
 };

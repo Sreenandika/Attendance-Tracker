@@ -177,6 +177,28 @@ app.get("/getTeachers", async (req, res) => {
 	});
 	client.release();
 });
+app.get("/getSubjects", async (req, res) => {
+	const client = await pool.connect();
+	funcs.getSubjects(client).then((result) => {
+		res.send(result.rows);
+	});
+	client.release();
+});
+app.post("/addAssignment", async (req, res) => {
+	console.log(req.body);
+	const client = await pool.connect();
+	funcs
+		.addAssignment(
+			client,
+			req.body.class_id,
+			req.body.teacher_id,
+			req.body.subject_id
+		)
+		.then((result) => {
+			res.send("OK");
+		});
+	client.release();
+});
 app.listen(port, () => {
 	console.log(`Server is running on http://localhost:${port}`);
 });
