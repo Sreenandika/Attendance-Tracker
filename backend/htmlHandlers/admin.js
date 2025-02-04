@@ -1,3 +1,11 @@
+/**
+ * @file admin.js
+ * @description This file contains the handlers for admin-related HTML requests.
+ * It uses the body-parser middleware to parse incoming request bodies.
+ * 
+ * @requires body-parser
+ */
+
 const express = require('express');
 const router = express.Router();
 const path = require("path");

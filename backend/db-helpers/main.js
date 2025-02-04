@@ -1,3 +1,8 @@
+/*
+	This file contains all the functions that will be performed by the database. 
+	I need to make classes for this, but that will come later.
+ */
+
 function getAdminUsers(client) {
 	const query = `SELECT user_id,username,password FROM user_accounts WHERE user_role = 'admin';`;
 	return client.query(query);
@@ -84,5 +89,5 @@ module.exports = {
 	addAssignment,
 	addStudents,
 	getStudents,
-	addEnrollment
+	addEnrollment,
 };
