@@ -59,5 +59,11 @@
 			const currUserId = window.location.pathname.split("/")[2];
 			window.location.pathname = `/admin/${currUserId}/student_manager`;
 		});
+		$("#logout").click(() => {
+			const currUserId = window.location.pathname.split("/")[2];
+			$.get("/logout", function (data, status) {
+			window.location.pathname = `/`;
+			});
+		});
 	</script>
 </html>

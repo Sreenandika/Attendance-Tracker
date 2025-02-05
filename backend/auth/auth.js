@@ -2,8 +2,9 @@
 	This file handles the authentication side of things, for all three users.
  */
 
-
+const session = require("express-session");
 const express = require("express");
+const pgSession = require('connect-pg-simple')(session);
 const router = express.Router();
 const bodyParser = require("body-parser");
 const { Pool } = require("pg");
@@ -12,7 +13,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 
 const funcs = require("../db-helpers/main.js");
-const db = require("../db-helpers/const.js");
+const db = require("../db-helpers/const-local.js");
 
 const pool = new Pool({
 	user: db.user,
@@ -22,6 +23,18 @@ const pool = new Pool({
 	port: db.port,
 	ssl: db.ssl,
 });
+
+router.use(
+	session({
+		store: new pgSession({
+			pool: pool, 
+			tableName: "session",
+		}),
+		secret: "THE KEY",
+		resave: false,
+		saveUninitialized: false,
+	})
+);
 
 router.post("/login", async (req, res) => {
 	const client = await pool.connect();
@@ -41,6 +54,7 @@ router.post("/login", async (req, res) => {
 					) {
 						dataToSend.user_id = result.rows[i].user_id;
 						dataToSend.loginStatus = true;
+						req.session.isAuth = true;
 						break;
 					}
 				}
@@ -52,5 +66,11 @@ router.post("/login", async (req, res) => {
 			});
 	}
 	client.release();
+});
+router.get("/logout", async (req, res) => {
+	req.session.destroy((err)=>{
+		if(err) console.log(err);
+	});
+	res.send("OK");
 });
 module.exports = router;

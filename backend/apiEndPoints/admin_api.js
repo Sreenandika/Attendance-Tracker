@@ -12,7 +12,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 
 const funcs = require("../db-helpers/main.js");
-const db = require("../db-helpers/const.js");
+const db = require("../db-helpers/const-local.js");
 
 const pool = new Pool({
 	user: db.user,
