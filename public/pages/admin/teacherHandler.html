@@ -138,45 +138,105 @@
     </div>
 
     <script>
-        $.get("/getDepartments", function (data, status) {
-            if (data.length == 0) {
-                $("#selectDepartment").append(`<option>No Departments Found</option>`);
-                return;
-            } else {
-                data.forEach((element) => {
-                    $("#selectDepartment").append(
-                        `<option>${element.department_id}. ${element.department_name}</option>`
-                    );
-                });
-            }
-        });
-
-        $("#submitTeacher").click(() => {
-            const teacher_name = $("#teacherName").val();
-            const department_id = $("#selectDepartment").val().split("")[0];
-            const teacher_id = $("#teacherId").val();
-            
-            if (!teacher_name || !department_id || !teacher_id) {
-                alert("Please fill all details");
-                return;
-            }
-            
-            $.ajax({
-                url: "/addTeacher",
-                method: "POST",
-                data: {
-                    teacher_id,
-                    teacher_name,
-                    department_id,
-                },
-                success: (data, textStatus, jqXHR) => {
-                    console.log("Success");
-                },
-                error: (err) => {
-                    console.log(err);
-                },
-            });
-        });
+        function getString(input) {
+			const periodIndex = input.indexOf(".");
+			if (periodIndex === -1) {
+				return input;
+			}
+			return input.substring(0, periodIndex);
+		}
+		$.get("/getDepartments", function (data, status) {
+			if (data.length == 0) {
+				$("#selectDepartment").append(`<option>No Departments Found</option>`);
+				return;
+			} else {
+				data.forEach((element) => {
+					$("#selectDepartment").append(
+						`<option>${element.department_id}. ${element.department_name}</option>`
+					);
+				});
+			}
+		});
+		$.get("/getSubjects", function (data, status) {
+			if (data.length == 0) {
+				$("#selectSubjects").append(`<option>No subjects Found</option>`);
+				return;
+			} else {
+				data.forEach((element) => {
+					$("#selectSubjects").append(
+						`<option>${element.subject_id}. ${element.subject_name} - ${element.subject_type}</option>`
+					);
+				});
+			}
+		});
+		$.get("/getTeachers", function (data, status) {
+			if (data.length == 0) {
+				$("#selectTeacher").append(`<option>No Teachers Found</option>`);
+				return;
+			} else {
+				data.forEach((element) => {
+					$("#selectTeacher").append(
+						`<option>${element.teacher_id}. ${element.teacher_name}</option>`
+					);
+				});
+			}
+		});
+		$.get("/getClass", function (data, status) {
+			if (data.length == 0) {
+				$("#selectClass").append(`<option>No Classes Found</option>`);
+				return;
+			} else {
+				data.forEach((element) => {
+					$("#selectClass").append(
+						`<option>${element.class_id}. ${element.class_name}</option>`
+					);
+				});
+			}
+		});
+		$("#submitTeacher").click(() => {
+			const teacher_name = $("#teacherName").val();
+			const department_id = $("#selectDepartment").val().split("")[0];
+			const teacher_id = $("#teacherId").val();
+			if (teacher_name == null || department_id == null || teacher_id == null) {
+				alert("Please fill details");
+				return;
+			}
+			$.ajax({
+				url: "/addTeacher",
+				method: "POST",
+				data: {
+					teacher_id,
+					teacher_name,
+					department_id,
+				},
+				success: (data, textStatus, jqXHR) => {
+					console.log("Sucess");
+				},
+				error: (err) => {
+					console.log(err);
+				},
+			});
+		});
+		$("#addAllotment").click(() => {
+			const teacher_id = getString($("#selectTeacher").val());
+			const class_id = getString($("#selectClass").val());
+			const subject_id = getString($("#selectSubjects").val());
+			$.ajax({
+				url: "/addAssignment",
+				method: "POST",
+				data: {
+					teacher_id,
+					class_id,
+					subject_id,
+				},
+				success: (data, textStatus, jqXHR) => {
+					console.log("Sucess");
+				},
+				error: (err) => {
+					console.log(err);
+				},
+			});
+		});
     </script>
 </body>
 </html>
