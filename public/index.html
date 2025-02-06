@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
 		<script
 			src="https://code.jquery.com/jquery-3.7.1.js"
 			integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
@@ -21,10 +21,21 @@
 		/>
 		<title>Attendance-Tracker</title>
 		<style>
-			#loginForm {
+			html, body {
+				height: 100%;
+				margin: 0;
+				padding: 0;
+			}
+
+			body {
+				font-family: 'Roboto', sans-serif;
+				background: linear-gradient(135deg, #1f2957 0%, #3a2052 100%);
 				display: flex;
-				flex-direction: column;
-				width: 200px;
+				justify-content: center;
+				align-items: center;
+				min-height: 100vh;
+				padding: 1.5rem;
+				box-sizing: border-box;
 			}
 
 			#login-container {
@@ -32,15 +43,89 @@
 				flex-direction: column;
 				justify-content: center;
 				align-items: center;
-				height: 100vh;
+				width: 100%;
+				max-width: 350px;
+				background: white;
+				border-radius: 10px;
+				box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+				padding: 2rem;
+				text-align: center;
+				box-sizing: border-box;
 			}
 
-			#userType {
-				margin-bottom: 10px;
+			#loginForm {
+				display: flex;
+				flex-direction: column;
+				width: 100%;
+			}
+
+			.login-icon {
+				font-size: 5rem;
+				color: #667eea;
+				margin-bottom: 1.5rem;
+				display: block;
+				text-align: center;
+			}
+
+			.form-group {
+				margin-bottom: 1.25rem;
+				text-align: left;
+				width: 100%;
+			}
+			form, ol, p, pre, table, ul {
+            margin-bottom: 0.5rem;
+            } 
+
+			label {
+				display: block;
+				margin-bottom: 0.5rem;
+				font-weight: 600;
+				text-align: left;
+			}
+
+			input, select {
+				width: 100%;
+				padding: 0.625rem;
+				border: 1px solid #ddd;
+				border-radius: 5px;
+				font-size: 1.3rem;
+				box-sizing: border-box;
 			}
 
 			#signin {
-				background-color: #0099ff;
+				background: linear-gradient(to right, #2a3875, #633d8a);
+				color: white;
+				border: none;
+				align-items: center;
+				border-radius: 5px;
+				font-size: 1.3rem;
+				cursor: pointer;
+				transition: transform 0.3s ease;
+				width: 100%;
+			}
+
+			#signin:hover {
+				transform: translateY(-2px);
+				box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+			}
+
+			@media (max-width: 480px) {
+				#login-container {
+					max-width: 100%;
+					padding: 1.25rem;
+				}
+
+				.login-icon {
+					font-size: 4rem;
+				}
+			}
+
+			@media (max-height: 600px) {
+				#login-container {
+					max-height: 90vh;
+					overflow-y: auto;
+					padding: 1.5rem;
+				}
 			}
 		</style>
 	</head>
@@ -48,21 +133,23 @@
 	<body>
 		<div id="login-container">
 			<form id="loginForm">
-				<span class="material-icons" style="font-size: 130px; padding-left: 20%"
-					>person</span
-				>
-				<label for="username">Username:</label>
-				<input type="text" id="username" name="username" required />
-				<br />
-				<label for="password">Password:</label>
-				<input type="password" id="password" name="password" required />
-				<br />
-				<label for="userType">Type of User:</label>
-				<select id="userType" name="userType" required>
-					<option value="student">Student</option>
-					<option value="teacher">Teacher</option>
-					<option value="admin">Admin</option>
-				</select>
+				<span class="material-icons" style="font-size: 8rem; text-align: center; display: block; margin-bottom: 1rem;">person</span>
+				<div class="form-group">
+					<label for="username">Username:</label>
+					<input type="text" id="username" name="username" required />
+				</div>
+				<div class="form-group">
+					<label for="password">Password:</label>
+					<input type="password" id="password" name="password" required />
+				</div>
+				<div class="form-group">
+					<label for="userType">Type of User:</label>
+					<select id="userType" name="userType" required>
+						<option value="student">Student</option>
+						<option value="teacher">Teacher</option>
+						<option value="admin">Admin</option>
+					</select>
+				</div>
 			</form>
 			<button id="signin">Sign In</button>
 		</div>

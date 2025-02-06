@@ -1,150 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Teacher Handler Page</title>
-		<script
-			src="https://code.jquery.com/jquery-3.7.1.js"
-			integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-			crossorigin="anonymous"
-		></script>
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
-			integrity="sha512-EZLkOqwILORob+p0BXZc+Vm3RgJBOe1Iq/0fiI7
-        r/wJgzOFZMlsqTa29UEl6v6U6gsV4uIpsNZoV32YZqrCRCQ=="
-			crossorigin="anonymous"
-			referrerpolicy="no-referrer"
-		/>
-	</head>
-	<body>
-		<h3>Add Teacher</h3>
-		<div id="addTeacherContainer">
-			<label>Teacher Name</label>
-			<input type="text" id="teacherName" />
-			<br />
-			<label>Teacher ID</label>
-			<input type="text" id="teacherId" />
-			<br />
-			<label>Select Department</label>
-			<select id="selectDepartment"></select>
-			<br />
-			<button id="submitTeacher">Submit</button>
-		</div>
-		<h3>Assign a class and subject</h3>
-		<div id="teacherAllotment">
-			<label>Select Teacher</label>
-			<select id="selectTeacher"></select>
-			<br />
-			<label>Select Subject</label>
-			<select id="selectSubjects"></select>
-			<br />
-			<label>Select Class</label>
-			<select id="selectClass"></select>
-			<br />
-			<button id="addAllotment">Add</button>
-		</div>
-	</body>
-	<script>
-		function getString(input) {
-			const periodIndex = input.indexOf(".");
-			if (periodIndex === -1) {
-				return input;
-			}
-			return input.substring(0, periodIndex);
-		}
-		$.get("/getDepartments", function (data, status) {
-			if (data.length == 0) {
-				$("#selectDepartment").append(`<option>No Departments Found</option>`);
-				return;
-			} else {
-				data.forEach((element) => {
-					$("#selectDepartment").append(
-						`<option>${element.department_id}. ${element.department_name}</option>`
-					);
-				});
-			}
-		});
-		$.get("/getSubjects", function (data, status) {
-			if (data.length == 0) {
-				$("#selectSubjects").append(`<option>No subjects Found</option>`);
-				return;
-			} else {
-				data.forEach((element) => {
-					$("#selectSubjects").append(
-						`<option>${element.subject_id}. ${element.subject_name} - ${element.subject_type}</option>`
-					);
-				});
-			}
-		});
-		$.get("/getTeachers", function (data, status) {
-			if (data.length == 0) {
-				$("#selectTeacher").append(`<option>No Teachers Found</option>`);
-				return;
-			} else {
-				data.forEach((element) => {
-					$("#selectTeacher").append(
-						`<option>${element.teacher_id}. ${element.teacher_name}</option>`
-					);
-				});
-			}
-		});
-		$.get("/getClass", function (data, status) {
-			if (data.length == 0) {
-				$("#selectClass").append(`<option>No Classes Found</option>`);
-				return;
-			} else {
-				data.forEach((element) => {
-					$("#selectClass").append(
-						`<option>${element.class_id}. ${element.class_name}</option>`
-					);
-				});
-			}
-		});
-		$("#submitTeacher").click(() => {
-			const teacher_name = $("#teacherName").val();
-			const department_id = $("#selectDepartment").val().split("")[0];
-			const teacher_id = $("#teacherId").val();
-			if (teacher_name == null || department_id == null || teacher_id == null) {
-				alert("Please fill details");
-				return;
-			}
-			$.ajax({
-				url: "/addTeacher",
-				method: "POST",
-				data: {
-					teacher_id,
-					teacher_name,
-					department_id,
-				},
-				success: (data, textStatus, jqXHR) => {
-					console.log("Sucess");
-				},
-				error: (err) => {
-					console.log(err);
-				},
-			});
-		});
-		$("#addAllotment").click(() => {
-			const teacher_id = getString($("#selectTeacher").val());
-			const class_id = getString($("#selectClass").val());
-			const subject_id = getString($("#selectSubjects").val());
-			$.ajax({
-				url: "/addAssignment",
-				method: "POST",
-				data: {
-					teacher_id,
-					class_id,
-					subject_id,
-				},
-				success: (data, textStatus, jqXHR) => {
-					console.log("Sucess");
-				},
-				error: (err) => {
-					console.log(err);
-				},
-			});
-		});
-	</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Handler</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        body {
+            background-color: #121621;
+            color: #e5e7eb;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 1rem;
+        }
+        .container {
+            background-color: #1f2937;
+            border-radius: 16px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 700px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+        }
+        .form-section {
+            margin-bottom: 2rem;
+        }
+        .form-input, .form-select {
+            background-color: #374151;
+            border-color: #4b5563;
+            color: #e5e7eb;
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23e5e7eb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 1.5em;
+        }
+        .inline-container {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        .btn {
+            background-color: #374151;
+            color: #e5e7eb;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .btn:hover {
+            background-color: #4b5563;
+            transform: translateY(-3px);
+        }
+        @media (max-width: 640px) {
+            .inline-container {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            .inline-container > * {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-section">
+            <h3 class="text-2xl font-bold mb-4">Add Teacher</h3>
+            <label class="block mb-2">Teacher Name</label>
+            <input 
+                type="text" 
+                id="teacherName" 
+                class="form-input"
+                placeholder="Enter teacher name"
+            />
+            <label class="block mb-2">Teacher ID</label>
+            <input 
+                type="text" 
+                id="teacherId" 
+                class="form-input"
+                placeholder="Enter teacher ID"
+            />
+            <label class="block mb-2">Select Department</label>
+            <div class="inline-container">
+                <select 
+                    id="selectDepartment" 
+                    class="form-select flex-grow"
+                ></select>
+                <button 
+                    id="submitTeacher" 
+                    class="btn"
+                >
+                    Submit
+                </button>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3 class="text-2xl font-bold mb-4">Assign Class and Subject</h3>
+            <label class="block mb-2">Select Teacher</label>
+            <div class="inline-container">
+                <select 
+                    id="selectTeacher" 
+                    class="form-select flex-grow"
+                ></select>
+            </div>
+            <label class="block mb-2">Select Subject</label>
+            <div class="inline-container">
+                <select 
+                    id="selectSubjects" 
+                    class="form-select flex-grow"
+                ></select>
+            </div>
+            <label class="block mb-2">Select Class</label>
+            <div class="inline-container">
+                <select 
+                    id="selectClass" 
+                    class="form-select flex-grow"
+                ></select>
+                <button 
+                    id="addAllotment" 
+                    class="btn"
+                >
+                    Add
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $.get("/getDepartments", function (data, status) {
+            if (data.length == 0) {
+                $("#selectDepartment").append(`<option>No Departments Found</option>`);
+                return;
+            } else {
+                data.forEach((element) => {
+                    $("#selectDepartment").append(
+                        `<option>${element.department_id}. ${element.department_name}</option>`
+                    );
+                });
+            }
+        });
+
+        $("#submitTeacher").click(() => {
+            const teacher_name = $("#teacherName").val();
+            const department_id = $("#selectDepartment").val().split("")[0];
+            const teacher_id = $("#teacherId").val();
+            
+            if (!teacher_name || !department_id || !teacher_id) {
+                alert("Please fill all details");
+                return;
+            }
+            
+            $.ajax({
+                url: "/addTeacher",
+                method: "POST",
+                data: {
+                    teacher_id,
+                    teacher_name,
+                    department_id,
+                },
+                success: (data, textStatus, jqXHR) => {
+                    console.log("Success");
+                },
+                error: (err) => {
+                    console.log(err);
+                },
+            });
+        });
+    </script>
+</body>
 </html>
+
