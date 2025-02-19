@@ -9,14 +9,6 @@
 			integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
 			crossorigin="anonymous"
 		></script>
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
-			integrity="sha512-EZLkOqwILORob+p0BXZc+Vm3RgJBOe1Iq/0fiI7
-        r/wJgzOFZMlsqTa29UEl6v6U6gsV4uIpsNZoV32YZqrCRCQ=="
-			crossorigin="anonymous"
-			referrerpolicy="no-referrer"
-		/>
 	</head>
 	<body>
 		<h3>Add Student</h3>
@@ -32,7 +24,27 @@
 			<br />
 			<button id="submitStudent">Submit</button>
 		</div>
+		<h3>Delete Student</h3>
+		<div id="deleteStudentContainer">
+			<label>Student Name</label>
+			<select id="selectStudent"></select>
+			<br />
+			<label>Select Department</label>
+			<select id="selectDepartment"></select>
+			<br>
+			<button id="submitStudent">Submit</button>
+		</div>
 		<h3>Assign a class to student</h3>
+		<div id="studentAllotment">
+			<label>Select Student</label>
+			<select id="selectStudent"></select>
+			<br />
+			<label>Select Class</label>
+			<select id="selectClass"></select>
+			<br />
+			<button id="addAllotment">Add</button>
+		</div>
+		<h3>Change Class of Student</h3>
 		<div id="studentAllotment">
 			<label>Select Student</label>
 			<select id="selectStudent"></select>

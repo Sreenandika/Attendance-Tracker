@@ -3,13 +3,6 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>subjectHandler</title>
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
-			integrity="sha512-EZLkOqwILORob+p0BXZc+Vm3RgJBOe1Iq/0fiI7r/wJgzOFZMlsqTa29UEl6v6U6gsV4uIpsNZoV32YZqrCRCQ=="
-			crossorigin="anonymous"
-			referrerpolicy="no-referrer"
-		/>
 		<script
 			src="https://code.jquery.com/jquery-3.7.1.js"
 			integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
@@ -17,23 +10,31 @@
 		></script>
 	</head>
 	<body>
-		<h3>Add Subject</h3>
-		<label>Subject Name</label>
-		<input id="subjectName" name="subjectName" />
-		<br />
-		<label>Subject ID</label>
-		<input id="subjectId" name="subjectId" />
-		<label>Select Department</label>
-		<select id="selectDepartment"></select>
-		<br />
-		<label>Type of Course</label>
-		<select id="specialCourse">
-			<option>Honours</option>
-			<option>Minors</option>
-			<option>Normal</option>
-		</select>
-		<br />
-		<button id="submitSubject">Submit</button>
+		<div id="Add Subjects">
+			<h3>Add Subject</h3>
+			<label>Subject Name</label>
+			<input id="subjectName" name="subjectName" />
+			<br />
+			<label>Subject ID</label>
+			<input id="subjectId" name="subjectId" />
+			<label>Select Department</label>
+			<select id="selectDepartment"></select>
+			<br />
+			<label>Type of Course</label>
+			<select id="specialCourse">
+				<option>Honours</option>
+				<option>Minors</option>
+				<option>Normal</option>
+			</select>
+			<br />
+			<button id="submitSubject">Submit</button>
+		</div>
+		<div id="Delete Subjects">
+			<label>Select Subjects</label>
+			<select id="selectSubjects"></select>
+			<br />
+			<button id="deleteSubject">Submit</button>
+		</div>
 	</body>
 	<script>
 		$.get("/getDepartments", function (data, status) {
