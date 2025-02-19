@@ -1,41 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<title>subjectHandler</title>
-		<script
-			src="https://code.jquery.com/jquery-3.7.1.js"
-			integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-			crossorigin="anonymous"
-		></script>
-	</head>
-	<body>
-		<div id="Add Subjects">
-			<h3>Add Subject</h3>
-			<label>Subject Name</label>
-			<input id="subjectName" name="subjectName" />
-			<br />
-			<label>Subject ID</label>
-			<input id="subjectId" name="subjectId" />
-			<label>Select Department</label>
-			<select id="selectDepartment"></select>
-			<br />
-			<label>Type of Course</label>
-			<select id="specialCourse">
-				<option>Honours</option>
-				<option>Minors</option>
-				<option>Normal</option>
-			</select>
-			<br />
-			<button id="submitSubject">Submit</button>
-		</div>
-		<div id="Delete Subjects">
-			<label>Select Subjects</label>
-			<select id="selectSubjects"></select>
-			<br />
-			<button id="deleteSubject">Submit</button>
-		</div>
-	</body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subject Handler</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+       
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #1b5692, #583a6d);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            padding: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+            min-height: 320px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+		h1 {
+            font-size: 2.5rem;
+            color: #fff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 1.7rem; /* Made headings bigger */
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 2px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        #specialCourse {
+            margin-bottom: 20px; /* Added more space below the dropdown */
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: auto;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        #submitSubject {
+            background: #0bc759;
+        }
+
+        #deleteSubject {
+            background: #ff1900;
+        }
+
+        .add-subject {
+            border-top: 5px solid #2ecc71;
+        }
+
+        .delete-subject {
+            border-top: 5px solid #e74c3c;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 >Subject Management system</h1>
+        <div class="grid">
+            <div class="card add-subject">
+                <h3>Add Subject</h3>
+                <label>Subject Name</label>
+                <input id="subjectName" name="subjectName" type="text">
+                
+                <label>Subject ID</label>
+                <input id="subjectId" name="subjectId" type="text">
+                
+                <label>Select Department</label>
+                <select id="selectDepartment"></select>
+                
+                <label>Type of Course</label>
+                <select id="specialCourse">
+                    <option>Honours</option>
+                    <option>Minors</option>
+                    <option>Normal</option>
+                </select>
+
+                <button id="submitSubject">Submit</button>
+            </div>
+
+            <div class="card delete-subject">
+                <h3>Delete Subject</h3>
+                <label>Select Subject</label>
+                <select id="selectSubjects"></select>
+
+                <button id="deleteSubject">Delete</button>
+            </div>
+        </div>
+    </div>
 	<script>
 		$.get("/getDepartments", function (data, status) {
 			if (data.length == 0) {
