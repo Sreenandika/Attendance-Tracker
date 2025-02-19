@@ -217,6 +217,7 @@ router.get("/getSubjects", async (req, res) => {
 		});
 	client.release();
 });
+
 router.get("/getStudents", async (req, res) => {
 	const client = await pool.connect();
 	funcs
@@ -231,4 +232,109 @@ router.get("/getStudents", async (req, res) => {
 		});
 	client.release();
 });
+
+router.delete("/deleteClass", async (req, res) => {
+	const client = await pool.connect();
+	funcs
+		.deleteClass(client, req.body.class_id)
+		.then((result) => {
+			res.send("Deleted");
+		})
+		.catch((error) => {
+			res.status(500).send(error.detail);
+		});
+});
+
+router.delete("/deleteTeacher", async (req, res) => {
+	const client = await pool.connect();
+	funcs
+		.deleteTeacher(client, req.body.teacher_id)
+		.then((result) => {
+			res.send("Deleted");
+		})
+		.catch((error) => {
+			res.status(500).send(error.detail);
+		});
+});
+
+router.delete("/deleteStudent", async (req, res) => {
+	const client = await pool.connect();
+	funcs
+		.deleteStudent(client, req.body.student_id)
+		.then((result) => {
+			res.send("Deleted");
+		})
+		.catch((error) => {
+			res.status(500).send(error.detail);
+		});
+});
+
+router.delete("/deleteDepartment", async (req, res) => {
+	const client = await pool.connect();
+	funcs
+		.deleteDepartment(client, req.body.department_id)
+		.then((result) => {
+			res.send("Deleted");
+		})
+		.catch((error) => {
+			res.status(500).send(error.detail);
+		});
+});
+router.put("/editTeacher", async (req, res) => {
+	const client = await pool.connect();
+	let updateParams = [];
+	if (req.body.department_id) {
+		updateParams.push("department_id = " + req.body.department_id);
+	}
+	if (req.body.teacher_name) {
+		updateParams.push(`teacher_name = '${req.body.teacher_name}'`);
+	}
+	const string = updateParams.join();
+	if (string) {
+		funcs
+			.editTeacher(client, string, req.body.teacher_id)
+			.then((result) => {
+				res.send("edited");
+			})
+			.catch((error) => {
+				res.status(500).send(error.detail);
+			});
+	}
+});
+
+router.put("/editStudent", async (req, res) => {
+	const client = await pool.connect();
+	let updateParams = [];
+	if (req.body.department_id) {
+		updateParams.push("department_id = " + req.body.department_id);
+	}
+	if (req.body.student_name) {
+		updateParams.push(`student_name = '${req.body.student_name}'`);
+	}
+	const string = updateParams.join();
+	console.log(string);
+	if (string) {
+		funcs
+			.editStudent(client, string, req.body.student_id)
+			.then((result) => {
+				res.send("edited");
+			})
+			.catch((error) => {
+				res.send(error.detail);
+			});
+	}
+});
+router.put("/changeClass", async (req, res) => {
+	const client = await pool.connect();
+	funcs
+		.changeClass(client, req.body.student_id, req.body.newClassId)
+		.then((result) => {
+			res.send("edited");
+		})
+		.catch((error) => {
+			console.log(error);
+			res.send(error);
+		});
+});
+
 module.exports = router;

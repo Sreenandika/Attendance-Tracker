@@ -74,7 +74,43 @@ function addEnrollment(client, class_id, student_id) {
 	VALUES(${student_id},${class_id});`;
 	return client.query(query);
 }
+function deleteClass(client, class_id) {
+	const query = `DELETE FROM classes WHERE class_id=${class_id};`;
+	return client.query(query);
+}
+function deleteTeacher(client, teacher_id) {
+	const query = `DELETE FROM teachers WHERE teacher_id=${teacher_id};`;
+	return client.query(query);
+}
+function deleteStudent(client, student_id) {
+	const query = `DELETE FROM students WHERE student_id=${student_id};`;
+	return client.query(query);
+}
+function deleteDepartment(client, department_id) {
+	const query = `DELETE FROM departments WHERE department_id=${department_id};`;
+	return client.query(query);
+}
+function editTeacher(client, updateFields, teacher_id) {
+	const query = ` UPDATE teachers SET ${updateFields} WHERE teacher_id = ${teacher_id}`;
+	return client.query(query);
+}
+function editStudent(client, updateFields, student_id) {
+	const query = `UPDATE students SET ${updateFields} WHERE student_id = ${student_id};`;
+	return client.query(query);
+}
+function changeClass(client,student_id,newClassId){
+	const query = `UPDATE student_enrollments SET class_id = ${newClassId} WHERE student_id = ${student_id};`;
+	console.log(query);
+	return client.query(query);
+}
 module.exports = {
+	changeClass,
+	editStudent,
+	editTeacher,
+	deleteDepartment,
+	deleteStudent,
+	deleteTeacher,
+	deleteClass,
 	getClass,
 	editClass,
 	getAdminUsers,
