@@ -3,13 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Teacher's Page</title>
+
+    <!-- FontAwesome for Icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous"></script>
+
+    <style>
+        /* General Page Styling */
+        body {
+            background:  #717769;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            background: white;
+            width: 70%;
+            max-width: 900px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        /* Left Side (Image) */
+        .left-side {
+            width: 50%;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .left-side img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Right Side (Teacher's Content) */
+        .right-side {
+            width: 50%;
+            padding: 40px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Button Styling */
+        .btn {
+            background: #d27355;
+            color: white;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 10px;
+            transition: 0.3s;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            background: #589c36;
+            transform: translateY(-2px);
+        }
+
+        /* Icon Styling */
+        .btn i {
+            font-size: 1.2rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+                width: 90%;
+            }
+
+            .left-side, .right-side {
+                width: 100%;
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div>
-        <button>Subjects</button>
-        <button>Get Reports</button>
-        <button>Profile</button>
+    <div class="main-container">
+        <!-- Left Side (Image) -->
+        <div class="left-side">
+            <img src="https://i.pinimg.com/736x/38/1a/d2/381ad22ff5e9b9fc462c69f6cead07b1.jpg" alt="Teacher Illustration">
+        </div>
+
+        <!-- Right Side (Teacher's Content) -->
+        <div class="right-side">
+            <h1>Welcome to Teacher's Page</h1>
+            <div id="buttonContainer"></div>
+        </div>
     </div>
+
+    <script>
+        // Dynamic Buttons Data
+        const buttons = [
+            { text: "Subjects", icon: "fa-solid fa-book" },
+            { text: "Get Reports", icon: "fa-solid fa-file-alt" },
+            { text: "Profile", icon: "fa-solid fa-user" }
+        ];
+
+        // Get Button Container
+        const buttonContainer = document.getElementById("buttonContainer");
+
+        // Create Buttons Dynamically
+        buttons.forEach(btn => {
+            const button = document.createElement("button");
+            button.classList.add("btn");
+            button.innerHTML = `<i class="${btn.icon}"></i> ${btn.text}`;
+            buttonContainer.appendChild(button);
+        });
+    </script>
 </body>
 </html>
