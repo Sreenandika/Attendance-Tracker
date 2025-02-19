@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student's Page</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
     <style>
@@ -69,13 +70,28 @@
             <img src="https://i.pinimg.com/736x/87/fb/17/87fb172a27025681da76b0ce36b8b3b0.jpg" alt="Illustration" class="rounded-lg">
         </div>
         <div class="right-section">
-            
             <h2 class="text-2xl font-bold mb-6">Welcome to the Student's Page</h2>
-            <button class="btn"><i class="fa-solid fa-user"></i> Profile</button>
-            <button class="btn mt-4"><i class="fa-solid fa-book"></i> Courses</button>
-            <button class="btn mt-4"><i class="fa-solid fa-graduation-cap"></i> Grades</button>
-            <button class="btn mt-4 bg-red-500 hover:bg-red-700" style="background:#b92626"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            <button id="profileHandler" class="btn"><i class="fa-solid fa-user"></i> Profile</button>
+            <button  id="subjectsHandler" class="btn mt-4"><i class="fa-solid fa-book"></i>Subjects</button>
+            <button  id="notificationsHandler" class="btn mt-4"><i class="fa-solid fa-graduation-cap"></i>Notifications</button>
+            <button id="logout" class="btn mt-4 bg-red-500 hover:bg-red-700" style="background:#b92626"><i class="fas fa-sign-out-alt"></i> Logout</button>
         </div>
     </div>
+    <script>
+        const currUserId = window.location.pathname.split("/")[2];
+            const handlers = {
+                "profileHandler": "/profile",
+                "subjectsHandler": "/subjects",
+                "notificationsHandler": "/notifications",
+            };
+            Object.entries(handlers).forEach(([id, path]) => {
+                document.getElementById(id).addEventListener("click", () => {
+                    window.location.pathname = `/student/${currUserId}${path}`;
+                });
+            });
+            document.getElementById("logout").addEventListener("click", () => {
+                window.location.pathname = "/logout";
+            });
+    </script>
 </body>
 </html>
