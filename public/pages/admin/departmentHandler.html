@@ -1,50 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<script
-			src="https://code.jquery.com/jquery-3.7.1.js"
-			integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-			crossorigin="anonymous"
-		></script>
-		<style>
-			#addDepartmentContainer {
-				display: flex;
-				flex-direction: column;
-				width: 200px;
-			}
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Department Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1b5692, #583a6d);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
 
-			#editDepartmentContainer {
-				display: flex;
-				flex-direction: column;
-				width: 200px;
-			}
-		</style>
-		<title>Department Manager</title>
-	</head>
+        .container {
+            background: #edf0f6;
+            border-radius: 16px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
 
-	<body>
-		<h5 style="font-weight: 200">Add department</h5>
-		<h3 style="font-weight: 200">Edit Department</h3>
-		<div id="editDepartmentContainer">
-			<label for="department">Choose a department to edit:</label>
-			<select name="selectDepartment" id="selectDepartment"></select>
-			<br />
-			<label for="departmentName">Name of new Department</label>
-			<input type="text" id="editDepartmentName" name="departmentName" />
-			<button id="editSubmitDepartment">Submit</button>
-		</div>
-		<h3 style="font-weight: 200">Current Departments</h3>
-		
-		<div id="addDepartmentContainer">
-			<label for="departmentName">Department Name</label>
-			<input type="text" id="departmentName" />
-			<label for="departmentName">Department Id</label>
-			<input type="text" id="departmentId" />
-			<button id="submitDepartment">Submit</button>
-		</div>
-		<h5>Current Departments registerd</h5>
-		<ul id="currDepartments"></ul>
-	</body>
+        .form-section {
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-section:nth-child(1) { background: #DC143C; }
+        .form-section:nth-child(2) { background: #4169E1; }
+        .form-section:nth-child(3) { background: #FF8C00; }
+
+        .input-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .form-input, .form-select {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: #ffffff;
+            padding: 0.75rem;
+            border-radius: 8px;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        .form-input::placeholder {
+            color: #ffffff;
+        }
+
+        .btn {
+            background: #ce6741;
+            color: #ffffff;
+            padding: 0.75rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background: #eaedf1;
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-section">
+            <h3 class="text-xl font-bold mb-4">Add Department</h3>
+            <div class="input-wrapper">
+                <input type="text" id="departmentName" placeholder="Enter department name" class="form-input" />
+                <div class="flex gap-2">
+                    <input type="text" id="departmentId" placeholder="Enter department ID" class="form-input" />
+                    <button id="submitDepartment" style="background-color:#f33b60e2" class="btn">Submit</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3 class="text-xl font-bold mb-4">Edit Department</h3>
+            <label for="selectDepartment" class="block mb-2">Choose a department to edit:</label>
+            <select id="selectDepartment" class="form-select mb-4"></select>
+            <div class="input-wrapper">
+                <div class="flex gap-2">
+                    <input type="text" id="editDepartmentName" placeholder="New department name" class="form-input" />
+                    <button id="editSubmitDepartment" style="background-color:#237aec" class="btn">Submit</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3 class="text-xl font-bold mb-4">Current Departments</h3>
+            <ul id="currDepartments" class="list-disc pl-5 text-gray-900"></ul>
+        </div>
+    </div>
 	<script>
 		$.get("/getDepartments", function (data, status) {
 			if (data.length == 0) {
