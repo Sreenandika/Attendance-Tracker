@@ -1,170 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Teacher Handler</title>
-		<link
-			href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-			rel="stylesheet"
-		/>
-		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-		<style>
-			body {
-				background-color: #121621;
-				color: #e5e7eb;
-				min-height: 100vh;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				margin: 0;
-				padding: 1rem;
-			}
-			.container {
-				background-color: #1f2937;
-				border-radius: 16px;
-				padding: 2.5rem;
-				width: 100%;
-				max-width: 700px;
-				box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-			}
-			.form-section {
-				margin-bottom: 2rem;
-			}
-			.form-input,
-			.form-select {
-				background-color: #374151;
-				border-color: #4b5563;
-				color: #e5e7eb;
-				width: 100%;
-				padding: 0.75rem;
-				border-radius: 0.5rem;
-				margin-bottom: 1rem;
-			}
-			.form-select {
-				appearance: none;
-				background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23e5e7eb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-				background-repeat: no-repeat;
-				background-position: right 0.75rem center;
-				background-size: 1.5em;
-			}
-			.inline-container {
-				display: flex;
-				gap: 1rem;
-				align-items: center;
-			}
-			.btn {
-				background-color: #374151;
-				color: #e5e7eb;
-				padding: 0.75rem;
-				border-radius: 0.5rem;
-				transition: all 0.3s ease;
-				white-space: nowrap;
-			}
-			.btn:hover {
-				background-color: #4b5563;
-				transform: translateY(-3px);
-			}
-			.modal {
-				display: none;
-				position: fixed;
-				z-index: 1;
-				top: 0;
-				right: 0;
-				width: auto; /* Adjust width based on content */
-				height: auto; /* Adjust height based on content */
-				background-color: rgba(
-					0,
-					0,
-					0,
-					0.4
-				); /* Optional semi-transparent background */
-			}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Handler</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #1b5692, #583a6d);
+            margin: 0;
+            padding: 0;
+        }
 
-			.modal-content {
-				background-color: #080808;
-				padding: 20px;
-				border: 1px solid #888;
-				/* Remove margin: 15% auto; */
-				/* Remove width: 80%; */
-				text-align: center;
-				border-radius: 5px; /* Optional rounded corners */
-			}
-			.modal.show {
-				display: block;
-			}
-			@media (max-width: 640px) {
-				.inline-container {
-					flex-direction: column;
-					gap: 0.5rem;
-				}
-				.inline-container > * {
-					width: 100%;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<div id="myModal" class="modal">
-			<div class="modal-content">
-				<p id="modalMessage"></p>
-			</div>
-		</div>
-		<div class="container">
-			<div class="form-section">
-				<h3 class="text-2xl font-bold mb-4">Add Teacher</h3>
-				<label class="block mb-2">Teacher Name</label>
-				<input
-					type="text"
-					id="teacherName"
-					class="form-input"
-					placeholder="Enter teacher name"
-				/>
-				<label class="block mb-2">Teacher ID</label>
-				<input
-					type="text"
-					id="teacherId"
-					class="form-input"
-					placeholder="Enter teacher ID"
-				/>
-				<label class="block mb-2">Select Department</label>
-				<div class="inline-container">
-					<select id="selectDepartment" class="form-select flex-grow"></select>
-					<button id="submitTeacher" class="btn">Submit</button>
-				</div>
-			</div>
-			<div class="container">
-				<div class="form-section">
-					<h3 class="text-2xl font-bold mb-4">Delete Teacher</h3>
-					<select id="selectTeacher" class="form-select flex-grow"></select>
-					<label class="block mb-2">Select Department</label>
-					<div class="inline-container">
-						<select
-							id="selectDepartment"
-							class="form-select flex-grow"
-						></select>
-						<button id="submitTeacher" class="btn">Submit</button>
-					</div>
-				</div>
-			</div>
+        .container {
+            max-width: 950px;
+            margin: 50px auto;
+            text-align: left;
+        }
 
-			<div class="form-section">
-				<h3 class="text-2xl font-bold mb-4">Assign Class and Subject</h3>
-				<label class="block mb-2">Select Teacher</label>
-				<div class="inline-container">
-					<select id="selectTeacher" class="form-select flex-grow"></select>
-				</div>
-				<label class="block mb-2">Select Subject</label>
-				<div class="inline-container">
-					<select id="selectSubjects" class="form-select flex-grow"></select>
-				</div>
-				<label class="block mb-2">Select Class</label>
-				<div class="inline-container">
-					<select id="selectClass" class="form-select flex-grow"></select>
-					<button id="addAllotment" class="btn">Add</button>
-				</div>
-			</div>
-		</div>
+        h1 {
+            font-size: 2.5rem;
+            color: #fff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        /* Card Styling */
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+            width: 90%;
+            margin: 0 auto;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Form Styling */
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 97%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        /* Button Styling */
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: auto;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        /* Button Colors */
+        #addTeacher {
+            background: #0bc759;
+        }
+
+        #deleteTeacher {
+            background: #ff1900;
+        }
+
+        #assignClass {
+            background: #26a1f3;
+        }
+
+        /* Card Colors */
+        .add-teacher {
+            border-top: 5px solid #2ecc71;
+        }
+
+        .delete-teacher {
+            border-top: 5px solid #e74c3c;
+        }
+
+        .assign-class {
+            border-top: 5px solid #3498db;
+        }
+
+        /* Button Hover Effects */
+        button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Teacher Management system</h1>
+        <div class="grid">
+            <!-- Add Teacher -->
+            <div class="card add-teacher">
+                <h2>Add Teacher</h2>
+                <label>Teacher Name</label>
+                <input type="text" id="teacherName" placeholder="Enter teacher name">
+                
+                <label>Teacher ID</label>
+                <input type="text" id="teacherId" placeholder="Enter teacher ID">
+                
+                <label>Select Department</label>
+                <select id="departmentList">
+                    <option>Science</option>
+                    <option>Mathematics</option>
+                    <option>English</option>
+                </select>
+                
+                <button id="addTeacher">Submit</button>
+            </div>
+            
+            <!-- Delete Teacher -->
+            <div class="card delete-teacher">
+                <h2>Delete Teacher</h2>
+                <label>Select Teacher</label>
+                <select id="teacherList">
+                    <option>Teacher 1</option>
+                    <option>Teacher 2</option>
+                </select>
+                <button id="deleteTeacher">Delete</button>
+            </div>
+
+            <!-- Assign Class -->
+            <div class="card assign-class">
+                <h2>Assign Class</h2>
+                <label>Select Teacher</label>
+                <select id="teacherAssignList">
+                    <option>Teacher 1</option>
+                    <option>Teacher 2</option>
+                </select>
+                
+                <label>Select Subject</label>
+                <select id="subjectList">
+                    <option>Math</option>
+                    <option>Science</option>
+                </select>
+                
+                <label>Select Class</label>
+                <select id="classList">
+                    <option>Class 1</option>
+                    <option>Class 2</option>
+                </select>
+                
+                <button id="assignClass">Assign</button>
+            </div>
+        </div>
+    </div>
+
 
 		<script>
 			function getString(input) {
