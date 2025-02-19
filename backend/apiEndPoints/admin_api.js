@@ -123,7 +123,7 @@ router.post("/addTeacher", async (req, res) => {
 			req.body.teacher_id,
 			req.body.teacher_email,
 			passcode,
-			"Teacher"
+			"teacher"
 		)
 		.then((result) => {
 			console.log(result);
@@ -291,10 +291,21 @@ router.delete("/deleteTeacher", async (req, res) => {
 	funcs
 		.deleteTeacher(client, req.body.teacher_id)
 		.then((result) => {
-			res.send("Deleted");
+			res.json(result);
 		})
 		.catch((error) => {
-			res.status(500).send(error.detail);
+			res.json(error);
+		});
+});
+router.delete("/deleteSubject", async (req, res) => {
+	const client = await pool.connect();
+	funcs
+		.deleteSubject(client, req.body.subject_id)
+		.then((result) => {
+			res.json(result);
+		})
+		.catch((error) => {
+			res.json(error);
 		});
 });
 
@@ -303,10 +314,10 @@ router.delete("/deleteStudent", async (req, res) => {
 	funcs
 		.deleteStudent(client, req.body.student_id)
 		.then((result) => {
-			res.send("Deleted");
+			res.json(result);
 		})
 		.catch((error) => {
-			res.status(500).send(error.detail);
+			res.json(error)
 		});
 });
 

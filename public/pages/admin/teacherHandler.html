@@ -1,177 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Handler</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #1b5692, #583a6d);
-            margin: 0;
-            padding: 0;
-        }
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<title>Teacher Handler</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				background: linear-gradient(to right, #1b5692, #583a6d);
+				margin: 0;
+				padding: 0;
+			}
 
-        .container {
-            max-width: 950px;
-            margin: 50px auto;
-            text-align: left;
-        }
+			.container {
+				max-width: 950px;
+				margin: 50px auto;
+				text-align: left;
+			}
 
-        h1 {
-            font-size: 2.5rem;
-            color: #fff;
-            margin-bottom: 20px;
-            text-align: center;
-        }
+			h1 {
+				font-size: 2.5rem;
+				color: #fff;
+				margin-bottom: 20px;
+				text-align: center;
+			}
 
-        /* Grid Layout */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
-        }
+			/* Grid Layout */
+			.grid {
+				display: grid;
+				grid-template-columns: repeat(2, 1fr);
+				gap: 25px;
+			}
 
-        /* Card Styling */
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: 0.3s;
-            width: 90%;
-            margin: 0 auto;
-            min-height: 350px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
+			/* Card Styling */
+			.card {
+				background: white;
+				padding: 20px;
+				border-radius: 12px;
+				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+				transition: 0.3s;
+				width: 90%;
+				margin: 0 auto;
+				min-height: 350px;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+			}
 
-        .card:hover {
-            transform: translateY(-5px);
-        }
+			.card:hover {
+				transform: translateY(-5px);
+			}
 
-        /* Form Styling */
-        label {
-            display: block;
-            margin-top: 10px;
-            font-weight: bold;
-        }
+			/* Form Styling */
+			label {
+				display: block;
+				margin-top: 10px;
+				font-weight: bold;
+			}
 
-        input, select {
-            width: 97%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-        }
+			input,
+			select {
+				width: 97%;
+				padding: 10px;
+				margin-top: 5px;
+				border: 1px solid #ccc;
+				border-radius: 6px;
+			}
 
-        /* Button Styling */
-        button {
-            width: 100%;
-            padding: 12px;
-            margin-top: auto;
-            border: none;
-            color: white;
-            font-size: 1rem;
-            border-radius: 6px;
-            cursor: pointer;
-        }
+			/* Button Styling */
+			button {
+				width: 100%;
+				padding: 12px;
+				margin-top: auto;
+				border: none;
+				color: white;
+				font-size: 1rem;
+				border-radius: 6px;
+				cursor: pointer;
+			}
 
-        /* Button Colors */
-        #addTeacher {
-            background: #0bc759;
-        }
+			/* Button Colors */
+			#addTeacher {
+				background: #0bc759;
+			}
 
-        #deleteTeacher {
-            background: #ff1900;
-        }
+			#deleteTeacher {
+				background: #ff1900;
+			}
 
-        #assignClass {
-            background: #26a1f3;
-        }
+			#assignClass {
+				background: #26a1f3;
+			}
 
-        /* Card Colors */
-        .add-teacher {
-            border-top: 5px solid #2ecc71;
-        }
+			/* Card Colors */
+			.add-teacher {
+				border-top: 5px solid #2ecc71;
+			}
 
-        .delete-teacher {
-            border-top: 5px solid #e74c3c;
-        }
+			.delete-teacher {
+				border-top: 5px solid #e74c3c;
+			}
 
-        .assign-class {
-            border-top: 5px solid #3498db;
-        }
+			.assign-class {
+				border-top: 5px solid #3498db;
+			}
 
-        /* Button Hover Effects */
-        button:hover {
-            opacity: 0.8;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Teacher Management system</h1>
-        <div class="grid">
-            <!-- Add Teacher -->
-            <div class="card add-teacher">
-                <h2>Add Teacher</h2>
-                <label>Teacher Name</label>
-                <input type="text" id="teacherName" placeholder="Enter teacher name">
-                
-                <label>Teacher ID</label>
-                <input type="text" id="teacherId" placeholder="Enter teacher ID">
-                
-                <label>Select Department</label>
-                <select id="departmentList">
-                    <option>Science</option>
-                    <option>Mathematics</option>
-                    <option>English</option>
-                </select>
-                
-                <button id="addTeacher">Submit</button>
-            </div>
-            
-            <!-- Delete Teacher -->
-            <div class="card delete-teacher">
-                <h2>Delete Teacher</h2>
-                <label>Select Teacher</label>
-                <select id="teacherList">
-                    <option>Teacher 1</option>
-                    <option>Teacher 2</option>
-                </select>
-                <button id="deleteTeacher">Delete</button>
-            </div>
+			/* Button Hover Effects */
+			button:hover {
+				opacity: 0.8;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h1>Teacher Management system</h1>
+			<div class="grid">
+				<!-- Add Teacher -->
+				<div class="card add-teacher">
+					<h2>Add Teacher</h2>
+					<label>Teacher Name</label>
+					<input
+						type="text"
+						id="teacherName"
+						placeholder="Enter teacher name"
+					/>
+					<label>Teacher Email</label>
+					<input
+						type="text"
+						id="teacherEmail"
+						placeholder="Enter teacher email"
+					/>
+					<label>Teacher ID</label>
+					<input type="text" id="teacherId" placeholder="Enter teacher ID" />
+					<label>Select Department</label>
+					<select id="addDepartmentList"></select>
+					<button id="addTeacher">Submit</button>
+				</div>
+				<!-- Delete Teacher -->
+				<div class="card delete-teacher">
+					<h2>Delete Teacher</h2>
+					<label>Select Teacher</label>
+					<select id="deleteTeacherList"></select>
+					<button id="deleteTeacher">Delete</button>
+				</div>
 
-            <!-- Assign Class -->
-            <div class="card assign-class">
-                <h2>Assign Class</h2>
-                <label>Select Teacher</label>
-                <select id="teacherAssignList">
-                    <option>Teacher 1</option>
-                    <option>Teacher 2</option>
-                </select>
-                
-                <label>Select Subject</label>
-                <select id="subjectList">
-                    <option>Math</option>
-                    <option>Science</option>
-                </select>
-                
-                <label>Select Class</label>
-                <select id="classList">
-                    <option>Class 1</option>
-                    <option>Class 2</option>
-                </select>
-                
-                <button id="assignClass">Assign</button>
-            </div>
-        </div>
-    </div>
-
+				<!-- Assign Class -->
+				<div class="card assign-class">
+					<h2>Assign Class</h2>
+					<label>Select Teacher</label>
+					<select id="teacherAssignList"></select>
+					<label>Select Subject</label>
+					<select id="subjectList"></select>
+					<label>Select Class</label>
+					<select id="classList"></select>
+					<button id="assignClass">Assign</button>
+				</div>
+			</div>
+		</div>
 
 		<script>
+			var deptID = ["#addDepartmentList"];
+			var teachID = ["#deleteTeacherList","#teacherAssignList"];
+            var subsID = ["#subjectList"];
+            var classID = ["#classList"];
 			function getString(input) {
 				const periodIndex = input.indexOf(".");
 				if (periodIndex === -1) {
@@ -190,69 +182,82 @@
 					modal.removeClass("show");
 				}, duration);
 			}
-			function getDepts() {
-				$.get("/getDepartments", function (data, status) {
-					if (data.length == 0) {
-						$("#selectDepartment").append(
-							`<option>No Departments Found</option>`
-						);
-						return;
-					} else {
-						data.forEach((element) => {
-							$("#selectDepartment").append(
-								`<option>${element.department_id}. ${element.department_name}</option>`
-							);
-						});
-					}
-				});
-			}
-			function getSubjects() {
-				$.get("/getSubjects", function (data, status) {
-					if (data.length == 0) {
-						$("#selectSubjects").append(`<option>No subjects Found</option>`);
-						return;
-					} else {
-						data.forEach((element) => {
-							$("#selectSubjects").append(
-								`<option>${element.subject_id}. ${element.subject_name} - ${element.subject_type}</option>`
-							);
-						});
-					}
-				});
-			}
-			function getTeachers() {
-				$.get("/getTeachers", function (data, status) {
-					if (data.length == 0) {
-						$("#selectTeacher").append(`<option>No Teachers Found</option>`);
-						return;
-					} else {
-						data.forEach((element) => {
-							$("#selectTeacher").append(
-								`<option>${element.teacher_id}. ${element.teacher_name}</option>`
-							);
-						});
-					}
-				});
-			}
-			function getClass() {
+			function getClass(id) {
 				$.get("/getClass", function (data, status) {
 					if (data.length == 0) {
-						$("#selectClass").append(`<option>No Classes Found</option>`);
+						id.forEach((ids) => {
+							$(ids).append(`<option>No Classes Found</option>`);
+						});
 						return;
 					} else {
 						data.forEach((element) => {
-							$("#selectClass").append(
-								`<option>${element.class_id}. ${element.class_name}</option>`
-							);
+							id.forEach((ids) => {
+								$(ids).append(`<option>${element.class_name}</option>`);
+							});
 						});
 					}
 				});
 			}
-
-			$("#submitTeacher").click(() => {
+			function getDepartments(id) {
+				$.get("/getDepartments", function (data, status) {
+					if (data.length == 0) {
+						id.forEach((ids) => {
+							$(ids).append(`<option>No Classes Found</option>`);
+						});
+						return;
+					} else {
+						classExist = true;
+						data.forEach((element) => {
+							id.forEach((ids) => {
+								$(ids).append(
+									`<option>${element.department_id}.${element.department_name}</option>`
+								);
+							});
+						});
+					}
+				});
+			}
+			function getSubjects(id) {
+				$.get("/getSubjects", function (data, status) {
+					if (data.length == 0) {
+						id.forEach((ids) => {
+							$(ids).append(`<option>No Classes Found</option>`);
+						});
+						return;
+					} else {
+						data.forEach((element) => {
+							id.forEach((ids) => {
+								$(ids).append(
+									`<option>${element.subject_id} - ${element.subject_name}</option>`
+								);
+							});
+						});
+					}
+				});
+			}
+			function getTeachers(id) {
+				$.get("/getTeachers", function (data, status) {
+					if (data.length == 0) {
+						id.forEach((ids) => {
+							$(ids).append(`<option>No Classes Found</option>`);
+						});
+						return;
+					} else {
+						data.forEach((element) => {
+							id.forEach((ids) => {
+								$(ids).append(
+									`<option>${element.teacher_id}. ${element.teacher_name}</option>`
+								);
+							});
+						});
+					}
+				});
+			}
+			$("#addTeacher").click(() => {
 				const teacher_name = $("#teacherName").val();
-				const department_id = $("#selectDepartment").val().split("")[0];
+				const department_id = $("#addDepartmentList").val().split("")[0];
 				const teacher_id = $("#teacherId").val();
+				const teacher_email = $("#teacherEmail").val();
 				if (
 					teacher_name == null ||
 					department_id == null ||
@@ -268,6 +273,7 @@
 						teacher_id,
 						teacher_name,
 						department_id,
+						teacher_email,
 					},
 					success: (data) => {
 						showDynamicModal("Added teacher", 2000);
@@ -279,9 +285,9 @@
 				});
 			});
 			$("#addAllotment").click(() => {
-				const teacher_id = getString($("#selectTeacher").val());
-				const class_id = getString($("#selectClass").val());
-				const subject_id = getString($("#selectSubjects").val());
+				const teacher_id = getString($("#teacherAssignList").val());
+				const class_id = getString($("#classList").val());
+				const subject_id = getString($("#subjectList").val());
 				$.ajax({
 					url: "/addAssignment",
 					method: "POST",
@@ -298,10 +304,28 @@
 					},
 				});
 			});
-			getClass();
-			getDepts();
-			getTeachers();
-			getSubjects();
+			$("#deleteTeacher").click(() => {
+				const teacher_id = getString($("#deleteTeacherList").val()).split(
+					"."
+				)[0];
+				$.ajax({
+					url: "/deleteTeacher",
+					method: "DELETE",
+					data: {
+						teacher_id,
+					},
+					success: (data) => {
+						showDynamicModal("Added assignment", 2000);
+					},
+					error: (err) => {
+						showDynamicModal("Assignment already exists", 2000);
+					},
+				});
+			});
+			getTeachers(teachID);
+			getDepartments(deptID);
+            getClass(classID);
+            getSubjects(subsID);
 		</script>
 	</body>
 </html>

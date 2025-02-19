@@ -56,7 +56,8 @@ function addTeachers(
 	teacher_email
 ) {
 	const query = `INSERT INTO teachers (teacher_id,teacher_name,department_id,teacher_email) 
-	VALUES(${teacher_id},'${teacher_name}','${department_id},${teacher_email}');`;
+	VALUES(${teacher_id},'${teacher_name}','${department_id}','${teacher_email}');`;
+	console.log(query);
 	return client.query(query);
 }
 
@@ -104,6 +105,10 @@ function deleteTeacher(client, teacher_id) {
 	const query = `DELETE FROM teachers WHERE teacher_id=${teacher_id};`;
 	return client.query(query);
 }
+function deleteSubject(client, subject_id) {
+	const query = `DELETE FROM subjects WHERE subject_id=${subject_id};`;
+	return client.query(query);
+}
 function deleteStudent(client, student_id) {
 	const query = `DELETE FROM students WHERE student_id=${student_id};`;
 	return client.query(query);
@@ -126,6 +131,7 @@ function changeClass(client, student_id, newClassId) {
 	return client.query(query);
 }
 module.exports = {
+	deleteSubject,
 	getStudentsUsers,
 	addUser,
 	changeClass,

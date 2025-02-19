@@ -137,7 +137,6 @@
                 <h3>Delete Subject</h3>
                 <label>Select Subject</label>
                 <select id="selectSubjects"></select>
-
                 <button id="deleteSubject">Delete</button>
             </div>
         </div>
@@ -151,6 +150,18 @@
 				data.forEach((element) => {
 					$("#selectDepartment").append(
 						`<option>${element.department_id}. ${element.department_name}</option>`
+					);
+				});
+			}
+		});
+        $.get("/getSubjects", function (data, status) {
+			if (data.length == 0) {
+				$("#selectSubjects").append(`<option>No Departments Found</option>`);
+				return;
+			} else {
+				data.forEach((element) => {
+					$("#selectSubjects").append(
+						`<option>${element.subject_id}. ${element.subject_name}</option>`
 					);
 				});
 			}
@@ -178,6 +189,23 @@
 					subject_name,
 					subject_type,
 					department_id,
+				},
+				success: (data, textStatus, jqXHR) => {
+					console.log("Sucess");
+				},
+				error: (err) => {
+					console.log(err.HEADERS_RECEIVED);
+				},
+			});
+		});
+        $("#deleteSubject").click(() => {
+			const subject_id = $("#selectSubjects").val().split(".")[0];
+            console.log(subject_id);
+			$.ajax({
+				url: "/deleteSubject",
+				method: "DELETE",
+				data: {
+					subject_id,
 				},
 				success: (data, textStatus, jqXHR) => {
 					console.log("Sucess");
