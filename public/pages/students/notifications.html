@@ -3,14 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Notifications</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>Notifications</h1>
-    <ul>
-        <li>Notification 1: Your assignment is due tomorrow.</li>
-        <li>Notification 2: New course materials have been uploaded.</li>
-        <li>Notification 3: Your class has been rescheduled to 3 PM.</li>
-    </ul>
+<body class="bg-gradient-to-r from-yellow-400 to-orange-300 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-6 rounded-xl shadow-lg max-w-md w-full">
+        <h1 class="text-2xl font-bold text-gray-800 mb-4">🔔 Notifications</h1>
+        <ul class="space-y-3">
+            <li class="flex items-center bg-gray-100 p-3 rounded-lg shadow">
+                <span class="text-blue-500 text-xl mr-3">📌</span>
+                <p class="text-gray-700">Your assignment is due tomorrow.</p>
+            </li>
+            <li class="flex items-center bg-gray-100 p-3 rounded-lg shadow">
+                <span class="text-green-500 text-xl mr-3">📂</span>
+                <p class="text-gray-700">New course materials have been uploaded.</p>
+            </li>
+            <li class="flex items-center bg-gray-100 p-3 rounded-lg shadow">
+                <span class="text-red-500 text-xl mr-3">⏰</span>
+                <p class="text-gray-700">Your class has been rescheduled to 3 PM.</p>
+            </li>
+        </ul>
+    </div>
 </body>
 </html>

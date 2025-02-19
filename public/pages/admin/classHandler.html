@@ -1,135 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Class Manager</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <style>
-        body {
-            background: linear-gradient(135deg, #1b5692, #583a6d);
-            color: #ffffff;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            font-family: 'Poppins', sans-serif;
-        }
-	
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Class Manager</title>
+		<link
+			href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+			rel="stylesheet"
+		/>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<style>
+			body {
+				background: linear-gradient(135deg, #1b5692, #583a6d);
+				color: #ffffff;
+				min-height: 100vh;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding: 1rem;
+				font-family: "Poppins", sans-serif;
+			}
 
-        .container {
-            background: #edf0f6;
-            border-radius: 16px;
-            padding: 2rem;
-            width: 100%;
-            max-width: 600px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
+			.container {
+				background: #edf0f6;
+				border-radius: 16px;
+				padding: 2rem;
+				width: 100%;
+				max-width: 600px;
+				box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+			}
 
-        .form-section {
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
+			.form-section {
+				padding: 1.5rem;
+				border-radius: 12px;
+				margin-bottom: 1.5rem;
+				box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+			}
 
-        .form-section:nth-child(1) { background: #DC143C; }
-        .form-section:nth-child(2) { background: #4169E1; }
-        .form-section:nth-child(3) { background: #FF8C00; }
+			.form-section:nth-child(1) {
+				background: #dc143c;
+			}
+			.form-section:nth-child(2) {
+				background: #4169e1;
+			}
+			.form-section:nth-child(3) {
+				background: #ff8c00;
+			}
 
-        .input-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
+			.input-wrapper {
+				display: flex;
+				flex-direction: column;
+				gap: 0.75rem;
+			}
 
-        .form-input, .form-select {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: #e5e7eb;
-            padding: 0.75rem;
-            border-radius: 8px;
-            width: 100%;
-            font-size: 1rem;
-        }
+			.form-input,
+			.form-select {
+				background: rgba(255, 255, 255, 0.2);
+				border: none;
+				color: #e5e7eb;
+				padding: 0.75rem;
+				border-radius: 8px;
+				width: 100%;
+				font-size: 1rem;
+			}
 
-        .btn {
-            background: #ce6741;
-            color: #ffffff;
-            padding: 0.75rem;
-            border-radius: 8px;
-            text-align: center;
-            transition: all 0.3s ease;
-            font-weight: bold;
-            font-size: 1rem;
-        }
-		.text-xl font-bold mb-4{
-			color: #eaedf1;
-		}
+			.btn {
+				background: #ce6741;
+				color: #ffffff;
+				padding: 0.75rem;
+				border-radius: 8px;
+				text-align: center;
+				transition: all 0.3s ease;
+				font-weight: bold;
+				font-size: 1rem;
+			}
+			.text-xl font-bold mb-4 {
+				color: #eaedf1;
+			}
 
+			.btn:hover {
+				background: #eaedf1;
+				transform: translateY(-3px);
+			}
 
-        .btn:hover {
-            background: #eaedf1;
-            transform: translateY(-3px);
-        }
-
-        @media (min-width: 640px) {
-            .input-wrapper {
-                flex-direction: row;
-                gap: 1rem;
-            }
-            .btn {
-                width: auto;
-                min-width: 120px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="form-section">
-            <h3 class="text-xl font-bold mb-4">Add Class</h3>
-            <div class="input-wrapper">
-                <input type="text" id="className" style="color: #f1eded;" placeholder="Enter class name" class="form-input" />
-                <button id="submitClass" style="background-color:#f33b60e2" class="btn">Submit</button>
-            </div>
-        </div>
-
-        <div class="form-section">
-            <h3 class="text-xl font-bold mb-4">Edit Class</h3>
-            <label for="selectClass" class="block mb-2">Choose a class:</label>
-            <select id="selectClass" class="form-select mb-4"></select>
-            <div class="input-wrapper">
-                <input type="text" id="editClassName" placeholder="New class name" class="form-input" />
-                <button id="editSubmitClass" style="background-color:#237aec" class="btn">Submit</button>
-            </div>
-        </div>
-
-        <div class="form-section">
-            <h3 class="text-xl font-bold mb-4">Delete Class</h3>
-            <label for="deleteClass" class="block mb-2">Select class to delete:</label>
-            <select id="deleteClass" class="form-select mb-4"></select>
-            <button id="deleteSubmitClass" style="background-color:#ffa02b" class="btn w-full">Delete</button>
-        </div>
-
-        <p id="operationsResult" class="mt-4 text-center"></p>
-    </div>
-
-		<script>
-			$.get("/getClass", function (data, status) {
-				if (data.length == 0) {
-					$("#selectClass").append(`<option>No Classes Found</option>`);
-					return;
-				} else {
-					classExist = true;
-					data.forEach((element) => {
-						$("#selectClass").append(`<option>${element.class_name}</option>`);
-					});
+			@media (min-width: 640px) {
+				.input-wrapper {
+					flex-direction: row;
+					gap: 1rem;
 				}
-			});
+				.btn {
+					width: auto;
+					min-width: 120px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="form-section">
+				<h3 class="text-xl font-bold mb-4">Add Class</h3>
+				<div class="input-wrapper">
+					<input
+						type="text"
+						id="className"
+						style="color: #f1eded"
+						placeholder="Enter class name"
+						class="form-input"
+					/>
+					<button
+						id="submitClass"
+						style="background-color: #f33b60e2"
+						class="btn"
+					>
+						Submit
+					</button>
+				</div>
+			</div>
 
+			<div class="form-section">
+				<h3 class="text-xl font-bold mb-4">Edit Class</h3>
+				<label for="selectClass" class="block mb-2">Choose a class:</label>
+				<select id="selectClassForEdit" class="form-select mb-4"></select>
+				<div class="input-wrapper">
+					<input
+						type="text"
+						id="editClassName"
+						placeholder="New class name"
+						class="form-input"
+					/>
+					<button
+						id="editSubmitClass"
+						style="background-color: #237aec"
+						class="btn"
+					>
+						Submit
+					</button>
+				</div>
+			</div>
+
+			<div class="form-section">
+				<h3 class="text-xl font-bold mb-4">Delete Class</h3>
+				<label for="deleteClass" class="block mb-2"
+					>Select class to delete:</label
+				>
+				<select id="selectClassForDelete" class="form-select mb-4"></select>
+				<button
+					id="deleteSubmitClass"
+					style="background-color: #ffa02b"
+					class="btn w-full"
+				>
+					Delete
+				</button>
+			</div>
+
+			<p id="operationsResult" class="mt-4 text-center"></p>
+		</div>
+		<script>
+			var ids = ["#selectClassForEdit", "#selectClassForDelete"];
+			function getClass(id) {
+				$.get("/getClass", function (data, status) {
+					if (data.length == 0) {
+						id.forEach((ids) => {
+							$(ids).append(`<option>No Classes Found</option>`);
+						});
+						return;
+					} else {
+						classExist = true;
+						data.forEach((element) => {
+							id.forEach((ids) => {
+								$(ids).append(`<option>${element.class_name}</option>`);
+							});
+						});
+					}
+				});
+			}
+			function deleteAll(id) {
+                id.forEach((ids) => {
+                    $(ids).empty();
+                });
+			}
 			let dictionary = new Map();
 			dictionary.set("IT", "1");
 			dictionary.set("CS", "2");
@@ -158,6 +207,8 @@
 			}
 			function addClassCallback() {
 				$("#operationsResult").text("HELLO");
+                deleteAll(ids);
+				getClass(ids);
 			}
 			$("#submitClass").click(() => {
 				const className = $("#className").val();
@@ -180,8 +231,9 @@
 				});
 			});
 			$("#editSubmitClass").click(() => {
+                const className = $("#editClassName").val();
 				const classId = extractAndConvert(className);
-				const oldClass = $("#selectClass").val();
+				const oldClass = $("#selectClassForEdit").val();
 				const oldClassId = extractAndConvert(oldClass);
 				if (!className || classId == null) {
 					alert("Please enter a proper class name");
@@ -198,13 +250,34 @@
 					},
 					success: (res) => {
 						console.log(res);
+                        deleteAll(ids);
+                        getClass(ids);
 					},
 					error: (err) => {
 						console.log(err);
 					},
 				});
 			});
-			
+            $("#deleteSubmitClass").click(() => {
+				const className = $("#selectClassForDelete").val();
+				const class_id = extractAndConvert(className);
+				if (!className || class_id == null) {
+					alert("Please enter a proper class name");
+					return;
+				}
+				$.ajax({
+					url: "/deleteClass",
+					method: "DELETE",
+					data: {
+						class_id,
+					},
+					success: addClassCallback,
+					error: (err) => {
+						console.log(err);
+					},
+				});
+			});
+			getClass(ids);
 		</script>
 	</body>
 </html>
