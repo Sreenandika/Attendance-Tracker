@@ -6,6 +6,7 @@
 const express = require("express");
 const router = express.Router();
 const bodyParser = require("body-parser");
+const generator = require("generate-password");
 const { Pool } = require("pg");
 
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -101,7 +102,8 @@ router.post("/addTeacher", async (req, res) => {
 			client,
 			req.body.department_id,
 			req.body.teacher_name,
-			req.body.teacher_id
+			req.body.teacher_id,
+			req.body.teacher_email
 		)
 		.then((result) => {
 			res.send("OK");
@@ -109,6 +111,25 @@ router.post("/addTeacher", async (req, res) => {
 		.catch((error) => {
 			console.error(error);
 			res.status(500).send("Error adding subject");
+		});
+	const passcode = generator.generate({
+		length: 10,
+		numbers: true,
+	});
+	console.log(passcode);
+	funcs
+		.addUser(
+			client,
+			req.body.teacher_id,
+			req.body.teacher_email,
+			passcode,
+			"Teacher"
+		)
+		.then((result) => {
+			console.log(result);
+		})
+		.catch((error) => {
+			console.error(error);
 		});
 	client.release();
 });
@@ -139,7 +160,8 @@ router.post("/addStudent", async (req, res) => {
 			client,
 			req.body.department_id,
 			req.body.student_name,
-			req.body.student_id
+			req.body.student_id,
+			req.body.student_email
 		)
 		.then((result) => {
 			res.send("OK");
@@ -147,6 +169,25 @@ router.post("/addStudent", async (req, res) => {
 		.catch((error) => {
 			console.error(error);
 			res.status(500).send("Error adding subject");
+		});
+	const passcode = generator.generate({
+		length: 10,
+		numbers: true,
+	});
+	console.log(passcode);
+	funcs
+		.addUser(
+			client,
+			req.body.student_id,
+			req.body.student_email,
+			passcode,
+			"student"
+		)
+		.then((result) => {
+			console.log(result);
+		})
+		.catch((error) => {
+			console.error(error);
 		});
 	client.release();
 });

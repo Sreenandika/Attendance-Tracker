@@ -224,7 +224,7 @@
 				if (data.loginStatus == false) {
 					alert("No such user, try again");
 				} else {
-					window.location.pathname = `admin/${data.user_id}`;
+					window.location.pathname = `${data.user_type}/${data.user_id}`;
 				}
 			}
 			$.ajax({

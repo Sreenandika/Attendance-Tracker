@@ -3,12 +3,13 @@
 	I need to make classes for this, but that will come later.
  */
 
-function getAdminUsers(client) {
-	const query = `SELECT user_id,username,password FROM user_accounts WHERE user_role = 'admin';`;
+function getStudentsUsers(client) {
+	const query = `SELECT user_id,username,password FROM user_accounts WHERE user_role = 'student';`;
 	return client.query(query);
 }
-function getStudentUsers(client) {
-	const query = `SELECT username,password FROM user_accounts WHERE user_role = 'student';`;
+
+function getAdminUsers(client) {
+	const query = `SELECT user_id,username,password FROM user_accounts WHERE user_role = 'admin';`;
 	return client.query(query);
 }
 function addClasses(client, class_name, class_id) {
@@ -46,9 +47,23 @@ function getSubjects(client) {
 	const query = `SELECT * FROM subjects`;
 	return client.query(query);
 }
-function addTeachers(client, department_id, teacher_name, teacher_id) {
-	const query = `INSERT INTO teachers (teacher_id,teacher_name,department_id) 
-	VALUES(${teacher_id},'${teacher_name}','${department_id}');`;
+
+function addTeachers(
+	client,
+	department_id,
+	teacher_name,
+	teacher_id,
+	teacher_email
+) {
+	const query = `INSERT INTO teachers (teacher_id,teacher_name,department_id,teacher_email) 
+	VALUES(${teacher_id},'${teacher_name}','${department_id},${teacher_email}');`;
+	return client.query(query);
+}
+
+function addUser(client, id, user_name, passwords, user_role) {
+	const query = `INSERT INTO user_accounts (user_id, username, password, user_role) 
+	VALUES(${id},'${user_name}','${passwords}','${user_role}');`;
+	console.log(query);
 	return client.query(query);
 }
 function getTeachers(client) {
@@ -60,9 +75,15 @@ function addAssignment(client, class_id, teacher_id, subject_id) {
 	VALUES(${teacher_id},'${class_id}','${subject_id}');`;
 	return client.query(query);
 }
-function addStudents(client, department_id, student_name, student_id) {
-	const query = `INSERT INTO students (student_id,student_name,department_id) 
-	VALUES(${student_id},'${student_name}','${department_id}');`;
+function addStudents(
+	client,
+	department_id,
+	student_name,
+	student_id,
+	student_email
+) {
+	const query = `INSERT INTO students (student_id,student_name,department_id,student_email) 
+	VALUES(${student_id},'${student_name}','${department_id}','${student_email}');`;
 	return client.query(query);
 }
 function getStudents(client) {
@@ -98,12 +119,14 @@ function editStudent(client, updateFields, student_id) {
 	const query = `UPDATE students SET ${updateFields} WHERE student_id = ${student_id};`;
 	return client.query(query);
 }
-function changeClass(client,student_id,newClassId){
+function changeClass(client, student_id, newClassId) {
 	const query = `UPDATE student_enrollments SET class_id = ${newClassId} WHERE student_id = ${student_id};`;
 	console.log(query);
 	return client.query(query);
 }
 module.exports = {
+	getStudentsUsers,
+	addUser,
 	changeClass,
 	editStudent,
 	editTeacher,
@@ -114,7 +137,6 @@ module.exports = {
 	getClass,
 	editClass,
 	getAdminUsers,
-	getStudentUsers,
 	addClasses,
 	addDepartments,
 	getDepartments,
