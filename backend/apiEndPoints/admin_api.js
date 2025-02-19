@@ -29,6 +29,7 @@ router.post("/addClass", async (req, res) => {
 		.addClasses(client, req.body.className, req.body.classId)
 		.then((result) => {
 			console.log(result.rows);
+			res.status(200).send("added class");
 		})
 		.catch((error) => {
 			console.error(error);
@@ -47,6 +48,7 @@ router.post("/editClass", async (req, res) => {
 			req.body.classId
 		)
 		.then((result) => {
+			res.status(200).send("edited class");
 			console.log(result.rows);
 		})
 		.catch((error) => {
