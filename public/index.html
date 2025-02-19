@@ -26,20 +26,34 @@
 				margin: 0;
 				padding: 0;
 			}
-
+		
 			body {
 				font-family: 'Roboto', sans-serif;
-				background: linear-gradient(135deg, #1f2957 0%, #3a2052 100%);
-				/* background-image: url("https://cdn-610147b2c1ac184e88c3a02e.closte.com/wp-content/uploads/cochin-university-of-science-and-technology-cusat-kochi-jpg.webp"); */
-				background-repeat: no-repeat;
+				background: linear-gradient(135deg, rgba(31, 41, 87, 0.7) 0%, rgba(58, 32, 82, 0.7) 100%);
 				display: flex;
 				justify-content: center;
 				align-items: center;
 				min-height: 100vh;
 				padding: 1.5rem;
 				box-sizing: border-box;
+				position: relative; /* Required for pseudo-element positioning */
 			}
-
+		
+			/* Pseudo-element for background image with reduced opacity */
+			body::before {
+				content: '';
+				background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Administrative_Block_%2C_Cusat.jpg/1024px-Administrative_Block_%2C_Cusat.jpg");
+				background-repeat: no-repeat;
+				background-size: 1380px 650px;
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				opacity: 0.5; /* Adjust opacity here (0.5 = 50% opacity) */
+				z-index: -1; /* Place it behind the content */
+			}
+		
 			#login-container {
 				display: flex;
 				flex-direction: column;
@@ -47,81 +61,121 @@
 				align-items: center;
 				width: 100%;
 				max-width: 350px;
-				background: white;
+				background: rgba(0, 0, 0, 0.6); /* Black background with transparency */
 				border-radius: 10px;
-				box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+				box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); /* Stronger shadow for depth */
 				padding: 2rem;
 				text-align: center;
 				box-sizing: border-box;
+				animation: fadeIn 1s ease-in-out; /* Fade-in animation */
 			}
-
+		
+			/* Fade-in animation for the login container */
+			@keyframes fadeIn {
+				from {
+					opacity: 0;
+					transform: translateY(-20px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+		
 			#loginForm {
 				display: flex;
 				flex-direction: column;
 				width: 100%;
 			}
-
+		
 			.login-icon {
 				font-size: 5rem;
-				color: #667eea;
+				color: white; /* White icon */
 				margin-bottom: 1.5rem;
 				display: block;
 				text-align: center;
+				filter: drop-shadow(0 4px 6px rgba(255, 255, 255, 0.4)); /* Subtle shadow for the icon */
+				animation: float 3s ease-in-out infinite; /* Floating animation */
 			}
-
+		
+			/* Floating animation for the person icon */
+			@keyframes float {
+				0%, 100% {
+					transform: translateY(0);
+				}
+				50% {
+					transform: translateY(-10px);
+				}
+			}
+		
 			.form-group {
 				margin-bottom: 1.25rem;
 				text-align: left;
 				width: 100%;
 			}
-			form, ol, p, pre, table, ul {
-            margin-bottom: 0.5rem;
-            } 
-
+		
 			label {
 				display: block;
 				margin-bottom: 0.5rem;
 				font-weight: 600;
 				text-align: left;
+				color: white; /* White text */
 			}
-
+		
 			input, select {
 				width: 100%;
 				padding: 0.625rem;
-				border: 1px solid #ddd;
+				border: 1px solid rgba(255, 255, 255, 0.3); /* Light border for inputs */
 				border-radius: 5px;
 				font-size: 1.3rem;
 				box-sizing: border-box;
+				background: rgb(255, 255, 255); /* Slightly transparent white background */
+				color: rgb(0, 0, 0); /* White text */
+				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow for inputs */
+				transition: all 0.3s ease; /* Smooth transition for focus effect */
 			}
-
+		
+			input:focus, select:focus {
+				border-color: #667eea; /* Highlight border on focus */
+				box-shadow: 0 0 10px rgba(102, 126, 234, 0.5); /* Glow effect on focus */
+				transform: scale(1.02); /* Slightly enlarge on focus */
+			}
+		
+			input::placeholder {
+				color: rgba(255, 255, 255, 0.7); /* Placeholder text in lighter white */
+			}
+		
 			#signin {
-				background: linear-gradient(to right, #2a3875, #633d8a);
+				background: linear-gradient(to right, #b9416f, #633d8a);
 				color: white;
 				border: none;
 				align-items: center;
 				border-radius: 5px;
 				font-size: 1.3rem;
 				cursor: pointer;
-				transition: transform 0.3s ease;
+				transition: all 0.3s ease; /* Smooth transition for hover effect */
 				width: 100%;
+				padding: 0.625rem;
+				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Shadow for the button */
 			}
-
+		
 			#signin:hover {
 				transform: translateY(-2px);
-				box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+				box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+				background: linear-gradient(to right, #3a4a8f, #7a4da0); /* Brighter gradient on hover */
 			}
-
+		
 			@media (max-width: 480px) {
 				#login-container {
 					max-width: 100%;
 					padding: 1.25rem;
 				}
-
+		
 				.login-icon {
 					font-size: 4rem;
 				}
 			}
-
+		
 			@media (max-height: 600px) {
 				#login-container {
 					max-height: 90vh;
@@ -135,14 +189,14 @@
 	<body>
 		<div id="login-container">
 			<form id="loginForm">
-				<span class="material-icons" style="font-size: 8rem; text-align: center; display: block; margin-bottom: 1rem;">person</span>
+				<span class="material-icons login-icon">person</span>
 				<div class="form-group">
 					<label for="username">Username:</label>
-					<input type="text" id="username" name="username" required />
+					<input type="text" id="username" name="username" placeholder="Enter your username" required />
 				</div>
 				<div class="form-group">
 					<label for="password">Password:</label>
-					<input type="password" id="password" name="password" required />
+					<input type="password" id="password" name="password" placeholder="Enter your password" required />
 				</div>
 				<div class="form-group">
 					<label for="userType">Type of User:</label>
