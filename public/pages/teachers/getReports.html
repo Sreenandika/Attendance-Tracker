@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <label for="class">Class:</label>
+        <select id="class" name="class">
+            <option value="class1">Class 1</option>
+            <option value="class2">Class 2</option>
+            <option value="class3">Class 3</option>
+        </select>
+        <br><br>
+        <label for="subject">Subject:</label>
+        <select id="subject" name="subject">
+            <option value="math">Math</option>
+            <option value="science">Science</option>
+            <option value="history">History</option>
+        </select>
+        <br><br>
+        <button type="button" onclick="generateReport()">Generate Report</button>
+    </form>
+
+    <script>
+        function generateReport() {
+            const selectedClass = document.getElementById('class').value;
+            const selectedSubject = document.getElementById('subject').value;
+            alert(`Generating report for ${selectedClass} - ${selectedSubject}`);
+        }
+    </script>
+</body>
+</html>

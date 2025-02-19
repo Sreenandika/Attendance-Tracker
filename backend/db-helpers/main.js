@@ -97,6 +97,7 @@ function addEnrollment(client, class_id, student_id) {
 }
 function deleteClass(client, class_id) {
 	const query = `DELETE FROM classes WHERE class_id=${class_id};`;
+	console.log(query);
 	return client.query(query);
 }
 function deleteTeacher(client, teacher_id) {
@@ -107,8 +108,8 @@ function deleteStudent(client, student_id) {
 	const query = `DELETE FROM students WHERE student_id=${student_id};`;
 	return client.query(query);
 }
-function deleteDepartment(client, department_id) {
-	const query = `DELETE FROM departments WHERE department_id=${department_id};`;
+function deleteDepartment(client, department_name) {
+	const query = `DELETE FROM departments WHERE department_name='${department_name}';`;
 	return client.query(query);
 }
 function editTeacher(client, updateFields, teacher_id) {

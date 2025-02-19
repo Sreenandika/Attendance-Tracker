@@ -30,7 +30,7 @@ router.post("/addClass", async (req, res) => {
 		.addClasses(client, req.body.className, req.body.classId)
 		.then((result) => {
 			console.log(result.rows);
-			res.status(200).send("added class");
+			res.send("added class");
 		})
 		.catch((error) => {
 			console.error(error);
@@ -279,10 +279,10 @@ router.delete("/deleteClass", async (req, res) => {
 	funcs
 		.deleteClass(client, req.body.class_id)
 		.then((result) => {
-			res.send("Deleted");
+			res.json(result);
 		})
 		.catch((error) => {
-			res.status(500).send(error.detail);
+			res.json(error);
 		});
 });
 
@@ -313,12 +313,12 @@ router.delete("/deleteStudent", async (req, res) => {
 router.delete("/deleteDepartment", async (req, res) => {
 	const client = await pool.connect();
 	funcs
-		.deleteDepartment(client, req.body.department_id)
+		.deleteDepartment(client, req.body.department_name)
 		.then((result) => {
-			res.send("Deleted");
+			res.json("DONE");
 		})
 		.catch((error) => {
-			res.status(500).send(error.detail);
+			res.json(error);
 		});
 });
 router.put("/editTeacher", async (req, res) => {

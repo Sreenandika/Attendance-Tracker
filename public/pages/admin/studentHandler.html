@@ -1,198 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Student Management System</title>
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-    <link rel="stylesheet" href="styles.css" />
-</head>
-<style>
-/* Global Styles */
-body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to right, #1b5692, #583a6d);
-    margin: 0;
-    padding: 0;
-	box-shadow: #333;
-}
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Student Management System</title>
+		<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+		/>
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<style>
+		/* Global Styles */
+		body {
+			font-family: Arial, sans-serif;
+			background: linear-gradient(to right, #1b5692, #583a6d);
+			margin: 0;
+			padding: 0;
+			box-shadow: #333;
+		}
 
-.container {
-    max-width: 950px;
-    margin: 50px auto;
-    text-align: left;
-}
+		.container {
+			max-width: 950px;
+			margin: 50px auto;
+			text-align: left;
+		}
 
-h1 {
-    font-size: 2.5rem;
-    color: #333;
-    margin-bottom: 20px;
-}
+		h1 {
+			font-size: 2.5rem;
+			color: #333;
+			margin-bottom: 20px;
+		}
 
-/* Grid Layout */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 25px;
-}
+		/* Grid Layout */
+		.grid {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 25px;
+		}
 
-/* Card Styling */
-.card {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: 0.3s;
-    width: 90%; /* Ensuring equal width */
-    margin: 0 auto;
-    min-height: 350px; /* Ensures equal height */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
+		/* Card Styling */
+		.card {
+			background: white;
+			padding: 20px;
+			border-radius: 12px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			transition: 0.3s;
+			width: 90%; /* Ensuring equal width */
+			margin: 0 auto;
+			min-height: 350px; /* Ensures equal height */
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+		}
 
-.card:hover {
-    transform: translateY(-5px);
-}
+		.card:hover {
+			transform: translateY(-5px);
+		}
 
-/* Form Styling */
-label {
-    display: block;
-    margin-top: 10px;
-    font-weight: bold;
-}
+		/* Form Styling */
+		label {
+			display: block;
+			margin-top: 10px;
+			font-weight: bold;
+		}
 
-input, select {
-    width: 97%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-}
+		input,
+		select {
+			width: 97%;
+			padding: 10px;
+			margin-top: 5px;
+			border: 1px solid #ccc;
+			border-radius: 6px;
+		}
 
-/* Button Styling */
-button {
-    width: 100%;
-    padding: 12px;
-    margin-top: auto; /* Aligns button to the bottom */
-    border: none;
-    color: white;
-    font-size: 1rem;
-    border-radius: 6px;
-    cursor: pointer;
-}
+		/* Button Styling */
+		button {
+			width: 100%;
+			padding: 12px;
+			margin-top: auto; /* Aligns button to the bottom */
+			border: none;
+			color: white;
+			font-size: 1rem;
+			border-radius: 6px;
+			cursor: pointer;
+		}
 
-/* Button Colors */
-#submitStudent {
-    background: #0bc759;
-}
+		/* Button Colors */
+		#submitStudent {
+			background: #0bc759;
+		}
 
-#submitDelete {
-    background: #ff1900;
-}
+		#submitDelete {
+			background: #ff1900;
+		}
 
-#addAllotment {
-    background: #26a1f3;
-}
+		#addAllotment {
+			background: #26a1f3;
+		}
 
-#changeClass {
-    background: #ff9900;
-}
+		#changeClass {
+			background: #ff9900;
+		}
 
-/* Card Colors */
-.add-student {
-    border-top: 5px solid #2ecc71;
-}
+		/* Card Colors */
+		.add-student {
+			border-top: 5px solid #2ecc71;
+		}
 
-.delete-student {
-    border-top: 5px solid #e74c3c;
-}
+		.delete-student {
+			border-top: 5px solid #e74c3c;
+		}
 
-.assign-class {
-    border-top: 5px solid #3498db;
-}
+		.assign-class {
+			border-top: 5px solid #3498db;
+		}
 
-.change-class {
-    border-top: 5px solid #f39c12;
-}
+		.change-class {
+			border-top: 5px solid #f39c12;
+		}
 
-/* Ensuring Delete Card Matches Height */
-.delete-student {
-    min-height: 350px; /* Matches Add Student height */
-}
+		/* Ensuring Delete Card Matches Height */
+		.delete-student {
+			min-height: 350px; /* Matches Add Student height */
+		}
 
-/* Button Hover Effects */
-button:hover {
-    opacity: 0.8;
-}
+		/* Button Hover Effects */
+		button:hover {
+			opacity: 0.8;
+		}
+	</style>
+	<body>
+		<div class="container">
+			<h1 style="text-align: center; color: white">
+				Student Management System
+			</h1>
 
+			<div class="grid">
+				<!-- Add Student -->
+				<div class="card add-student">
+					<h3><i class="fas fa-user-plus"></i> Add Student</h3>
+					<label>Student Name</label>
+					<input
+						type="text"
+						id="studentName"
+						placeholder="Enter student name"
+					/>
+					<label>Student ID</label>
+					<input type="text" id="studentId" placeholder="Enter student ID" />
+					<label>Department</label>
+					<select id="selectDepartment">
+					</select>
+					<button id="submitStudent">Add Student</button>
+				</div>
 
-</style>
-<body>
-    <div class="container">
-        <h1 style="text-align: center; color: white;">Student Management System</h1>
-        
-        <div class="grid">
-            <!-- Add Student -->
-            <div class="card add-student">
-                <h3><i class="fas fa-user-plus"></i> Add Student</h3>
-                <label>Student Name</label>
-                <input type="text" id="studentName" placeholder="Enter student name" />
-                <label>Student ID</label>
-                <input type="text" id="studentId" placeholder="Enter student ID" />
-                <label>Department</label>
-                <select id="selectDepartment">
-                    <option value="">Select department</option>
-                </select>
-                <button id="submitStudent">Add Student</button>
-            </div>
+				<!-- Delete Student -->
+				<div class="card delete-student">
+					<h3><i class="fas fa-user-times"></i> Delete Student</h3>
+					<label>Student</label>
+					<select id="selectStudentDelete">
+						<option value="">Select student</option>
+					</select>
+					<label>Department</label>
+					<select id="selectDepartmentDelete">
+						<option value="">Select department</option>
+					</select>
+					<button id="submitDelete">Delete Student</button>
+				</div>
 
-            <!-- Delete Student -->
-            <div class="card delete-student">
-                <h3><i class="fas fa-user-times"></i> Delete Student</h3>
-                <label>Student</label>
-                <select id="selectStudentDelete">
-                    <option value="">Select student</option>
-                </select>
-                <label>Department</label>
-                <select id="selectDepartmentDelete">
-                    <option value="">Select department</option>
-                </select>
-                <button id="submitDelete">Delete Student</button>
-            </div>
+				<!-- Assign Class -->
+				<div class="card assign-class">
+					<h3><i class="fas fa-user-graduate"></i> Assign Class</h3>
+					<label>Student</label>
+					<select id="selectStudentAssign">
+						<option value="">Select student</option>
+					</select>
+					<label>Class</label>
+					<select id="selectClassAssign">
+					</select>
+					<button id="addAllotment">Assign Class</button>
+				</div>
 
-            <!-- Assign Class -->
-            <div class="card assign-class">
-                <h3><i class="fas fa-user-graduate"></i> Assign Class</h3>
-                <label>Student</label>
-                <select id="selectStudentAssign">
-                    <option value="">Select student</option>
-                </select>
-                <label>Class</label>
-                <select id="selectClassAssign">
-                    <option value="">Select class</option>
-                </select>
-                <button id="addAllotment">Assign Class</button>
-            </div>
-
-            <!-- Change Class -->
-            <div class="card change-class">
-                <h3><i class="fas fa-exchange-alt"></i> Change Class</h3>
-                <label>Student</label>
-                <select id="selectStudentChange">
-                    <option value="">Select student</option>
-                </select>
-                <label>Class</label>
-                <select id="selectClassChange">
-                    <option value="">Select class</option>
-                </select>
-                <button id="changeClass">Change Class</button>
-            </div>
-        </div>
-    </div>
-</body>
-
+				<!-- Change Class -->
+				<div class="card change-class">
+					<h3><i class="fas fa-exchange-alt"></i> Change Class</h3>
+					<label>Student</label>
+					<select id="selectStudentChange">
+						<option value="">Select student</option>
+					</select>
+					<label>Class</label>
+					<select id="selectClassChange">
+					</select>
+					<button id="changeClass">Change Class</button>
+				</div>
+			</div>
+		</div>
+	</body>
 
 	<script>
 		function getString(input) {
@@ -202,17 +206,48 @@ button:hover {
 			}
 			return input.substring(0, periodIndex);
 		}
-		$.get("/getClass", function (data, status) {
-			if (data.length == 0) {
-				$("#selectClass").append(`<option>No Classes Found</option>`);
-				return;
-			} else {
-				classExist = true;
-				data.forEach((element) => {
-					$("#selectClass").append(`<option>${element.class_id}. ${element.class_name}</option>`);
-				});
-			}
-		});
+        function deleteAll(id) {
+			id.forEach((ids) => {
+				$(ids).empty();
+			});
+		}
+		var classIDs = ["#selectClassAssign", "#selectClassChange"];
+        var departmentIDs = [];
+		function getClass(id) {
+			$.get("/getClass", function (data, status) {
+				if (data.length == 0) {
+					id.forEach((ids) => {
+						$(ids).append(`<option>No Classes Found</option>`);
+					});
+					return;
+				} else {
+					classExist = true;
+					data.forEach((element) => {
+						id.forEach((ids) => {
+							$(ids).append(`<option>${element.class_name}</option>`);
+						});
+					});
+				}
+			});
+		}
+        function getDepartments(id) {
+            $.get("/getDepartments", function (data, status) {
+                if (data.length == 0) {
+                    id.forEach((ids) => {
+                        $(ids).append(`<option>No Classes Found</option>`);
+                    });
+                    return;
+                } else {
+                    classExist = true;
+                    data.forEach((element) => {
+                        id.forEach((ids) => {
+                            $(ids).append(`<option>${element.department_name}</option>`);
+                        });
+                    });
+                }
+            });
+        }
+		getClass(classIDs);
 		$.get("/getStudents", function (data, status) {
 			if (data.length == 0) {
 				$("#selectStudent").append(`<option>No Students Found</option>`);
@@ -221,18 +256,6 @@ button:hover {
 				data.forEach((element) => {
 					$("#selectStudent").append(
 						`<option>${element.student_id}. ${element.student_name}</option>`
-					);
-				});
-			}
-		});
-		$.get("/getDepartments", function (data, status) {
-			if (data.length == 0) {
-				$("#selectDepartment").append(`<option>No Departments Found</option>`);
-				return;
-			} else {
-				data.forEach((element) => {
-					$("#selectDepartment").append(
-						`<option>${element.department_id}. ${element.department_name}</option>`
 					);
 				});
 			}

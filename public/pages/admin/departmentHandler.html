@@ -90,12 +90,11 @@
 
         <div class="form-section">
             <h3 class="text-xl font-bold mb-4">Edit Department</h3>
-            <label for="selectDepartment" class="block mb-2">Choose a department to edit:</label>
-            <select id="selectDepartment" class="form-select mb-4"></select>
+            <label for="selectDepartment" class="block mb-2">Choose a department to delete </label>
+            <select id="selectDepartmentForDelete" class="form-select mb-4"></select>
             <div class="input-wrapper">
                 <div class="flex gap-2">
-                    <input type="text" id="editDepartmentName" placeholder="New department name" class="form-input" />
-                    <button id="editSubmitDepartment" style="background-color:#237aec" class="btn">Submit</button>
+                    <button id="deleteDepartment" style="background-color:#237aec" class="btn">Delete</button>
                 </div>
             </div>
         </div>
@@ -106,16 +105,29 @@
         </div>
     </div>
 	<script>
-		$.get("/getDepartments", function (data, status) {
-			if (data.length == 0) {
-				$("#currDepartments").append(`<li>No Classes Found</li>`);
-				return;
-			} else {
-				data.forEach((element) => {
-					$("#currDepartments").append(`<li>${element.department_name}</li>`);
-				});
-			}
-		});
+        var ids= ["#selectDepartmentForDelete","#currDepartments"]
+        function getDepartments(id) {
+            $.get("/getDepartments", function (data, status) {
+                if (data.length == 0) {
+                    id.forEach((ids) => {
+                        $(ids).append(`<option>No Classes Found</option>`);
+                    });
+                    return;
+                } else {
+                    classExist = true;
+                    data.forEach((element) => {
+                        id.forEach((ids) => {
+                            $(ids).append(`<option>${element.department_name}</option>`);
+                        });
+                    });
+                }
+            });
+        }
+        function deleteAll(id) {
+            id.forEach((ids) => {
+                $(ids).empty();
+            });
+        }
 		$("#submitDepartment").click(() => {
 			const departmentName = $("#departmentName").val();
 			const departmentId = $("#departmentId").val();
@@ -130,11 +142,37 @@
 					departmentId,
 					departmentName,
 				},
-				success: (data, textStatus, jqXHR) => {},
+				success: (data, textStatus, jqXHR) => {
+                    deleteAll(ids);
+                    getDepartments(ids);
+                },
 				error: (err) => {
 					console.log(err);
 				},
 			});
 		});
+        $("#deleteDepartment").click(() => {
+			const department_name = $("#selectDepartmentForDelete").val();
+			if (!departmentName) {
+				alert("Please enter a proper department name");
+				return;
+			}
+			$.ajax({
+				url: "/deleteDepartment",
+				method: "DELETE",
+				data: {
+					department_name,
+				},
+				success: (data, textStatus, jqXHR) => {
+                    deleteAll(ids);
+                    getDepartments(ids);
+                    console.log(data);
+                },
+				error: (err) => {
+					console.log(err);
+				},
+			});
+		});
+        getDepartments(ids);
 	</script>
 </html>
