@@ -3,15 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Subjects Page</title>
+
+    <!-- FontAwesome for Icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous"></script>
+
+    <style>
+        /* General Page Styling */
+        body {
+            background: #6b6f60; /* Matching Teacher's Page */
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+        }
+
+        /* Main Container */
+        .main-container {
+            background: white;
+            width: 400px;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Styled Subject List */
+        ol {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: #c97556; /* Matching Button Color */
+            color: white;
+            font-size: 1rem;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        li i {
+            font-size: 1.2rem;
+        }
+    </style>
 </head>
 <body>
-<ol>
-    <li>Mathematics</li>
-    <li>Science</li>
-    <li>History</li>
-    <li>Geography</li>
-    <li>English</li>
-</ol>
+    <div class="main-container">
+        <h1>Subjects</h1>
+        <ol>
+            <li><i class="fas fa-calculator"></i> Mathematics</li>
+            <li><i class="fas fa-flask"></i> Science</li>
+            <li><i class="fas fa-landmark"></i> History</li>
+            <li><i class="fas fa-globe"></i> Geography</li>
+            <li><i class="fas fa-book-open"></i> English</li>
+        </ol>
+    </div>
 </body>
 </html>
