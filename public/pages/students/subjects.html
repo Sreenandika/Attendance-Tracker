@@ -3,22 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Student Scores</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fde8c8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #ffeb99;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            text-align: center;
+        }
+        .card {
+            background: #ffd700;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .circle {
+            width: 60px;
+            height: 60px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background: conic-gradient(#ddd  var(--percentage),#d88d02 0deg);
+        }
+        .circle::before {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: #ffd700;
+            border-radius: 50%;
+        }
+        .percentage {
+            position: absolute;
+            font-weight: bold;
+            color: #333;
+            font-size: 14px;
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: #444;
+        }
+        .subject {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-left: 10px;
+        }
+    </style>
 </head>
 <body>
-    <table border="1">
-        <tr>
-            <th>Subject</th>
-            <th>Percentage</th>
-        </tr>
-        <tr>
-            <td>Mathematics</td>
-            <td>85%</td>
-        </tr>
-        <tr>
-            <td>Science</td>
-            <td>90%</td>
-        </tr>
-    </table>
+    <div class="container">
+        <h2>Student Scores</h2>
+        <div class="card">
+            <span class="subject">Mathematics</span>
+            <div class="circle" style="--percentage: 85deg;">
+                <div class="percentage">85%</div>
+            </div>
+        </div>
+        <div class="card">
+            <span class="subject">Science</span>
+            <div class="circle" style="--percentage: 90deg;">
+                <div class="percentage">90%</div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
