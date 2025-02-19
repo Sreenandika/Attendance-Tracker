@@ -3,26 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Generate Report</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        /* Page Styling */
+        body {
+            background-color: #6F7265; /* Background color similar to previous pages */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+        }
+
+        /* Form Container */
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h2 {
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Form Styling */
+        label {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #444;
+            display: block;
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            margin-top: 5px;
+        }
+
+        /* Button Styling */
+        .btn {
+            background: #C67656;
+            color: white;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            transition: 0.3s;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            background: #A85A44;
+            transform: translateY(-2px);
+        }
+
+        .btn i {
+            font-size: 1.2rem;
+        }
+    </style>
 </head>
 <body>
-    <form>
-        <label for="class">Class:</label>
-        <select id="class" name="class">
-            <option value="class1">Class 1</option>
-            <option value="class2">Class 2</option>
-            <option value="class3">Class 3</option>
-        </select>
-        <br><br>
-        <label for="subject">Subject:</label>
-        <select id="subject" name="subject">
-            <option value="math">Math</option>
-            <option value="science">Science</option>
-            <option value="history">History</option>
-        </select>
-        <br><br>
-        <button type="button" onclick="generateReport()">Generate Report</button>
-    </form>
+    <div class="container">
+        <h2>📋 Generate Report</h2>
+        <form>
+            <label for="class">Class:</label>
+            <select id="class" name="class">
+                <option value="class1">Class 1</option>
+                <option value="class2">Class 2</option>
+                <option value="class3">Class 3</option>
+            </select>
+
+            <label for="subject">Subject:</label>
+            <select id="subject" name="subject">
+                <option value="math">Math</option>
+                <option value="science">Science</option>
+                <option value="history">History</option>
+            </select>
+
+            <button type="button" class="btn" onclick="generateReport()">
+                <i class="fas fa-file-alt"></i> Generate Report
+            </button>
+        </form>
+    </div>
 
     <script>
         function generateReport() {
