@@ -24,10 +24,47 @@ router.get("/admin/:admin_id", (req, res) => {
 		res.redirect("/");
 	}
 });
+router.get("/teacher/:teacher_id", (req, res) => {
+	if(req.session.isAuth){
+        console.log(req.session.isAuth);
+		res.sendFile(path.join(__dirname, "../../public/pages/teachers", "teachers.html"));
+	}
+	else{
+		res.redirect("/");
+	}
+});
+router.get("/teacher/:teacher_id/profile", (req, res) => {
+	if(req.session.isAuth){
+        console.log(req.session.isAuth);
+		res.sendFile(path.join(__dirname, "../../public/pages/teachers", "profile.html"));
+	}
+	else{
+		res.redirect("/");
+	}
+});
+router.get("/teacher/:teacher_id/subjects", (req, res) => {
+	if(req.session.isAuth){
+        console.log(req.session.isAuth);
+		res.sendFile(path.join(__dirname, "../../public/pages/teachers", "subjects.html"));
+	}
+	else{
+		res.redirect("/");
+	}
+});
+router.get("/teacher/:teacher_id/reports", (req, res) => {
+	if(req.session.isAuth){
+        console.log(req.session.isAuth);
+		res.sendFile(path.join(__dirname, "../../public/pages/teachers", "getReports.html"));
+	}
+	else{
+		res.redirect("/");
+	}
+});
+
 router.get("/student/:student_id", (req, res) => {
 	if(req.session.isAuth){
         console.log(req.session.isAuth);
-		res.sendFile(path.join(__dirname, "../../public/pages/students", "students.html"));
+		res.sendFile(path.join(__dirname, "../../public/pages/teachers", "students.html"));
 	}
 	else{
 		res.redirect("/");

@@ -92,6 +92,35 @@ router.post("/login", async (req, res) => {
 				res.send("Error getting students users");
 			});
 	}
+	if (req.body.userType === "teacher") {
+		const dataToSend = {
+			user_id: "no_user_found",
+			user_type:"",
+			loginStatus: false,
+		};
+		funcs
+			.getTeachersUsers(client)
+			.then((result) => {
+				console.log(result.rows);
+				for (let i = 0; i < result.rows.length; i++) {
+					if (
+						req.body.username === result.rows[i].username &&
+						req.body.password === result.rows[i].password
+					) {
+						dataToSend.user_id = result.rows[i].user_id;
+						dataToSend.loginStatus = true;
+						dataToSend.user_type="teacher"
+						req.session.isAuth = true;
+						break;
+					}
+				}
+				res.send(dataToSend);
+			})
+			.catch((e) => {
+				console.error("Error getting students users", e);
+				res.send("Error getting students users");
+			});
+	}
 	client.release();
 });
 router.get("/logout", async (req, res) => {

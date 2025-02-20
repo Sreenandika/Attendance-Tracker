@@ -7,7 +7,10 @@ function getStudentsUsers(client) {
 	const query = `SELECT user_id,username,password FROM user_accounts WHERE user_role = 'student';`;
 	return client.query(query);
 }
-
+function getTeachersUsers(client) {
+	const query = `SELECT user_id,username,password FROM user_accounts WHERE user_role = 'teacher';`;
+	return client.query(query);
+}
 function getAdminUsers(client) {
 	const query = `SELECT user_id,username,password FROM user_accounts WHERE user_role = 'admin';`;
 	return client.query(query);
@@ -177,6 +180,7 @@ function changeClass(client, student_id, newClassId) {
 }
 
 module.exports = {
+	getTeachersUsers,
 	getAttandance,
 	getSingleStudents,
 	deleteSubject,
