@@ -73,7 +73,7 @@ function getTeachers(client) {
 }
 function addAssignment(client, class_id, teacher_id, subject_id) {
 	const query = `INSERT INTO teacher_assignments (teacher_id,class_id,subject_id) 
-	VALUES(${teacher_id},'${class_id}','${subject_id}');`;
+	VALUES(${teacher_id},${class_id},${subject_id});`;
 	return client.query(query);
 }
 function addStudents(
@@ -89,6 +89,51 @@ function addStudents(
 }
 function getStudents(client) {
 	const query = `SELECT * FROM students`;
+	return client.query(query);
+}
+function getSingleStudents(client, student_id) {
+	const query = `
+    SELECT
+        c.class_name,
+        s.student_name,
+        d.department_name
+    FROM
+        students AS s
+    JOIN
+        student_enrollments AS se ON s.student_id = se.student_id
+    JOIN
+        classes AS c ON se.class_id = c.class_id
+    JOIN
+        departments AS d ON s.department_id = d.department_id
+    WHERE
+        s.student_id = ${student_id};
+  `;
+	console.log(query);
+	return client.query(query);
+}
+function getAttandance(client, student_id) {
+	const query = `    
+	SELECT
+    s.subject_name,
+    COUNT(CASE WHEN a.present = TRUE THEN 1 END) AS present_count,
+    COUNT(a.attendance_id) AS total_classes,
+    (COUNT(CASE WHEN a.present = TRUE THEN 1 END) * 100.0 / COUNT(a.attendance_id)) AS attendance_percentage
+      FROM
+          subjects AS s
+      JOIN
+          teacher_assignments AS ta ON s.subject_id = ta.subject_id
+      JOIN
+          student_enrollments AS se ON ta.class_id = se.class_id
+      JOIN
+          students AS st ON se.student_id = st.student_id
+      LEFT JOIN
+          attendance AS a ON ta.assignment_id = a.assignment_id AND st.student_id = a.student_id
+      WHERE
+          st.student_id = ${student_id}
+      GROUP BY
+          s.subject_name
+      ORDER BY
+          s.subject_name;`;
 	return client.query(query);
 }
 function addEnrollment(client, class_id, student_id) {
@@ -130,7 +175,10 @@ function changeClass(client, student_id, newClassId) {
 	console.log(query);
 	return client.query(query);
 }
+
 module.exports = {
+	getAttandance,
+	getSingleStudents,
 	deleteSubject,
 	getStudentsUsers,
 	addUser,

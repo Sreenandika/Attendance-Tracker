@@ -146,6 +146,12 @@
 						id="studentName"
 						placeholder="Enter student name"
 					/>
+					<label>Student Email</label>
+					<input
+						type="text"
+						id="student_email"
+						placeholder="Enter student email"
+					/>
 					<label>Student ID</label>
 					<input type="text" id="studentId" placeholder="Enter student ID" />
 					<label>Department</label>
@@ -267,6 +273,7 @@
 			const student_name = $("#studentName").val();
 			const department_id = $("#selectDepartmentAdd").val().split("")[0];
 			const student_id = $("#studentId").val();
+			const student_email = $("#student_email").val();
 			if (student_name == null || department_id == null || student_id == null) {
 				alert("Please fill details");
 				return;
@@ -278,6 +285,7 @@
 					student_id,
 					student_name,
 					department_id,
+					student_email
 				},
 				success: (data, textStatus, jqXHR) => {
 					console.log("Sucess");

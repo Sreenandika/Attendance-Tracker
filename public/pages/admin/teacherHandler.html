@@ -297,10 +297,10 @@
 						subject_id,
 					},
 					success: (data) => {
-						showDynamicModal("Added assignment", 2000);
+						console.log(data);
 					},
 					error: (err) => {
-						showDynamicModal("Assignment already exists", 2000);
+						console.log(data);
 					},
 				});
 			});

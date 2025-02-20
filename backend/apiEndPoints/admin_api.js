@@ -1,8 +1,3 @@
-/*
-	This file contains all the api endpoints that the admin requires.
-	The acctual functions are defined in the file main.js
-*/
-
 const express = require("express");
 const router = express.Router();
 const bodyParser = require("body-parser");
@@ -22,6 +17,21 @@ const pool = new Pool({
 	password: db.password,
 	port: db.port,
 	ssl: db.ssl,
+});
+
+router.get("/getSingleStudent", async (req, res) => {
+    const client = await pool.connect();
+    console.log(req.body.student_id);
+    funcs
+        .getSingleStudents(client,req.body.student_id)
+        .then((result) => {
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send("Error adding subject");
+        });
+    client.release();
 });
 
 router.post("/addClass", async (req, res) => {
@@ -180,7 +190,7 @@ router.post("/addStudent", async (req, res) => {
 			client,
 			req.body.student_id,
 			req.body.student_email,
-			passcode,
+			"stu",
 			"student"
 		)
 		.then((result) => {
