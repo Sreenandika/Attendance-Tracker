@@ -57,6 +57,11 @@
             color: #333;
             font-size: 14px;
         }
+        .fraction {
+            font-weight: bold;
+            color: #333;
+            font-size: 14px;
+        }
         h2 {
             margin-bottom: 20px;
             color: #444;
@@ -71,13 +76,7 @@
 </head>
 <body>
     <div class="container">
-        <h2>Student Scores</h2>
-        <div class="card">
-            <span class="subject">Mathematics</span>
-            <div class="circle" style="--percentage: 85deg;">
-                <div class="percentage">85%</div>
-            </div>
-        </div>
+        <h2>Student Attendance</h2>
     </div>
     <script>
         const student_id = window.location.pathname.split("/")[2];
@@ -88,13 +87,16 @@
 					student_id
 				},
 				success: (data, textStatus, jqXHR) => {
+                    console.log(data);
                     data.forEach(subject => {
+                        console.log(subject);
                         const card = `
                             <div class="card">
                                 <span class="subject">${subject.subject_name}</span>
-                                <div class="circle" style="--percentage: ${subject.attandance_percentage * 3.6}deg;">
-                                    <div class="percentage">${subject.attandance_percentage}%</div>
+                                <div class="circle">
+                                    <div class="percentage">${Math.floor(subject.attendance_percentage)}%</div>
                                 </div>
+                                <div class="fraction">${subject.present_count}/${subject.total_classes}</div>
                             </div>
                         `;
                         $('.container').append(card);

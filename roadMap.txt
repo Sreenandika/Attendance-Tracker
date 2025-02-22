@@ -18,3 +18,10 @@ ToDo Next:
     6. Define the various views for the teacher and the student
     7. Define what the teacher needs to do
     8. Define what the student wants to do. 
+
+
+
+Remaining Bugs : 
+    1. When no attendance is taken, a division by 0 occures. -- done
+    2. Profile page of teachers 
+    3. Generate Attendance report

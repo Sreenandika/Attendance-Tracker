@@ -8,7 +8,7 @@ const studentApis = require("./apiEndPoints/student_api.js");
 const teacherApis = require("./apiEndPoints/teacher_api.js");
 const login = require("./auth/auth.js");
 const app = express();
-const port = 3000;
+const port = 8080;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

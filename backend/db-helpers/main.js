@@ -3,18 +3,58 @@
 	I need to make classes for this, but that will come later.
  */
 
-function getAssignmentId(client, student_id, subject_id, teacher_id) {
+function getAttandanceReport(){
+	
+}
+
+
+async function addAttendance(client, studentIds, assignmentId, currentDate) {
+	client.query("BEGIN");
+	const allStudentsQuery = `
+      SELECT se.student_id
+      FROM student_enrollments se
+      JOIN teacher_assignments ta ON se.class_id = ta.class_id
+      WHERE ta.assignment_id = $1
+    `;
+	const res = await client.query(allStudentsQuery, [assignmentId]);
+
+	const allStudentIds = res.rows.map((row) => row.student_id);
+	studentIds = studentIds.map((ids) => Number(ids));
+	const presentStudentIds = new Set(studentIds);
+	const absentStudentIds = allStudentIds.filter(
+		(id) => !presentStudentIds.has(id)
+	);
+
+	console.log(studentIds);
+	console.log(allStudentIds);
+	console.log(presentStudentIds);
+	console.log(absentStudentIds);
+
+	const insertQuery = `
+      INSERT INTO attendance (assignment_id, student_id, attendance_date, present)
+      VALUES ($1, $2, $3, $4)
+    `;
+	for (const studentId of studentIds) {
+		client.query(insertQuery, [assignmentId, studentId, currentDate, true]);
+	}
+
+	for (const studentId of absentStudentIds) {
+		client.query(insertQuery, [assignmentId, studentId, currentDate, false]);
+	}
+	return client.query("COMMIT");
+}
+function getAssignmentId(client, student_id, subject_name, teacher_id) {
 	const query = `
 	SELECT ta.assignment_id
 	FROM teacher_assignments ta
 	JOIN student_enrollments se ON ta.class_id = se.class_id
+	JOIN subjects sub ON ta.subject_id = sub.subject_id
 	WHERE ta.teacher_id = ${teacher_id}  
   	AND se.student_id = ${student_id}
-  	AND ta.subject_id = ${subject_id}; 
+  	AND sub.subject_name = '${subject_name}';
 	`;
 	return client.query(query);
 }
-
 function getTeacher_Classes(client, teacher_id) {
 	const query = `
 	SELECT 
@@ -157,23 +197,26 @@ function getAttandance(client, student_id) {
     s.subject_name,
     COUNT(CASE WHEN a.present = TRUE THEN 1 END) AS present_count,
     COUNT(a.attendance_id) AS total_classes,
-    (COUNT(CASE WHEN a.present = TRUE THEN 1 END) * 100.0 / COUNT(a.attendance_id)) AS attendance_percentage
-      FROM
-          subjects AS s
-      JOIN
-          teacher_assignments AS ta ON s.subject_id = ta.subject_id
-      JOIN
-          student_enrollments AS se ON ta.class_id = se.class_id
-      JOIN
-          students AS st ON se.student_id = st.student_id
-      LEFT JOIN
-          attendance AS a ON ta.assignment_id = a.assignment_id AND st.student_id = a.student_id
-      WHERE
-          st.student_id = ${student_id}
-      GROUP BY
-          s.subject_name
-      ORDER BY
-          s.subject_name;`;
+    CASE 
+        WHEN COUNT(a.attendance_id) = 0 THEN 0
+        ELSE (COUNT(CASE WHEN a.present = TRUE THEN 1 END) * 100.0 / COUNT(a.attendance_id))
+    END AS attendance_percentage
+	FROM
+    	subjects AS s
+	JOIN
+    	teacher_assignments AS ta ON s.subject_id = ta.subject_id
+	JOIN
+    	student_enrollments AS se ON ta.class_id = se.class_id
+	JOIN
+    	students AS st ON se.student_id = st.student_id
+	LEFT JOIN
+    	attendance AS a ON ta.assignment_id = a.assignment_id AND st.student_id = a.student_id
+	WHERE
+    	st.student_id = ${student_id}
+	GROUP BY
+    	s.subject_name
+	ORDER BY
+    	s.subject_name;`;
 	return client.query(query);
 }
 function addEnrollment(client, class_id, student_id) {
@@ -217,6 +260,7 @@ function changeClass(client, student_id, newClassId) {
 }
 
 module.exports = {
+	addAttendance,
 	getAssignmentId,
 	getStudents_Classes,
 	getTeacher_Classes,
