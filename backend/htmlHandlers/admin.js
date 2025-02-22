@@ -33,6 +33,15 @@ router.get("/teacher/:teacher_id", (req, res) => {
 		res.redirect("/");
 	}
 });
+router.get("/teacher/:teacher_id/attendance", (req, res) => {
+	if(req.session.isAuth){
+        console.log(req.session.isAuth);
+		res.sendFile(path.join(__dirname, "../../public/pages/teachers", "attendance.html"));
+	}
+	else{
+		res.redirect("/");
+	}
+});
 router.get("/teacher/:teacher_id/profile", (req, res) => {
 	if(req.session.isAuth){
         console.log(req.session.isAuth);
@@ -64,7 +73,7 @@ router.get("/teacher/:teacher_id/reports", (req, res) => {
 router.get("/student/:student_id", (req, res) => {
 	if(req.session.isAuth){
         console.log(req.session.isAuth);
-		res.sendFile(path.join(__dirname, "../../public/pages/teachers", "students.html"));
+		res.sendFile(path.join(__dirname, "../../public/pages/students", "students.html"));
 	}
 	else{
 		res.redirect("/");
@@ -78,7 +87,8 @@ router.get("/student/:student_id/profile", (req, res) => {
 	else{
 		res.redirect("/");
 	}
-});router.get("/student/:student_id/subjects", (req, res) => {
+});
+router.get("/student/:student_id/subjects", (req, res) => {
 	if(req.session.isAuth){
         console.log(req.session.isAuth);
 		res.sendFile(path.join(__dirname, "../../public/pages/students", "subjects.html"));
@@ -86,7 +96,8 @@ router.get("/student/:student_id/profile", (req, res) => {
 	else{
 		res.redirect("/");
 	}
-});router.get("/student/:student_id/notifications", (req, res) => {
+});
+router.get("/student/:student_id/notifications", (req, res) => {
 	if(req.session.isAuth){
         console.log(req.session.isAuth);
 		res.sendFile(path.join(__dirname, "../../public/pages/students", "notifications.html"));
@@ -94,7 +105,8 @@ router.get("/student/:student_id/profile", (req, res) => {
 	else{
 		res.redirect("/");
 	}
-});router.get("/student/:student_id", (req, res) => {
+});
+router.get("/student/:student_id", (req, res) => {
 	if(req.session.isAuth){
         console.log(req.session.isAuth);
 		res.sendFile(path.join(__dirname, "../../public/pages/students", "students.html"));

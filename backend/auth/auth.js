@@ -127,6 +127,6 @@ router.get("/logout", async (req, res) => {
 	req.session.destroy((err)=>{
 		if(err) console.log(err);
 	});
-	res.send("OK");
+	res.redirect("/");
 });
 module.exports = router;

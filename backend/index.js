@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const adminPaths = require("./htmlHandlers/admin.js");
 const adminApis = require("./apiEndPoints/admin_api.js");
 const studentApis = require("./apiEndPoints/student_api.js");
+const teacherApis = require("./apiEndPoints/teacher_api.js");
 const login = require("./auth/auth.js");
 const app = express();
 const port = 3000;
@@ -15,6 +16,7 @@ app.use('',adminPaths);
 app.use('',adminApis);
 app.use('',login);
 app.use('',studentApis);
+app.use('',teacherApis);
 app.get("/", (req, res) => {
 	res.sendFile(path.join(__dirname, "../public", "index.html"));
 });

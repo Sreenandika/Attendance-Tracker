@@ -1,111 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-    <style>
-        body {
-            background: linear-gradient(135deg, #401972, #3161b3 );
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 2rem;
-            font-family: 'Arial', sans-serif;
-        }
-        .dashboard-container {
-            background: rgba(236, 232, 232, 0.95);
-            width: 80%;
-            max-width: 900px;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            text-align: center;
-        }
-        .admin-button {
-            background: white;
-            color: #1e3c72;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            border-radius: 12px;
-            padding: 1.2rem;
-            text-align: center;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(30, 60, 114, 0.3);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            font-size: 1rem;
-        }
-        .admin-button i {
-            font-size: 1.8rem;
-            color: #2a5298;
-        }
-        .admin-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(30, 60, 114, 0.4);
-        }
-        .grid {
-            display: grid;
-            gap: 1rem;
-            grid-template-columns: repeat(3, minmax(150px, 1fr));
-            margin-top: 2rem;
-            justify-content: center;
-        }
-        #logout {
-            background: linear-gradient(45deg, #e74c3c, #c0392b);
-            color: white;
-            font-weight: bold;
-            border-radius: 12px;
-            padding: 1rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            margin-top: 2rem;
-            width: 100%;
-        }
-        #logout:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 20px rgba(231, 76, 60, 0.4);
-        }
-    </style>
-</head>
-<body>
-    <div class="dashboard-container">
-        <h2 id="header" class="text-4xl font-bold mb-8 text-gray-800">Welcome Admin</h2>
-        <div class="grid">
-            <div id="studentHandler" class="admin-button"><i class="fas fa-user-graduate"></i> Student Manager</div>
-            <div id="departmentHandler" class="admin-button"><i class="fas fa-building"></i> Department Manager</div>
-            <div id="classHandler" class="admin-button"><i class="fas fa-chalkboard"></i> Class Manager</div>
-            <div id="teacherHandler" class="admin-button"><i class="fas fa-chalkboard-teacher"></i> Teacher Manager</div>
-            <div id="subjectHandler" class="admin-button"><i class="fas fa-book"></i> Subjects Manager</div>
-        </div>
-        <button id="logout">Logout</button>
-    </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const currUserId = window.location.pathname.split("/")[2];
-            document.getElementById("header").textContent = `Welcome Admin ${currUserId}`;
-            const handlers = {
-                "classHandler": "/class_manager",
-                "teacherHandler": "/teacher_manager",
-                "studentHandler": "/student_manager",
-                "subjectHandler": "/subject_manager",
-                "departmentHandler": "/department_manager"
-            };
-            Object.entries(handlers).forEach(([id, path]) => {
-                document.getElementById(id).addEventListener("click", () => {
-                    window.location.pathname = `/admin/${currUserId}${path}`;
-                });
-            });
-            document.getElementById("logout").addEventListener("click", () => {
-                window.location.pathname = "/logout";
-            });
-        });
-    </script>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Admin Dashboard</title>
+		<link
+			href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+			rel="stylesheet"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+		/>
+		<style>
+			body {
+				background: linear-gradient(135deg, #401972, #3161b3);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				min-height: 100vh;
+				padding: 2rem;
+				font-family: "Arial", sans-serif;
+			}
+			.dashboard-container {
+				background: rgba(236, 232, 232, 0.95);
+				width: 80%;
+				max-width: 900px;
+				padding: 2rem;
+				border-radius: 15px;
+				box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+				text-align: center;
+			}
+			.admin-button {
+				background: white;
+				color: #1e3c72;
+				font-weight: bold;
+				transition: all 0.3s ease;
+				border-radius: 12px;
+				padding: 1.2rem;
+				text-align: center;
+				cursor: pointer;
+				box-shadow: 0 5px 15px rgba(30, 60, 114, 0.3);
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 0.5rem;
+				font-size: 1rem;
+			}
+			.admin-button i {
+				font-size: 1.8rem;
+				color: #2a5298;
+			}
+			.admin-button:hover {
+				transform: translateY(-5px);
+				box-shadow: 0 10px 20px rgba(30, 60, 114, 0.4);
+			}
+			.grid {
+				display: grid;
+				gap: 1rem;
+				grid-template-columns: repeat(3, minmax(150px, 1fr));
+				margin-top: 2rem;
+				justify-content: center;
+			}
+			#logout {
+				background: linear-gradient(45deg, #e74c3c, #c0392b);
+				color: white;
+				font-weight: bold;
+				border-radius: 12px;
+				padding: 1rem;
+				transition: all 0.3s ease;
+				cursor: pointer;
+				margin-top: 2rem;
+				width: 100%;
+			}
+			#logout:hover {
+				transform: scale(1.05);
+				box-shadow: 0 10px 20px rgba(231, 76, 60, 0.4);
+			}
+		</style>
+	</head>
+	<body>
+		<div class="dashboard-container">
+			<h2 id="header" class="text-4xl font-bold mb-8 text-gray-800">
+				Welcome Admin
+			</h2>
+			<div class="grid">
+				<div id="studentHandler" class="admin-button">
+					<i class="fas fa-user-graduate"></i> Student Manager
+				</div>
+				<div id="departmentHandler" class="admin-button">
+					<i class="fas fa-building"></i> Department Manager
+				</div>
+				<div id="classHandler" class="admin-button">
+					<i class="fas fa-chalkboard"></i> Class Manager
+				</div>
+				<div id="teacherHandler" class="admin-button">
+					<i class="fas fa-chalkboard-teacher"></i> Teacher Manager
+				</div>
+				<div id="subjectHandler" class="admin-button">
+					<i class="fas fa-book"></i> Subjects Manager
+				</div>
+			</div>
+			<button id="logout">Logout</button>
+		</div>
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				const currUserId = window.location.pathname.split("/")[2];
+				document.getElementById(
+					"header"
+				).textContent = `Welcome Admin ${currUserId}`;
+				const handlers = {
+					classHandler: "/class_manager",
+					teacherHandler: "/teacher_manager",
+					studentHandler: "/student_manager",
+					subjectHandler: "/subject_manager",
+					departmentHandler: "/department_manager",
+				};
+				Object.entries(handlers).forEach(([id, path]) => {
+					document.getElementById(id).addEventListener("click", () => {
+						window.location.pathname = `/admin/${currUserId}${path}`;
+					});
+				});
+				document.getElementById("logout").addEventListener("click", () => {
+					fetch("/logout", {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+						},
+					})
+						.then((response) => {
+							if (response.ok) {
+								console.log("logout");
+							}
+						})
+						.catch((error) => {
+							console.error("Error:", error);
+						});
+				});
+			});
+		</script>
+	</body>
 </html>

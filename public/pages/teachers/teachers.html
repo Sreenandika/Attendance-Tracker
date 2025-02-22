@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teacher's Page</title>
 
     <!-- FontAwesome for Icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"
+        crossorigin="anonymous"></script>
 
     <style>
         /* General Page Styling */
         body {
-            background:  #717769;
+            background: #717769;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -96,45 +98,47 @@
                 width: 90%;
             }
 
-            .left-side, .right-side {
+            .left-side,
+            .right-side {
                 width: 100%;
                 padding: 20px;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="main-container">
         <!-- Left Side (Image) -->
         <div class="left-side">
-            <img src="https://i.pinimg.com/736x/38/1a/d2/381ad22ff5e9b9fc462c69f6cead07b1.jpg" alt="Teacher Illustration">
+            <img src="https://i.pinimg.com/736x/38/1a/d2/381ad22ff5e9b9fc462c69f6cead07b1.jpg"
+                alt="Teacher Illustration">
         </div>
 
         <!-- Right Side (Teacher's Content) -->
         <div class="right-side">
             <h1>Welcome to Teacher's Page</h1>
-            <div id="buttonContainer"></div>
+            <div id="buttonContainer">
+                <button id="subjectHandler" class="btn"><i class="fa-solid fa-book"></i> Subjects</button>
+                <button id="reportsHandler" class="btn"><i class="fa-solid fa-file-alt"></i> Get Reports</button>
+                <button id="profileHandler" class="btn"><i class="fa-solid fa-user"></i> Profile</button>
+            </div>
         </div>
     </div>
-
     <script>
-        // Dynamic Buttons Data
-        const buttons = [
-            { text: "Subjects", icon: "fa-solid fa-book" },
-            { text: "Get Reports", icon: "fa-solid fa-file-alt" },
-            { text: "Profile", icon: "fa-solid fa-user" }
-        ];
-
-        // Get Button Container
-        const buttonContainer = document.getElementById("buttonContainer");
-
-        // Create Buttons Dynamically
-        buttons.forEach(btn => {
-            const button = document.createElement("button");
-            button.classList.add("btn");
-            button.innerHTML = `<i class="${btn.icon}"></i> ${btn.text}`;
-            buttonContainer.appendChild(button);
+        const currUserId = window.location.pathname.split("/")[2];
+        const handlers = {
+            reportsHandler: "/reports",
+            profileHandler: "/profile",
+            subjectHandler: "/subjects",
+        };
+        Object.entries(handlers).forEach(([id, path]) => {
+            document.getElementById(id).addEventListener("click", () => {
+                window.location.pathname = `/teacher/${currUserId}${path}`;
+            });
         });
     </script>
+    </script>
 </body>
+
 </html>

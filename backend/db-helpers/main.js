@@ -3,6 +3,43 @@
 	I need to make classes for this, but that will come later.
  */
 
+function getAssignmentId(client, student_id, subject_id, teacher_id) {
+	const query = `
+	SELECT ta.assignment_id
+	FROM teacher_assignments ta
+	JOIN student_enrollments se ON ta.class_id = se.class_id
+	WHERE ta.teacher_id = ${teacher_id}  
+  	AND se.student_id = ${student_id}
+  	AND ta.subject_id = ${subject_id}; 
+	`;
+	return client.query(query);
+}
+
+function getTeacher_Classes(client, teacher_id) {
+	const query = `
+	SELECT 
+    t.teacher_name,
+    c.class_name,
+    s.subject_name
+	FROM teacher_assignments ta
+	JOIN teachers t ON ta.teacher_id = t.teacher_id
+	JOIN classes c ON ta.class_id = c.class_id
+	JOIN subjects s ON ta.subject_id = s.subject_id
+	WHERE ta.teacher_id = ${teacher_id};`;
+	return client.query(query);
+}
+function getStudents_Classes(client, subject_name, class_name) {
+	const query = `
+	SELECT s.student_id, s.student_name
+	FROM student_enrollments se
+	JOIN students s ON se.student_id = s.student_id
+	JOIN teacher_assignments ta ON ta.class_id = se.class_id
+	JOIN classes c ON c.class_id = ta.class_id
+	JOIN subjects sub ON sub.subject_id = ta.subject_id
+	WHERE sub.subject_name = '${subject_name}'
+  	AND c.class_name = '${class_name}';`;
+	return client.query(query);
+}
 function getStudentsUsers(client) {
 	const query = `SELECT user_id,username,password FROM user_accounts WHERE user_role = 'student';`;
 	return client.query(query);
@@ -180,6 +217,9 @@ function changeClass(client, student_id, newClassId) {
 }
 
 module.exports = {
+	getAssignmentId,
+	getStudents_Classes,
+	getTeacher_Classes,
 	getTeachersUsers,
 	getAttandance,
 	getSingleStudents,

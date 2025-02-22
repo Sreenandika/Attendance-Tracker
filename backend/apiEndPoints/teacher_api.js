@@ -1,4 +1,3 @@
-
 const express = require("express");
 const router = express.Router();
 const bodyParser = require("body-parser");
@@ -18,10 +17,11 @@ const pool = new Pool({
     ssl: db.ssl,
 });
 
-router.post("/getSingleStudent", async (req, res) => {
+router.post("/getTeacherClasses", async (req, res) => {
     const client = await pool.connect();
+    console.log(req.body);
     funcs
-        .getSingleStudents(client, req.body.student_id)
+        .getTeacher_Classes(client, req.body.teacher_id)
         .then((result) => {
             res.send(result.rows);
         })
@@ -31,10 +31,11 @@ router.post("/getSingleStudent", async (req, res) => {
         });
     client.release();
 });
-router.post("/getAttendanceDetails", async (req, res) => {
+router.post("/getStudentClasses", async (req, res) => {
     const client = await pool.connect();
+    console.log(req.body);
     funcs
-        .getAttandance(client, req.body.student_id)
+        .getStudents_Classes(client, req.body.subject_name,req.body.class_name)
         .then((result) => {
             res.send(result.rows);
         })
