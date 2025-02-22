@@ -60,11 +60,27 @@ router.post("/getAssignmentId", async (req, res) => {
         });
     client.release();
 });
+
 router.post("/addAttendance", async (req, res) => {
     const client = await pool.connect();
     console.log(req.body);
     funcs
         .addAttendance(client, req.body.studentIds,req.body.assignmentId, req.body.currDate)
+        .then((result) => {
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send("Error adding subject");
+        });
+    client.release();
+});
+
+router.post("/getReport", async (req, res) => {
+    const client = await pool.connect();
+    console.log(req.body);
+    funcs
+        .getAttandanceReport(client, req.body.class_name,req.body.subject_name)
         .then((result) => {
             res.send(result.rows);
         })

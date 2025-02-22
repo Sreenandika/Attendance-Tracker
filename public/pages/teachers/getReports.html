@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generate Report</title>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
     <style>
         /* Page Styling */
         body {
@@ -87,32 +89,70 @@
     <div class="container">
         <h2>📋 Generate Report</h2>
         <form>
-            <label for="class">Class:</label>
-            <select id="class" name="class">
-                <option value="class1">Class 1</option>
-                <option value="class2">Class 2</option>
-                <option value="class3">Class 3</option>
-            </select>
-
-            <label for="subject">Subject:</label>
+            
+            <label for="subject">Subject And Class</label>
             <select id="subject" name="subject">
-                <option value="math">Math</option>
-                <option value="science">Science</option>
-                <option value="history">History</option>
             </select>
 
             <button type="button" class="btn" onclick="generateReport()">
                 <i class="fas fa-file-alt"></i> Generate Report
             </button>
+
         </form>
     </div>
 
     <script>
-        function generateReport() {
-            const selectedClass = document.getElementById('class').value;
-            const selectedSubject = document.getElementById('subject').value;
-            alert(`Generating report for ${selectedClass} - ${selectedSubject}`);
+        const teacher_id = window.location.pathname.split("/")[2];
+        let res = [];
+
+        function fill(){
+            fetch('/getTeacherClasses', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ teacher_id: teacher_id })
+            })
+            .then(response => response.json())
+            .then(data => {
+                res = data;
+                const subjectSelect = document.getElementById('subject');
+                data.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = `${item.class_name}-${item.subject_name}`;
+                    option.textContent = `${item.class_name}-${item.subject_name}`;
+                    subjectSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error:', error));
         }
+        
+        function generateReport() {
+            const selectedOption = document.getElementById('subject').value;
+            const [class_name, subject_name] = selectedOption.split('-');
+            console.log(res);
+            fetch('/getReport', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ class_name: class_name, subject_name: subject_name })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Report Data:', data);
+                const { jsPDF } = window.jspdf;  
+                const doc = new jsPDF();        
+                doc.text(`Report for ${subject_name}`, 10, 10);
+                doc.autoTable({
+                    head: [['Student ID', 'Student Name', 'Percentage']],
+                    body: data.map(item => [item.student_id, item.student_name, item.attendance_percentage])
+                });
+                doc.save(`${subject_name}_report.pdf`);
+            })
+            .catch(error => console.error('Error:', error));
+        }
+        fill();
     </script>
 </body>
 </html>

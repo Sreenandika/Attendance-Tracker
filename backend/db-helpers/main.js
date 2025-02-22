@@ -3,8 +3,40 @@
 	I need to make classes for this, but that will come later.
  */
 
-function getAttandanceReport(){
-	
+function getAttandanceReport(client,class_name,subject_name){
+	const query = `
+    SELECT 
+        st.student_id,
+        st.student_name,
+        COUNT(CASE WHEN a.present = TRUE THEN 1 END) AS present_count,
+        COUNT(a.attendance_id) AS total_classes,
+        CASE 
+            WHEN COUNT(a.attendance_id) = 0 THEN 0
+            ELSE (COUNT(CASE WHEN a.present = TRUE THEN 1 END) * 100.0 / COUNT(a.attendance_id))
+        END AS attendance_percentage
+    FROM 
+        students st
+    JOIN 
+        student_enrollments se ON st.student_id = se.student_id
+    JOIN 
+        teacher_assignments ta ON se.class_id = ta.class_id
+    JOIN 
+        classes c ON ta.class_id = c.class_id
+    JOIN 
+        subjects sub ON ta.subject_id = sub.subject_id
+    LEFT JOIN 
+        attendance a ON ta.assignment_id = a.assignment_id AND st.student_id = a.student_id
+    WHERE 
+        c.class_name = '${class_name}'  -- replace with the given class_name
+    AND 
+        sub.subject_name = '${subject_name}'  -- replace with the given subject_name
+    GROUP BY 
+        st.student_id, st.student_name
+    ORDER BY 
+        st.student_name;
+`;
+	return client.query(query);
+
 }
 
 
@@ -60,7 +92,9 @@ function getTeacher_Classes(client, teacher_id) {
 	SELECT 
     t.teacher_name,
     c.class_name,
-    s.subject_name
+    s.subject_name,
+	c.class_id,
+	s.subject_id 
 	FROM teacher_assignments ta
 	JOIN teachers t ON ta.teacher_id = t.teacher_id
 	JOIN classes c ON ta.class_id = c.class_id
@@ -260,6 +294,7 @@ function changeClass(client, student_id, newClassId) {
 }
 
 module.exports = {
+	getAttandanceReport,
 	addAttendance,
 	getAssignmentId,
 	getStudents_Classes,

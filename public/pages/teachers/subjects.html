@@ -39,29 +39,49 @@
 				font-size: 1.8rem;
 				margin-bottom: 1.5rem;
 			}
+			label {
+				font-size: 1rem;
+				font-weight: bold;
+				color: #444;
+				display: block;
+				text-align: left;
+				margin-top: 10px;
+			}
 
 			/* Styled Subject List */
-			ol {
-				list-style: none;
-				padding: 0;
-			}
-
-			li {
-				background: #c97556; /* Matching Button Color */
-				color: white;
+			select {
+				width: 100%;
+				padding: 10px;
+				border-radius: 6px;
+				border: 1px solid #ccc;
 				font-size: 1rem;
+				margin-top: 5px;
+			}
+			.btn {
+				background: #c67656;
+				color: white;
 				padding: 12px 20px;
+				font-size: 1rem;
+				border: none;
 				border-radius: 8px;
-				margin-bottom: 10px;
+				cursor: pointer;
+				width: 100%;
+				margin-top: 15px;
+				transition: 0.3s;
 				font-weight: bold;
+				box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 				display: flex;
 				align-items: center;
-				gap: 10px;
 				justify-content: center;
-				box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+				gap: 10px;
 			}
 
-			li i {
+			.btn:hover {
+				background: #a85a44;
+				transform: translateY(-2px);
+			}
+
+			.btn i {
 				font-size: 1.2rem;
 			}
 		</style>
@@ -70,7 +90,7 @@
 		<div class="main-container">
 			<h1>Subjects</h1>
 			<select id="subjectDropdown"></select>
-			<button id="take-attendance-btn">Take Attendance</button>
+			<button class="btn" id="take-attendance-btn">Take Attendance</button>
 		</div>
 		<script>
 			const teacher_id = window.location.pathname.split("/")[2];
