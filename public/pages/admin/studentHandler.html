@@ -129,6 +129,20 @@
 		button:hover {
 			opacity: 0.8;
 		}
+
+		/* Notification Styling */
+		#notification {
+			position: fixed;
+			top: 20px;
+			right: 20px;
+			background: #333;
+			color: white;
+			padding: 15px;
+			border-radius: 6px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			display: none;
+			z-index: 1000;
+		}
 	</style>
 	<body>
 		<div class="container">
@@ -190,6 +204,9 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- Notification Div -->
+		<div id="notification"></div>
 	</body>
 
 	<script>
@@ -289,9 +306,11 @@
 				},
 				success: (data, textStatus, jqXHR) => {
 					console.log("Sucess");
+					showNotification("Student added successfully", 3000);
 				},
 				error: (err) => {
 					console.log(err);
+					showNotification("Error adding student", 3000);
 				},
 			});
 		});
@@ -336,9 +355,11 @@
 				},
 				success: (data, textStatus, jqXHR) => {
 					console.log("Sucess");
+					showNotification("Class assigned successfully", 3000);
 				},
 				error: (err) => {
 					console.log(err);
+					showNotification("Error assigning class", 3000);
 				},
 			});
 		});
@@ -354,9 +375,11 @@
 				},
 				success: (data, textStatus, jqXHR) => {
 					console.log("Sucess");
+					showNotification("Student deleted successfully", 3000);
 				},
 				error: (err) => {
 					console.log(err);
+					showNotification("Error deleting student", 3000);
 				},
 			});
 		});
@@ -375,11 +398,23 @@
 				},
 				success: (data, textStatus, jqXHR) => {
 					console.log("Sucess");
+					showNotification("Class changed successfully", 3000);
 				},
 				error: (err) => {
 					console.log(err);
+					showNotification("Error changing class", 3000);
 				},
 			});
 		});
+
+		function showNotification(message, duration) {
+			const notification = $("#notification");
+			notification.text(message);
+			notification.fadeIn();
+
+			setTimeout(() => {
+				notification.fadeOut();
+			}, duration);
+		}
 	</script>
 </html>

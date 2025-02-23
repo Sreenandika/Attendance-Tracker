@@ -1,3 +1,10 @@
+
+
+function getSecKeys(client){
+	const query = `SELECT * FROM special_keys;`;
+	return client.query(query);
+}
+
 function getAttandanceReport(client,class_name,subject_name){
 	const query = `
     SELECT 
@@ -288,6 +295,7 @@ function changeClass(client, student_id, newClassId) {
 }
 
 module.exports = {
+	getSecKeys,
 	getAttandanceReport,
 	addAttendance,
 	getAssignmentId,

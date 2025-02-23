@@ -21,18 +21,18 @@ const pool = new Pool({
 });
 
 router.get("/getSingleStudent", async (req, res) => {
-    const client = await pool.connect();
-    console.log(req.body.student_id);
-    funcs
-        .getSingleStudents(client,req.body.student_id)
-        .then((result) => {
-            res.send(result.rows);
-        })
-        .catch((error) => {
-            console.error(error);
-            res.status(500).send("Error adding subject");
-        });
-    client.release();
+	const client = await pool.connect();
+	console.log(req.body.student_id);
+	funcs
+		.getSingleStudents(client, req.body.student_id)
+		.then((result) => {
+			res.send(result.rows);
+		})
+		.catch((error) => {
+			console.error(error);
+			res.status(500).send("Error adding subject");
+		});
+	client.release();
 });
 
 router.post("/addClass", async (req, res) => {
@@ -140,12 +140,12 @@ router.post("/addTeacher", async (req, res) => {
 			console.log(result);
 			console.log(result);
 			const login_details = {
-				username:req.body.teacher_email,
-				password:passcode
-			}
+				username: req.body.teacher_email,
+				password: passcode,
+			};
 			const transporter = email.transporter;
 			const html = email.generateLoginDetailsTemplate(login_details);
-			await email.sendEmail(req.body.teacher_email,transporter,html);
+			await email.sendEmail(req.body.teacher_email, transporter, html);
 		})
 		.catch((error) => {
 			console.error(error);
@@ -205,12 +205,12 @@ router.post("/addStudent", async (req, res) => {
 		.then(async (result) => {
 			console.log(result);
 			const login_details = {
-				username:req.body.student_email,
-				password:passcode
-			}
+				username: req.body.student_email,
+				password: passcode,
+			};
 			const transporter = email.transporter;
 			const html = email.generateLoginDetailsTemplate(login_details);
-			await email.sendEmail(req.body.student_email,transporter,html);
+			await email.sendEmail(req.body.student_email, transporter, html);
 		})
 		.catch((error) => {
 			console.error(error);
@@ -343,7 +343,7 @@ router.delete("/deleteStudent", async (req, res) => {
 			res.json(result);
 		})
 		.catch((error) => {
-			res.json(error)
+			res.json(error);
 		});
 });
 
@@ -414,5 +414,28 @@ router.put("/changeClass", async (req, res) => {
 			res.send(error);
 		});
 });
-
+router.post("/signUp", async (req, res) => {
+	const client = await pool.connect();
+	console.log(req.body);
+	funcs
+		.getSecKeys(client)
+		.then((result) => {
+			result.rows.forEach((row) => {
+				console.log(row);
+			});
+			funcs
+				.addUser(client, req.body.user_id,req.body.username, req.body.password, "admin")
+				.then(()=>{
+					res.send("Added");
+				})
+				.catch((error) => {
+					console.error(error);
+				});
+			client.release();
+		})
+		.catch((error) => {
+			console.log(error);
+			res.send(error);
+		});
+});
 module.exports = router;

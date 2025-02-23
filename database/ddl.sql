@@ -156,4 +156,4 @@ ALTER TABLE IF EXISTS public.teachers
     ON UPDATE NO ACTION
     ON DELETE NO ACTION;
 
-INSERT into TABLE user_accounts VALUES(1,'admin','admin','admin');
+INSERT INTO special_keys (key_value) VALUES ('1234');
