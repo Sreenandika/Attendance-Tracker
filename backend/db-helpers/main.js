@@ -1,8 +1,3 @@
-/*
-	This file contains all the functions that will be performed by the database. 
-	I need to make classes for this, but that will come later.
- */
-
 function getAttandanceReport(client,class_name,subject_name){
 	const query = `
     SELECT 
@@ -27,9 +22,9 @@ function getAttandanceReport(client,class_name,subject_name){
     LEFT JOIN 
         attendance a ON ta.assignment_id = a.assignment_id AND st.student_id = a.student_id
     WHERE 
-        c.class_name = '${class_name}'  -- replace with the given class_name
-    AND 
-        sub.subject_name = '${subject_name}'  -- replace with the given subject_name
+        c.class_name = '${class_name}'  
+    AND
+        sub.subject_name = '${subject_name}'
     GROUP BY 
         st.student_id, st.student_name
     ORDER BY 
@@ -38,7 +33,6 @@ function getAttandanceReport(client,class_name,subject_name){
 	return client.query(query);
 
 }
-
 
 async function addAttendance(client, studentIds, assignmentId, currentDate) {
 	client.query("BEGIN");

@@ -1,27 +1,43 @@
-var nodemailer = require("nodemailer");
+const nodemailer = require("nodemailer");
+const secrets = require("../db-helpers/const-local.js");
+const transporter = nodemailer.createTransport({
+	host: "smtp.gmail.com",
+	secure: true,
+	auth: {
+		user: "nandagopal.nsb@gmail.com",
+		pass: secrets.emailKey,
+	},
+});
 
-
-function sendMail(senderEmail, data) {
-    var transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-            user: "lmaogreninja@gmail.com",
-            pass: "GE11!!re",
-        },
-    });    
-	var mailOptions = {
-		from: "lmaogreninja@gmail.com",
-		to: senderEmail,
-		subject: "Sending Email using Node.js",
-		text: data,
-	};
-	transporter.sendMail(mailOptions, function (error, info) {
-		if (error) {
-			console.log(error);
-		} else {
-			console.log("Email sent: " + info.response);
-		}
-	});
+function generateLoginDetailsTemplate(login_details) {
+	return `
+    <body>
+      <div>
+        <h2>Welcome to Our Platform!</h2>
+        <p>Here are your initial login credentials:</p>
+        <div>
+          <strong>Username:</strong> ${login_details.username} <br>
+          <strong>Password:</strong> ${login_details.password} <br>
+        </div>
+        <p>Thank you!</p>
+      </div>
+    </body>
+    </html>
+  `;
 }
 
-sendMail("nandagopal.nsb@gmail.com","LMAO");
+async function sendEmail(email, transporter, html) {
+	const info = await transporter.sendMail({
+		from: "nandagopal.nsb@gmail.com", // sender address
+		to: email, // list of receivers
+		subject: "The Login Details",
+		html: html,
+	});
+	console.log("Message sent: %s", info.messageId);
+}
+
+module.exports = {
+	sendEmail,
+	generateLoginDetailsTemplate,
+	transporter,
+};

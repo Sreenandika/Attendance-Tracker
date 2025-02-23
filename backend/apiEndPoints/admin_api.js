@@ -9,6 +9,7 @@ router.use(bodyParser.json());
 
 const funcs = require("../db-helpers/main.js");
 const db = require("../db-helpers/const-local.js");
+const email = require("../utils/email.js");
 
 const pool = new Pool({
 	user: db.user,
@@ -135,8 +136,16 @@ router.post("/addTeacher", async (req, res) => {
 			passcode,
 			"teacher"
 		)
-		.then((result) => {
+		.then(async (result) => {
 			console.log(result);
+			console.log(result);
+			const login_details = {
+				username:req.body.teacher_email,
+				password:passcode
+			}
+			const transporter = email.transporter;
+			const html = email.generateLoginDetailsTemplate(login_details);
+			await email.sendEmail(req.body.teacher_email,transporter,html);
 		})
 		.catch((error) => {
 			console.error(error);
@@ -190,11 +199,18 @@ router.post("/addStudent", async (req, res) => {
 			client,
 			req.body.student_id,
 			req.body.student_email,
-			"stu",
+			passcode,
 			"student"
 		)
-		.then((result) => {
+		.then(async (result) => {
 			console.log(result);
+			const login_details = {
+				username:req.body.student_email,
+				password:passcode
+			}
+			const transporter = email.transporter;
+			const html = email.generateLoginDetailsTemplate(login_details);
+			await email.sendEmail(req.body.student_email,transporter,html);
 		})
 		.catch((error) => {
 			console.error(error);

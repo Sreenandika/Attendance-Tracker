@@ -13,6 +13,51 @@ This is the official repository for my DBMS mini-project for college.
 
 ## Running the Application
 
+## Prerequisites
+
+Before running the application, ensure you have the following installed:
+
+- [Node.js](https://nodejs.org/)
+- [PostgreSQL](https://www.postgresql.org/)
+
+## Backend Directory Structure
+
+The backend directory contains the following structure:
+
+```
+├── backend
+│   ├── apiEndPoints
+│   │   ├── admin_api.js
+│   │   ├── student_api.js
+│   │   └── teacher_api.js
+│   ├── auth
+│   │   └── auth.js
+│   ├── db-helpers
+│   │   ├── const-local.js
+│   │   └── main.js
+│   ├── htmlHandlers
+│   │   └── admin.js
+│   ├── index.js
+│   ├── package.json
+│   ├── package-lock.json
+│   └── utils
+│       └── email.js
+```
+
+A file named `const-local.js` is expected to be in the `db-helpers` directory. 
+
+```js
+const host = '<your-host-key>';
+const port = 8080; //add your port
+const password = '<your password>';
+const database = '<db name>';
+const user = '<user_name>';
+const ssl = false; //usually set true for cloud based
+const emailKey = "<The email key from which the emails are sent>"; // this can be generated from the app-passwords section 
+```
+
+You must also excute the /database/ddl.sql file in your terminal/gui application. 
+
 1. Navigate to the backend directory:
     ```sh
     cd backend/
@@ -25,3 +70,8 @@ This is the official repository for my DBMS mini-project for college.
     ```sh
     node index.js
     ```
+4.  Login with the sample admin user set up,
+    ```txt
+    password : admin
+    username : admin
+    ``'
