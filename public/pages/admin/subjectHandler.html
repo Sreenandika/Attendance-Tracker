@@ -141,7 +141,19 @@
             </div>
         </div>
     </div>
+    <div
+        id="notification"
+        class="hidden fixed top-4 right-4 bg-blue-500 text-white p-4 rounded shadow-lg"
+	></div>
 	<script>
+        function showNotification(message, duration) {
+				const notification = document.getElementById("notification");
+				notification.textContent = message;
+				notification.classList.remove("hidden");
+				setTimeout(() => {
+					notification.classList.add("hidden");
+				}, duration);
+		}
 		$.get("/getDepartments", function (data, status) {
 			if (data.length == 0) {
 				$("#selectDepartment").append(`<option>No Departments Found</option>`);
@@ -192,6 +204,7 @@
 				},
 				success: (data, textStatus, jqXHR) => {
 					console.log("Sucess");
+                    showNotification("Added Subject",3000);
 				},
 				error: (err) => {
 					console.log(err.HEADERS_RECEIVED);
@@ -209,6 +222,7 @@
 				},
 				success: (data, textStatus, jqXHR) => {
 					console.log("Sucess");
+                    showNotification("Deleted Subject",3000);
 				},
 				error: (err) => {
 					console.log(err.HEADERS_RECEIVED);

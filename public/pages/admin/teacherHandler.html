@@ -158,8 +158,19 @@
 				</div>
 			</div>
 		</div>
-
+		<div
+			id="notification"
+			class="hidden fixed top-4 right-4 bg-blue-500 text-white p-4 rounded shadow-lg"
+		></div>
 		<script>
+			function showNotification(message, duration) {
+				const notification = document.getElementById("notification");
+				notification.textContent = message;
+				notification.classList.remove("hidden");
+				setTimeout(() => {
+					notification.classList.add("hidden");
+				}, duration);
+			}
 			let dictionary = new Map();
 			dictionary.set("IT", "1");
 			dictionary.set("CS", "2");
@@ -302,11 +313,10 @@
 						teacher_email,
 					},
 					success: (data) => {
-						showDynamicModal("Added teacher", 2000);
+						showNotification("Added teacher", 2000);
 						getTeachers(teachID);
 					},
 					error: (err) => {
-						showDynamicModal("Unable to add Teacher", 2000);
 					},
 				});
 			});
@@ -325,6 +335,7 @@
 					},
 					success: (data) => {
 						console.log(data);
+						showNotification("Added the assignment",3000);
 					},
 					error: (err) => {
 						console.log(err);
@@ -342,10 +353,9 @@
 						teacher_id,
 					},
 					success: (data) => {
-						showDynamicModal("Added assignment", 2000);
+						showNotification("Deleted Assignemnt", 3000);
 					},
 					error: (err) => {
-						showDynamicModal("Assignment already exists", 2000);
 					},
 				});
 			});

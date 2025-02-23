@@ -38,13 +38,13 @@
 			}
 
 			.form-section:nth-child(1) {
-				background: #dc143c;
+				background: #410612;
 			}
 			.form-section:nth-child(2) {
-				background: #4169e1;
+				background: #0d2d8c;
 			}
 			.form-section:nth-child(3) {
-				background: #ff8c00;
+				background: #7a480b;
 			}
 
 			.input-wrapper {
@@ -152,10 +152,20 @@
 					Delete
 				</button>
 			</div>
-
-			<p id="operationsResult" class="mt-4 text-center"></p>
 		</div>
+		<div
+			id="notification"
+			class="hidden fixed top-4 right-4 bg-blue-500 text-white p-4 rounded shadow-lg"
+		></div>
 		<script>
+			function showNotification(message, duration) {
+				const notification = document.getElementById("notification");
+				notification.textContent = message;
+				notification.classList.remove("hidden");
+				setTimeout(() => {
+					notification.classList.add("hidden");
+				}, duration);
+			}
 			var ids = ["#selectClassForEdit", "#selectClassForDelete"];
 			function getClass(id) {
 				$.get("/getClass", function (data, status) {
@@ -175,9 +185,9 @@
 				});
 			}
 			function deleteAll(id) {
-                id.forEach((ids) => {
-                    $(ids).empty();
-                });
+				id.forEach((ids) => {
+					$(ids).empty();
+				});
 			}
 			let dictionary = new Map();
 			dictionary.set("IT", "1");
@@ -205,11 +215,7 @@
 				}
 				return null;
 			}
-			function addClassCallback() {
-				$("#operationsResult").text("HELLO");
-                deleteAll(ids);
-				getClass(ids);
-			}
+
 			$("#submitClass").click(() => {
 				const className = $("#className").val();
 				const classId = extractAndConvert(className);
@@ -224,14 +230,17 @@
 						classId,
 						className,
 					},
-					success: addClassCallback,
+					success: (res) => {
+						console.log(res);
+						showNotification("Added Class successfully", 3000);
+					},
 					error: (err) => {
 						console.log(err);
 					},
 				});
 			});
 			$("#editSubmitClass").click(() => {
-                const className = $("#editClassName").val();
+				const className = $("#editClassName").val();
 				const classId = extractAndConvert(className);
 				const oldClass = $("#selectClassForEdit").val();
 				const oldClassId = extractAndConvert(oldClass);
@@ -250,15 +259,16 @@
 					},
 					success: (res) => {
 						console.log(res);
-                        deleteAll(ids);
-                        getClass(ids);
+						deleteAll(ids);
+						getClass(ids);
+						showNotification("Edited Class successfully", 3000);
 					},
 					error: (err) => {
 						console.log(err);
 					},
 				});
 			});
-            $("#deleteSubmitClass").click(() => {
+			$("#deleteSubmitClass").click(() => {
 				const className = $("#selectClassForDelete").val();
 				const class_id = extractAndConvert(className);
 				if (!className || class_id == null) {
@@ -271,13 +281,19 @@
 					data: {
 						class_id,
 					},
-					success: addClassCallback,
+					success: () => {
+						showNotification("Deleted Class successfully", 3000);
+					},
 					error: (err) => {
 						console.log(err);
 					},
 				});
 			});
+
 			getClass(ids);
+
 		</script>
 	</body>
 </html>
+
+<script></script>

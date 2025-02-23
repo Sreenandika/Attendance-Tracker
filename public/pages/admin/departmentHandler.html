@@ -104,7 +104,19 @@
             <ul id="currDepartments" class="list-disc pl-5 text-gray-900"></ul>
         </div>
     </div>
+    <div
+        id="notification"
+        class="hidden fixed top-4 right-4 bg-blue-500 text-white p-4 rounded shadow-lg"
+    ></div>
 	<script>
+        function showNotification(message, duration) {
+				const notification = document.getElementById("notification");
+				notification.textContent = message;
+				notification.classList.remove("hidden");
+				setTimeout(() => {
+					notification.classList.add("hidden");
+				}, duration);
+		}
         var ids= ["#selectDepartmentForDelete","#currDepartments"]
         function getDepartments(id) {
             $.get("/getDepartments", function (data, status) {
@@ -145,6 +157,7 @@
 				success: (data, textStatus, jqXHR) => {
                     deleteAll(ids);
                     getDepartments(ids);
+                    showNotification("Added Department Sucessfully",3000);
                 },
 				error: (err) => {
 					console.log(err);
@@ -167,6 +180,7 @@
                     deleteAll(ids);
                     getDepartments(ids);
                     console.log(data);
+                    showNotification("Deleted Notification Sucessfully",3000)
                 },
 				error: (err) => {
 					console.log(err);

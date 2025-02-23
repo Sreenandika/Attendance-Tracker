@@ -74,4 +74,4 @@ You must also excute the /database/ddl.sql file in your terminal/gui application
     ```txt
     password : admin
     username : admin
-    ``'
+    ```
