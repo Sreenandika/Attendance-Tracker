@@ -20,7 +20,7 @@ const pool = new Pool({
 	ssl: db.ssl,
 });
 
-router.use(
+router.use(                           // saved
 	session({
 		store: new pgSession({
 			pool: pool, 
@@ -34,7 +34,7 @@ router.use(
 
 router.post("/login", async (req, res) => {
 	const client = await pool.connect();
-	if (req.body.userType === "admin") {
+	if (req.body.userType === "admin") { // got from the frontend 
 		const dataToSend = {
 			user_id: "no_user_found",
 			user_type:"",
@@ -45,10 +45,9 @@ router.post("/login", async (req, res) => {
 			.then((result) => {
 				console.log(result.rows);
 				for (let i = 0; i < result.rows.length; i++) {
-					if (
-						req.body.username === result.rows[i].username &&
-						req.body.password === result.rows[i].password
-					) {
+					if (req.body.username === result.rows[i].username &&
+						req.body.password === result.rows[i].password) 
+					{
 						dataToSend.user_id = result.rows[i].user_id;
 						dataToSend.loginStatus = true;
 						dataToSend.user_type="admin"
@@ -123,7 +122,7 @@ router.post("/login", async (req, res) => {
 	}
 	client.release();
 });
-router.get("/logout", async (req, res) => {
+router.post("/logout", async (req, res) => {
 	req.session.destroy((err)=>{
 		if(err) console.log(err);
 	});

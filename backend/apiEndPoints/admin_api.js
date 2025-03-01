@@ -438,4 +438,35 @@ router.post("/signUp", async (req, res) => {
 			res.send(error);
 		});
 });
+router.get("/get",async (req,res)=>{
+	const client = await pool.connect();
+	funcs.get(client).then((result)=>{
+		res.send(result.rows);
+	})
+	.catch((error) => {
+		console.log(error);
+		res.send(error);
+	});
+});
+router.post("/deleteAssignment", async (req,res)=>{
+	const client= await pool.connect();
+	funcs.deleteAssignment(client, req.body.teacher_id).then((result)=>{
+		res.send("Deleted ");
+
+	})
+	.catch((error)=>{
+		res.send("Not deleted");
+	});
+});
+router.put("/updateTeacherName", async(req,res)=>{
+	const client= await pool.connect();
+	console.log(req.body);
+	funcs.updateTeacherName(client, req.body.teacher_id ,req.body.teacher_name).then((result)=>{
+		res.send("updated");
+	})
+    .catch((error)=>{
+		res.send(error);
+	});
+
+});
 module.exports = router;

@@ -1,11 +1,4 @@
-
-
-function getSecKeys(client){
-	const query = `SELECT * FROM special_keys;`;
-	return client.query(query);
-}
-
-function getAttandanceReport(client,class_name,subject_name){
+function getAttandanceReport(client, class_name, subject_name) {
 	const query = `
     SELECT 
         st.student_id,
@@ -38,13 +31,12 @@ function getAttandanceReport(client,class_name,subject_name){
         st.student_name;
 `;
 	return client.query(query);
-
 }
 
 async function addAttendance(client, studentIds, assignmentId, currentDate) {
 	client.query("BEGIN");
 	const allStudentsQuery = `
-      SELECT se.student_id
+      SELECT DISTINCT se.student_id
       FROM student_enrollments se
       JOIN teacher_assignments ta ON se.class_id = ta.class_id
       WHERE ta.assignment_id = $1
@@ -90,7 +82,7 @@ function getAssignmentId(client, student_id, subject_name, teacher_id) {
 }
 function getTeacher_Classes(client, teacher_id) {
 	const query = `
-	SELECT 
+	SELECT DISTINCT
     t.teacher_name,
     c.class_name,
     s.subject_name,
@@ -105,14 +97,14 @@ function getTeacher_Classes(client, teacher_id) {
 }
 function getStudents_Classes(client, subject_name, class_name) {
 	const query = `
-	SELECT s.student_id, s.student_name
+	SELECT DISTINCT s.student_id, s.student_name
 	FROM student_enrollments se
 	JOIN students s ON se.student_id = s.student_id
 	JOIN teacher_assignments ta ON ta.class_id = se.class_id
 	JOIN classes c ON c.class_id = ta.class_id
 	JOIN subjects sub ON sub.subject_id = ta.subject_id
 	WHERE sub.subject_name = '${subject_name}'
-  	AND c.class_name = '${class_name}';`;
+	AND c.class_name = '${class_name}';`;
 	return client.query(query);
 }
 function getStudentsUsers(client) {
@@ -206,7 +198,7 @@ function getStudents(client) {
 	const query = `SELECT * FROM students`;
 	return client.query(query);
 }
-function getSingleStudents(client, student_id) {
+function retrieveStudentInfo(client, student_id) {
 	const query = `
     SELECT
         c.class_name,
@@ -254,6 +246,38 @@ function getAttandance(client, student_id) {
     	s.subject_name;`;
 	return client.query(query);
 }
+function getDangerSubjects(client, student_id) {
+	const query = `
+	SELECT
+    s.subject_name,
+    COUNT(CASE WHEN a.present = TRUE THEN 1 END) AS present_count,
+    COUNT(a.attendance_id) AS total_classes,
+    CASE
+        WHEN COUNT(a.attendance_id) = 0 THEN 0
+        ELSE (COUNT(CASE WHEN a.present = TRUE THEN 1 END) * 100.0 / COUNT(a.attendance_id))
+    END AS attendance_percentage
+	FROM
+		subjects AS s
+	JOIN
+		teacher_assignments AS ta ON s.subject_id = ta.subject_id
+	JOIN
+		student_enrollments AS se ON ta.class_id = se.class_id
+	JOIN
+		students AS st ON se.student_id = st.student_id
+	LEFT JOIN
+		attendance AS a ON ta.assignment_id = a.assignment_id AND st.student_id = a.student_id
+	WHERE
+		st.student_id = ${student_id}
+	GROUP BY
+		s.subject_name
+	HAVING
+		COUNT(a.attendance_id) > 0
+		AND (COUNT(CASE WHEN a.present = TRUE THEN 1 END) * 100.0 / COUNT(a.attendance_id)) < 75
+	ORDER BY
+		s.subject_name;
+	`;
+	return client.query(query);
+}
 function addEnrollment(client, class_id, student_id) {
 	const query = `INSERT INTO student_enrollments (student_id,class_id) 
 	VALUES(${student_id},${class_id});`;
@@ -294,8 +318,38 @@ function changeClass(client, student_id, newClassId) {
 	return client.query(query);
 }
 
+function deleteAssignment(client, teacher_id) {
+	const query = `DELETE from teacher_assignments WHERE teacher_id=${teacher_id}`;
+	return client.query(query);
+}
+function updateTeacherName(client, teacher_id, teacher_name) {
+	const query = `UPDATE teachers set teacher_name='${teacher_name}' where teacher_id=${teacher_id};`;
+	return client.query(query);
+}
+function getTeacherDetails(client, teacher_id) {
+	const query = `
+	SELECT DISTINCT
+	t.teacher_name,
+    d.department_name,
+    s.subject_name
+	FROM 
+		teachers t
+	JOIN 
+		departments d ON t.department_id = d.department_id
+	JOIN 
+		teacher_assignments ta ON t.teacher_id = ta.teacher_id
+	JOIN 
+		subjects s ON ta.subject_id = s.subject_id
+	WHERE 
+		t.teacher_id = ${teacher_id};
+	`;
+	return client.query(query);
+}
 module.exports = {
-	getSecKeys,
+	getTeacherDetails,
+	getDangerSubjects,
+	updateTeacherName,
+	deleteAssignment,
 	getAttandanceReport,
 	addAttendance,
 	getAssignmentId,
@@ -303,7 +357,7 @@ module.exports = {
 	getTeacher_Classes,
 	getTeachersUsers,
 	getAttandance,
-	getSingleStudents,
+	getSingleStudents: retrieveStudentInfo,
 	deleteSubject,
 	getStudentsUsers,
 	addUser,

@@ -232,6 +232,8 @@
 					},
 					success: (res) => {
 						console.log(res);
+						deleteAll(ids)
+						getClass(ids);
 						showNotification("Added Class successfully", 3000);
 					},
 					error: (err) => {
@@ -282,6 +284,8 @@
 						class_id,
 					},
 					success: () => {
+						deleteAll(ids);
+						getClass(ids);
 						showNotification("Deleted Class successfully", 3000);
 					},
 					error: (err) => {

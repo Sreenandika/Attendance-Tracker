@@ -110,6 +110,20 @@
 			button:hover {
 				opacity: 0.8;
 			}
+
+			/* Notification Styling */
+			.notification {
+				position: fixed;
+				top: 20px;
+				right: 20px;
+				background-color: #4caf50;
+				color: white;
+				padding: 15px;
+				border-radius: 5px;
+				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+				display: none;
+				z-index: 1000;
+			}
 		</style>
 	</head>
 	<body>
@@ -158,18 +172,12 @@
 				</div>
 			</div>
 		</div>
-		<div
-			id="notification"
-			class="hidden fixed top-4 right-4 bg-blue-500 text-white p-4 rounded shadow-lg"
-		></div>
+		<div class="notification" id="notification"></div>
 		<script>
-			function showNotification(message, duration) {
-				const notification = document.getElementById("notification");
-				notification.textContent = message;
-				notification.classList.remove("hidden");
-				setTimeout(() => {
-					notification.classList.add("hidden");
-				}, duration);
+			function deleteAll(id) {
+				id.forEach((ids) => {
+					$(ids).empty();
+				});
 			}
 			let dictionary = new Map();
 			dictionary.set("IT", "1");
@@ -198,9 +206,9 @@
 				return null;
 			}
 			var deptID = ["#addDepartmentList"];
-			var teachID = ["#deleteTeacherList","#teacherAssignList"];
-            var subsID = ["#subjectList"];
-            var classID = ["#classList"];
+			var teachID = ["#deleteTeacherList", "#teacherAssignList"];
+			var subsID = ["#subjectList"];
+			var classID = ["#classList"];
 			function getString(input) {
 				const periodIndex = input.indexOf(".");
 				if (periodIndex === -1) {
@@ -208,15 +216,13 @@
 				}
 				return input.substring(0, periodIndex);
 			}
-			function showDynamicModal(message, duration) {
-				var modal = $("#myModal");
-				var modalMessage = $("#modalMessage");
-
-				modalMessage.text(message);
-				modal.addClass("show");
+			function showNotification(message, duration) {
+				var notification = $("#notification");
+				notification.text(message);
+				notification.fadeIn();
 
 				setTimeout(function () {
-					modal.removeClass("show");
+					notification.fadeOut();
 				}, duration);
 			}
 			function getClass(id) {
@@ -313,18 +319,18 @@
 						teacher_email,
 					},
 					success: (data) => {
+						deleteAll(teachID);
 						showNotification("Added teacher", 2000);
 						getTeachers(teachID);
 					},
-					error: (err) => {
-					},
+					error: (err) => {},
 				});
 			});
 			$("#assignClass").click(() => {
 				const teacher_id = getString($("#teacherAssignList").val());
 				const class_id = extractAndConvert(getString($("#classList").val()));
-				const subject_id = getString($("#subjectList").val()).split(' ')[0];
-				console.log(teacher_id+" "+class_id+" "+subject_id);
+				const subject_id = getString($("#subjectList").val()).split(" ")[0];
+				console.log(teacher_id + " " + class_id + " " + subject_id);
 				$.ajax({
 					url: "/addAssignment",
 					method: "POST",
@@ -335,7 +341,7 @@
 					},
 					success: (data) => {
 						console.log(data);
-						showNotification("Added the assignment",3000);
+						showNotification("Added the assignment", 3000);
 					},
 					error: (err) => {
 						console.log(err);
@@ -353,16 +359,17 @@
 						teacher_id,
 					},
 					success: (data) => {
-						showNotification("Deleted Assignemnt", 3000);
+						deleteAll(teachID);
+						getTeachers(teachID);
+						showNotification("Deleted Assignment", 3000);
 					},
-					error: (err) => {
-					},
+					error: (err) => {},
 				});
 			});
 			getTeachers(teachID);
 			getDepartments(deptID);
-            getClass(classID);
-            getSubjects(subsID);
+			getClass(classID);
+			getSubjects(subsID);
 		</script>
 	</body>
 </html>

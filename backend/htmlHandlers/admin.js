@@ -154,7 +154,6 @@ router.get("/admin/:admin_id/subject_manager",  (req, res) => {
 		res.redirect("/");
 	}
 });
-
 router.get("/admin/:admin_id/department_manager",  (req, res) => {
     if(req.session.isAuth){
         console.log(req.session.isAuth);

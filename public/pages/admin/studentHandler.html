@@ -306,6 +306,8 @@
 				},
 				success: (data, textStatus, jqXHR) => {
 					console.log("Sucess");
+					deleteAll(studentIDs);
+					getStudents(studentIDs);
 					showNotification("Student added successfully", 3000);
 				},
 				error: (err) => {
@@ -375,6 +377,8 @@
 				},
 				success: (data, textStatus, jqXHR) => {
 					console.log("Sucess");
+					deleteAll(studentIDs);
+					getStudents(studentIDs);
 					showNotification("Student deleted successfully", 3000);
 				},
 				error: (err) => {

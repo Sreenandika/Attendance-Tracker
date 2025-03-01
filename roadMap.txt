@@ -22,6 +22,11 @@ ToDo Next:
 
 
 Remaining Bugs : 
-    1. When no attendance is taken, a division by 0 occures. -- done
-    2. Profile page of teachers 
-    3. Generate Attendance report
+   *** delete assignment
+    **** no confirmation msg in teacher management
+    ** dont allow duplicates`
+   ** change teacher profile  
+   * STUDENT NOTIFICATIONS
+   * admin global look
+
+
