@@ -76,7 +76,10 @@ CREATE TABLE IF NOT EXISTS public.teachers
     teacher_email character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT teachers_pkey PRIMARY KEY (teacher_id)
 );
-
+CREATE TABLE IF NOT EXISTS public.special_keys 
+(
+    key_value serial NOT NULL
+);
 CREATE TABLE IF NOT EXISTS public.user_accounts
 (
     user_id serial NOT NULL,

@@ -1,3 +1,9 @@
+function getSecKeys(client){
+	const query = `SELECT * FROM special_keys;`;
+	return client.query(query);
+}
+
+
 function getAttandanceReport(client, class_name, subject_name) {
 	const query = `
     SELECT 
@@ -346,6 +352,7 @@ function getTeacherDetails(client, teacher_id) {
 	return client.query(query);
 }
 module.exports = {
+	getSecKeys,
 	getTeacherDetails,
 	getDangerSubjects,
 	updateTeacherName,
