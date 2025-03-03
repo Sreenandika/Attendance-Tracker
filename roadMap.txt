@@ -21,6 +21,7 @@ ToDo Next:
 
 
 
+
 Remaining Bugs : 
    *** delete assignment
     **** no confirmation msg in teacher management
@@ -29,4 +30,6 @@ Remaining Bugs :
    * STUDENT NOTIFICATIONS
    * admin global look
 
-
+   * cant have same id now
+   * cant upload image for teacher profile
+   
