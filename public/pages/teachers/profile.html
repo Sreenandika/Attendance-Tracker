@@ -109,6 +109,7 @@
 					id="imageUpload"
 					style="display: none"
 					accept="image/*"
+					onchange="previewImage(event)"
 				/>
 				<button
 					class="upload-btn"
@@ -116,7 +117,7 @@
 				>
 					Upload Image
 				</button>
-				<h2 id="name">John Doe</h2>
+				<h2 id="name">John Doe</h2>	
 			</div>
 			<div class="info-grid">
 				<div id="subjects" class="info-item">
@@ -128,6 +129,14 @@
 			</div>
 		</div>
 		<script>
+			function previewImage(event) {
+				const reader = new FileReader();
+				reader.onload = function () {
+					const imgElement = document.getElementById("profilePic");
+					imgElement.src = reader.result;
+				};
+				reader.readAsDataURL(event.target.files[0]);
+			}
 			const teacher_id = window.location.pathname.split("/")[2];
 			fetch("/getTeacherDetails", {
 				method: "POST",
