@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Subject Handler</title>
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
-       
         body {
             font-family: Arial, sans-serif;
             background: linear-gradient(to right, #1b5692, #583a6d);
@@ -116,23 +115,18 @@
                 <h3>Add Subject</h3>
                 <label>Subject Name</label>
                 <input id="subjectName" name="subjectName" type="text">
-                
                 <label>Subject ID</label>
                 <input id="subjectId" name="subjectId" type="text">
-                
                 <label>Select Department</label>
                 <select id="selectDepartment"></select>
-                
                 <label>Type of Course</label>
                 <select id="specialCourse">
                     <option>Honours</option>
                     <option>Minors</option>
                     <option>Normal</option>
                 </select>
-
                 <button id="submitSubject">Submit</button>
             </div>
-
             <div class="card delete-subject">
                 <h3>Delete Subject</h3>
                 <label>Select Subject</label>
@@ -143,96 +137,7 @@
     </div>
     <div
         id="notification"
-        class="hidden fixed top-4 right-4 bg-blue-500 text-white p-4 rounded shadow-lg"
-	></div>
-	<script>
-            function deleteAll(id) {
-				id.forEach((ids) => {
-					$(ids).empty();
-				});
-			}
-        function showNotification(message, duration) {
-				const notification = document.getElementById("notification");
-				notification.textContent = message;
-				notification.classList.remove("hidden");
-				setTimeout(() => {
-					notification.classList.add("hidden");
-				}, duration);
-		}
-		$.get("/getDepartments", function (data, status) {
-			if (data.length == 0) {
-				$("#selectDepartment").append(`<option>No Departments Found</option>`);
-				return;
-			} else {
-				data.forEach((element) => {
-					$("#selectDepartment").append(
-						`<option>${element.department_id}. ${element.department_name}</option>`
-					);
-				});
-			}
-		});
-        $.get("/getSubjects", function (data, status) {
-			if (data.length == 0) {
-				$("#selectSubjects").append(`<option>No Departments Found</option>`);
-				return;
-			} else {
-				data.forEach((element) => {
-					$("#selectSubjects").append(
-						`<option>${element.subject_id}. ${element.subject_name}</option>`
-					);
-				});
-			}
-		});
-		$("#submitSubject").click(() => {
-			const subject_name = $("#subjectName").val();
-			const department_id = $("#selectDepartment").val().split("")[0];
-			var subject_type = $("#specialCourse").val();
-			const subject_id = $("#subjectId").val();
-			if (
-				subject_name == null ||
-				department_id == null ||
-				subject_type == null ||
-				subject_id == null
-			) {
-				alert("Please fill details");
-				return;
-			}
-			subject_type = subject_type.toLowerCase();
-			$.ajax({
-				url: "/addSubject",
-				method: "POST",
-				data: {
-					subject_id,
-					subject_name,
-					subject_type,
-					department_id,
-				},
-				success: (data, textStatus, jqXHR) => {
-					console.log("Sucess");
-                    showNotification("Added Subject",3000);
-				},
-				error: (err) => {
-					console.log(err.HEADERS_RECEIVED);
-				},
-			});
-		});
-        $("#deleteSubject").click(() => {
-			const subject_id = $("#selectSubjects").val().split(".")[0];
-            console.log(subject_id);
-			$.ajax({
-				url: "/deleteSubject",
-				method: "DELETE",
-				data: {
-					subject_id,
-				},
-				success: (data, textStatus, jqXHR) => {
-					console.log("Sucess");
-                    showNotification("Deleted Subject",3000);
-				},
-				error: (err) => {
-					console.log(err.HEADERS_RECEIVED);
-				},
-			});
-		});
-	</script>
+        class="hidden fixed top-4 right-4 bg-blue-500 text-white p-4 rounded shadow-lg">
+    </div>
+	<script src="../../javascript/admin/subjectHandler.js"></script>
 </html>
