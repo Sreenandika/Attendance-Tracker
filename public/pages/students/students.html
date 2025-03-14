@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student's Page</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
     <style>
         body {
@@ -77,21 +76,6 @@
             <button id="logout" class="btn mt-4 bg-red-500 hover:bg-red-700" style="background:#b92626"><i class="fas fa-sign-out-alt"></i> Logout</button>
         </div>
     </div>
-    <script>
-        const currUserId = window.location.pathname.split("/")[2];
-            const handlers = {
-                "profileHandler": "/profile",
-                "subjectsHandler": "/subjects",
-                "notificationsHandler": "/notifications",
-            };
-            Object.entries(handlers).forEach(([id, path]) => {
-                document.getElementById(id).addEventListener("click", () => {
-                    window.location.pathname = `/student/${currUserId}${path}`;
-                });
-            });
-            document.getElementById("logout").addEventListener("click", () => {
-                window.location.pathname = "/logout";
-            });
-    </script>
+    <script src="../../javascript/students/students.js"></script>
 </body>
 </html>
