@@ -53,10 +53,10 @@ const password = '<your password>';
 const database = '<db name>';
 const user = '<user_name>';
 const ssl = false; //usually set true for cloud based
-const emailKey = "<The email key from which the emails are sent>"; // this can be generated from the app-passwords section 
+const emailKey = "<The email key from which the emails are sent>";
 ```
 
-You must also excute the /database/ddl.sql file in your terminal/gui application. 
+You must also excute the database/ddl.sql file onto your postgrese instance.
 
 1. Navigate to the backend directory:
     ```sh
@@ -70,8 +70,4 @@ You must also excute the /database/ddl.sql file in your terminal/gui application
     ```sh
     node index.js
     ```
-4.  Login with the sample admin user set up,
-    ```txt
-    password : admin
-    username : admin
-    ```
+4. Create a new admin user, with the secret key '1234'
