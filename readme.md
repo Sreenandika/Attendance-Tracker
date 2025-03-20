@@ -2,10 +2,6 @@
 
 This project is an open-source tool for managing a college's attendance. It can handle most types of requirements, such as a variety of classes.
 
-## Official Repository
-
-This is the official repository for my DBMS mini-project for college.
-
 ## Technology Stack
 
 - Frontend: Static vanilla HTML and CSS with occasional Tailwind
